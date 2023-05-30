@@ -1,0 +1,67 @@
+{
+  "signers": [
+    {
+      "mnemonic": "test",
+      "addressPrivate": "0x000000000000000",
+      "addressPublic": "0x000000000000000"
+    },
+    {
+      "mnemonic": "test2",
+      "addressPrivate": "0x000000000000000",
+      "addressPublic": "0x000000000000000"
+    }
+  ],
+  "types": [
+    {
+      "name": "Cafe"
+    },
+    {
+      "name": "Restaurant"
+    },
+    {
+      "name": "Office"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Brewing"
+    },
+    {
+      "name": "Cooking"
+    },
+    {
+      "name": "Cleaning"
+    }
+  ],
+  "admins": [
+    {
+      "email": "tes@mail.com",
+      "password": "admin"
+    }
+  ],
+  "users": [
+    {
+      "email": "user@mail.com",
+      "password": "admin",
+      "username": "applicant",
+      "name": "Mustakim",
+      "address": "address",
+      "phoneNumber": "123456",
+      "gender": "male",
+      "signer": 2
+    }
+  ],
+  "employers": [
+    {
+      "email": "emp@mail.com",
+      "password": "admin",
+      "companyName": "Flance",
+      "address": "address",
+      "location": "Malang",
+      "PIC": "ojan",
+      "typeId": 1,
+      "phoneNumber": "123456",
+      "signer": 1
+    }
+  ]
+}

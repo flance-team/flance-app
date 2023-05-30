@@ -17,13 +17,94 @@ module.exports = (sequelize, DataTypes) => {
   }
   Employer.init(
     {
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      companyName: DataTypes.STRING,
-      address: DataTypes.STRING,
-      location: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
-      PIC: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: { msg: "Email already exists!" },
+        validate: {
+          notNull: {
+            msg: 'Email Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Email Must be filled!',
+          },
+          isEmail: {
+            msg: 'Invalid Email Format!',
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Password Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Password Must be filled!',
+          },
+        },
+      },
+      companyName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Company name Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Company name Must be filled!',
+          },
+        },
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Address Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Address Must be filled!',
+          },
+        },
+      },
+      location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Location Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Location Must be filled!',
+          },
+        },
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Phone Number Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Phone Number Must be filled!',
+          },
+        },
+      },
+      PIC: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Person in Charge Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Person in Charge Must be filled!',
+          },
+        },
+      },
       typeId: DataTypes.INTEGER,
       signer: DataTypes.INTEGER,
     },

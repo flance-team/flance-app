@@ -18,12 +18,71 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      username: DataTypes.STRING,
-      name: DataTypes.STRING,
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: { msg: "Email already exists!" },
+        validate: {
+          notNull: {
+            msg: 'Email Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Email Must be filled!',
+          },
+          isEmail: {
+            msg: 'Invalid Email Format!',
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Password Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Password Must be filled!',
+          },
+        },
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Username Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Username Must be filled!',
+          },
+        },
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Name Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Name Must be filled!',
+          },
+        },
+      },
       address: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Phone Number Must be filled!',
+          },
+          notEmpty: {
+            msg: 'Phone Number Must be filled!',
+          },
+        },
+      },
       gender: DataTypes.STRING,
       signer: DataTypes.INTEGER,
     },
