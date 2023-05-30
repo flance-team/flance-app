@@ -41,7 +41,6 @@ class LoginController {
         email: findUser?.email ? findUser.email : findEmployer.email,
         role: findUser ? "user" : "employer",
         id: findUser?.id ? findUser.id : findEmployer.id,
-        email: findUser?.email ? findUser.email : findEmployer.email,
       });
 
       res.status(200).json({
