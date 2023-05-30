@@ -6,17 +6,16 @@ const express = require('express');
 const cors = require('cors')
 const app = express()
 const port = process.env.PORT || 3000;
-// const route = require('./routes/route');
+const route = require('./routes');
 
 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//app.use('/', route);
-//route example:
-//app.post('/register', Controller.register)
+app.use('/', route);
+
 
 app.listen(port, () => {
-    console.log(`Example app listening on port port`)
+    console.log(`Example app listening on port ${port}`)
 })
