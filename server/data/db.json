@@ -33,6 +33,17 @@
       "name": "Cleaning"
     }
   ],
+  "categories": [
+    {
+      "name": "Barista"
+    },
+    {
+      "name": "Waiter"
+    },
+    {
+      "name": "Cleaner"
+    }
+  ],
   "admins": [
     {
       "email": "tes@mail.com",

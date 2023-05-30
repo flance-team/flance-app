@@ -7,10 +7,10 @@ const adminRoute = require("./adminRoute");
 const loginRoute = require("./loginRoute");
 const errorHandler = require("../middleware/errorHandler");
 
-router.use("/user", userRoute);
-router.use("/job", jobRoute);
-router.use("/employer", employerRoute);
-router.use("/admin", adminRoute);
+router.use("/users", userRoute);
+router.use("/jobs", jobRoute);
+router.use("/employers", employerRoute);
+router.use("/admins", adminRoute);
 router.use("/login", loginRoute);
 
 router.use(errorHandler);

@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Schedule.init({
-    Day: DataTypes.INTEGER,
+    day: DataTypes.INTEGER,
     jobId: DataTypes.INTEGER,
     startHour: DataTypes.TIME,
     totalHour: DataTypes.INTEGER
