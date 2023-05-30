@@ -13,7 +13,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       employerId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Employers',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       location: {
         type: Sequelize.STRING

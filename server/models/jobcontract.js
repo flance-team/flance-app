@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.JobList, { foreignKey: 'jobListId', as: 'jobList' })
+      this.belongsTo(models.User, { foreignKey: 'userId', as: 'user' })
+      this.belongsTo(models.Employer, { foreignKey: 'employerId', as: 'employer' })
+      this.belongsTo(models.Job, { foreignKey: 'jobId', as: 'job' })
     }
   }
   JobContract.init({

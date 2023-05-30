@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Type, { foreignKey: "typeId" })
+      this.hasMany(models.JobContract, { foreignKey: "employerId" })
     }
   }
   Employer.init(

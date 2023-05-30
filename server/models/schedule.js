@@ -11,10 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Job, { foreignKey: 'jobId' });
     }
   }
   Schedule.init({
     Day: DataTypes.INTEGER,
+    jobId: DataTypes.INTEGER,
     startHour: DataTypes.TIME,
     totalHour: DataTypes.INTEGER
   }, {
