@@ -31,7 +31,14 @@ module.exports = {
         type: Sequelize.STRING
       },
       typeId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Types',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       signer: {
         type: Sequelize.STRING

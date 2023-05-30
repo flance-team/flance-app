@@ -22,6 +22,24 @@ class jobController {
         }
     }
 
+    static async createJob(req, res, next) {
+        try {
+            const {
+                title,
+                location,
+                salary,
+                expireDate,
+                status,
+                categoryId,
+                duration,
+                schedules
+            } = req.body;
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
 }
 
 module.exports = jobController;

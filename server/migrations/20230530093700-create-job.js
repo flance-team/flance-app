@@ -28,6 +28,16 @@ module.exports = {
         type: Sequelize.STRING
       },
       categoryId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Categories',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      totalHours: {
         type: Sequelize.INTEGER
       },
       createdAt: {
