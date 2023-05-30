@@ -18,6 +18,10 @@ module.exports = {
       totalHour: {
         type: Sequelize.INTEGER
       },
+      jobId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

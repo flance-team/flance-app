@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     expireDate: DataTypes.DATE,
     status: DataTypes.STRING,
     totalHours: DataTypes.INTEGER,
-    categoryId: DataTypes.INTEGER
+    categoryId: DataTypes.INTEGER,
+    duration: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Job',
