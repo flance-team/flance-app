@@ -1,4 +1,4 @@
-const { Job, Category, Schedule, Employer } = require('../models');
+const { Job, Category, Schedule, Employer, JobList, JobContract } = require('../models');
 
 class jobController {
 
@@ -24,6 +24,8 @@ class jobController {
 
     static async createJob(req, res, next) {
         try {
+            const employerId = req.identity.id;
+
             const {
                 title,
                 location,
@@ -48,7 +50,8 @@ class jobController {
                 status,
                 categoryId,
                 duration,
-                totalHours
+                totalHours,
+                employerId
             });
 
             const scheduleCreate = schedules.map((schedule) => {
@@ -59,6 +62,80 @@ class jobController {
             const schedulesList = await Schedule.bulkCreate(scheduleCreate);
 
             return res.status(201).json(job);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async applyJob(req, res, next) {
+        try {
+            const id = +req.params.id;
+            const userId = req.identity.id;
+
+            const job = await Job.findByPk(id);
+
+            if (!job) {
+                throw ({ name: "not_found", message: "Job ID not found.", code: 404 })
+            }
+
+            const jobList = await JobList.create({ userId, jobId: id, status: "applied" });
+
+            res.status(201).json(jobList);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async acceptJob(req, res, next) {
+        try {
+
+            const id = +req.params.id;
+
+            const jobList = await JobList.findOne({
+                where: { id: id },
+                include: {
+                    model: Job
+                }
+            });
+
+            if (!jobList) {
+                throw ({ name: "not_found", message: "Job ID not found.", code: 404 })
+            }
+
+            const updateJobList = await JobList.update({ status: "accepted" }, {
+                where: {
+                    id
+                }
+            });
+
+            const JobContract = await JobContract.create({
+                jobListId: id,
+                jobId: jobList.jobId,
+                userId: +req.identity.id,
+                employerId: jobList.Job.employerId,
+                timestamp: new Date(),
+                totalHours: jobList.Job.totalHours,
+                totalSalary: jobList.Job.salary
+            });
+
+            res.status(201).json(JobContract);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async acceptApply(req, res, next) {
+        try {
+            const id = +req.params.id;
+
+            const jobList = await JobList.findByPk(id);
+
+            if (!jobList) {
+                throw ({ name: "not_found", message: "Job ID not found.", code: 404 })
+            }
 
         } catch (err) {
             next(err);
