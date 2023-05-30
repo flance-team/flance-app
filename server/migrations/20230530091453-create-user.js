@@ -32,7 +32,14 @@ module.exports = {
         type: Sequelize.STRING,
       },
       signer: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Signers',
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,
