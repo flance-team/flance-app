@@ -1,23 +1,25 @@
 // import { useState } from "react";
-
+"use client";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
 const LoginForm = () => {
-  //   const [formValue, setFormValue] = useState({
-  //     email: "",
-  //     password: "",
-  //   });
-  //   const inputForm = (el) => {
-  //     setFormValue({
-  //       ...formValue,
-  //       [el.target.name]: el.target.value,
-  //     });
-  //   };
-  //   const formOnSubmit = (el) => {
-  //     el.preventDefault();
-  //     console.log(formValue, "dariFormInputJSX line 14");
-  //     const response = JSON.stringify(formValue);
-  //   };
+  const [formValue, setFormValue] = useState({
+    email: "",
+    password: "",
+  });
+  const inputForm = (el) => {
+    setFormValue({
+      ...formValue,
+      [el.target.name]: el.target.value,
+    });
+  };
+  const formOnSubmit = async (el) => {
+    el.preventDefault();
+    await axios.post("", formValue);
+    const response = JSON.stringify(formValue);
+  };
   return (
     <>
       <div className="flex flex-row w-screen h-screen">
@@ -44,6 +46,7 @@ const LoginForm = () => {
                 placeholder="Type here"
                 name="email"
                 className="input input-bordered w-full max-w-xs"
+                onChange={inputForm}
               />
             </div>
             <div className="form-control mb-4">
@@ -51,13 +54,17 @@ const LoginForm = () => {
                 Password:
               </label>
               <input
+                name="password"
                 type="password"
                 id="password"
                 placeholder="Type here"
                 className="input input-bordered w-full max-w-xs"
+                onChange={inputForm}
               />
             </div>
-            <button className="btn btn-outline w-full">Sign In</button>
+            <button className="btn btn-outline w-full" onClick={formOnSubmit}>
+              Sign In
+            </button>
           </form>
         </div>
       </div>
