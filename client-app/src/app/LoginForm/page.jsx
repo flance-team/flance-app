@@ -1,4 +1,5 @@
 // import { useState } from "react";
+
 import Image from "next/image";
 
 const LoginForm = () => {
@@ -19,21 +20,46 @@ const LoginForm = () => {
   //   };
   return (
     <>
-      {/* <div className="flex bg-white">
-        <div className="flex-shrink-0">
+      <div className="flex flex-row w-screen h-screen">
+        <div className="flex-initial w-7/12 h-screen">
           <img
-            src="/LoginPicUser.jpg"
-            className="max-h-full w-200"
-            alt="User Image"
+            src="./Possible.jpg"
+            className="object-cover w-full h-full"
+            alt="Image"
           />
         </div>
-        <div className="ml-4">Place your content here</div>
-      </div> */}
-      <div className="drawer-side bg-white">
-        <label for="my-drawer-2" className="drawer-overlay"></label>
-        <ul className="menu p-4 w-80 bg-base-100 text-base-content bg-white">
-          <img src="/LoginPicUser.jpg" className="h-full" alt="User Image" />
-        </ul>
+        <div className="flex flex-col justify-center items-center w-5/12">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold mb-2">Welcome to Flance!</h1>
+            <p className="text-lg">Login to your account</p>
+          </div>
+          <form className="flex flex-col items-center">
+            <div className="form-control mb-4">
+              <label htmlFor="email" className="label">
+                Email:
+              </label>
+              <input
+                type="text"
+                id="email"
+                placeholder="Type here"
+                name="email"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label htmlFor="password" className="label">
+                Password:
+              </label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Type here"
+                className="input input-bordered w-full max-w-xs"
+              />
+            </div>
+            <button className="btn btn-outline w-full">Sign In</button>
+          </form>
+        </div>
       </div>
     </>
   );
