@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Type, { foreignKey: "typeId" });
       this.hasMany(models.JobContract, { foreignKey: "employerId" });
       this.belongsTo(models.Signer, { foreignKey: "signer" });
+      this.hasOne(models.DepositEmployer, { foreignKey: "employerId" });
     }
   }
   Employer.init(

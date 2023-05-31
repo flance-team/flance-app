@@ -2,56 +2,35 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Jobs', {
+    await queryInterface.createTable('DepositUsers', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
-      employerId: {
+      userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Employers',
+          model: 'Users',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      location: {
-        type: Sequelize.STRING
-      },
-      salary: {
-        type: Sequelize.INTEGER
-      },
-      expireDate: {
-        type: Sequelize.DATE
-      },
-      status: {
-        type: Sequelize.STRING
-      },
-      categoryId: {
+      signer: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Categories',
+          model: 'Signers',
           key: 'id'
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
       },
-      totalHours: {
+      balance: {
         type: Sequelize.INTEGER
-      },
-      duration: {
-        type: Sequelize.INTEGER
-      },
-      hash: {
-        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -64,6 +43,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Jobs');
+    await queryInterface.dropTable('DepositUsers');
   }
 };

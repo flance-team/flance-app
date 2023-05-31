@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       this.hasMany(models.JobList, { foreignKey: "userId" });
       this.hasMany(models.JobContract, { foreignKey: "userId" });
       this.hasMany(models.SkillList, { foreignKey: "userId" });
-      this.belongsTo(models.Signer, { foreignKey: "signer" })
+      this.belongsTo(models.Signer, { foreignKey: "signer" });
+      this.hasOne(models.DepositUser, { foreignKey: "userId" });
     }
   }
   User.init(

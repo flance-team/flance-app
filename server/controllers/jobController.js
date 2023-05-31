@@ -167,6 +167,22 @@ class jobController {
         }
     }
 
+    static async payUser(req, res, next) {
+        try {
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async payEmployer(req, res, next) {
+        try {
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
 }
 
 module.exports = jobController;
