@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta
+         http-equiv="X-UA-Compatible"
+         content="IE=edge" />
+      <meta
+         name="viewport"
+         content="width=device-width, initial-scale=1.0" />
+      <title>CreateJobForm</title>
+      <link
+         rel="stylesheet"
+         href="./CreateJobForm.css" />
+   </head>
+   <body>
+      <div class="navbar">
+         <div class="navbar-logo">
+            <img
+               src="../assets/logo.png"
+               alt="Logo" />
+            <span>Logo</span>
+         </div>
+         <ul class="navbar-menu">
+            <li><a href="#">Menu 1</a></li>
+            <li><a href="#">Menu 2</a></li>
+            <li><a href="#">Menu 3</a></li>
+         </ul>
+      </div>
+      <div class="container">
+         <h1>Create New Job</h1>
+         <form>
+            <div class="form-group">
+               <label for="job-title">Job Title:</label>
+               <input
+                  type="text"
+                  id="job-title"
+                  name="job-title"
+                  placeholder="Enter Job Title" />
+            </div>
+            <div class="form-group">
+               <label for="id-employee">ID Employee:</label>
+               <input
+                  type="text"
+                  id="id-employee"
+                  name="id-employee"
+                  placeholder="Enter Employee ID" />
+            </div>
+            <div class="form-group">
+               <label for="location">Location:</label>
+               <select class="select-group">
+                  <option value="1">Current Location</option>
+                  <option value="2">New Location</option>
+               </select>
+            </div>
+            <div class="form-group">
+               <label for="new-location">Add New Location (Optional):</label>
+               <input
+                  type="text"
+                  id="new-location"
+                  name="new-location"
+                  placeholder="Enter New Location" />
+            </div>
+            <div class="form-group">
+               <label for="salary-per-hour">Salary Per Hour:</label>
+               <input
+                  type="number"
+                  id="salary-per-hour"
+                  name="salary-per-hour"
+                  placeholder="Enter Salary (per Hour)" />
+            </div>
+            <div class="form-group">
+               <label for="expired-date">Expired Date:</label>
+               <input
+                  class="expired-date"
+                  type="date"
+                  id="expired-date"
+                  name="expired-date"
+                  placeholder="Enter Expired Date" />
+            </div>
+            <div class="form-group">
+               <label for="status">Status:</label>
+               <select class="select-group">
+                  <option value="1">Active</option>
+                  <option value="2">Inactive</option>
+               </select>
+            </div>
+            <div class="form-group">
+               <label for="duration">Duration:</label>
+               <select class="select-group">
+                  <option value="1">Weekly</option>
+                  <option value="2">Monthly</option>
+               </select>
+            </div>
+            <input
+               type="submit"
+               value="Submit" />
+         </form>
+      </div>
+   </body>
+</html>
