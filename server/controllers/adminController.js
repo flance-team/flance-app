@@ -53,6 +53,15 @@ class AdminController {
     }
   }
 
+  static async getCategory(req, res, next) {
+    try {
+      const categories = await Category.findAndCountAll();
+      res.status(200).json(categories);
+    } catch (err) {
+      next(err);
+    }
+  }
+
   static async createCategory(req, res, next) {
     try {
       const { name } = req.body;
@@ -75,7 +84,9 @@ class AdminController {
           where: { id },
         }
       );
-      res.status(200).json(updateCategory);
+      res.status(200).json({
+        message: "update succesfull",
+      });
     } catch (err) {
       next(err);
     }
@@ -89,6 +100,15 @@ class AdminController {
       res.status(200).json({
         message: "category has been deleted",
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getType(req, res, next) {
+    try {
+      const types = await Type.findAndCountAll();
+      res.status(200).json(types);
     } catch (err) {
       next(err);
     }
@@ -114,7 +134,9 @@ class AdminController {
           where: { id },
         }
       );
-      res.status(200).json(updateType);
+      res.status(200).json({
+        message: "update succesfull",
+      });
     } catch (err) {
       next(err);
     }
@@ -129,6 +151,15 @@ class AdminController {
       res.status(200).json({
         message: "type has been deleted",
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getSkill(req, res, next) {
+    try {
+      const skills = await Skill.findAndCountAll();
+      res.status(200).json(skills);
     } catch (err) {
       next(err);
     }
@@ -154,7 +185,9 @@ class AdminController {
           where: { id },
         }
       );
-      res.status(200).json(updateSkill);
+      res.status(200).json({
+        message: "update succesfull",
+      });
     } catch (err) {
       next(err);
     }
@@ -183,7 +216,9 @@ class AdminController {
         },
         { where: { id } }
       );
-      res.status(200).json(patchEmployer);
+      res.status(200).json({
+        message: `employer status changed to ${status}`,
+      });
     } catch (err) {
       next(err);
     }
