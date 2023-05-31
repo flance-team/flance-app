@@ -3,6 +3,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const LoginForm = () => {
   const [formValue, setFormValue] = useState({
@@ -17,8 +18,13 @@ const LoginForm = () => {
   };
   const formOnSubmit = async (el) => {
     el.preventDefault();
-    await axios.post("", formValue);
-    const response = JSON.stringify(formValue);
+    // const response = JSON.stringify(formValue);
+    // console.log(response, "ini response");
+    const databalik = await axios.post(
+      "http://localhost:3000/login",
+      formValue
+    );
+    console.log(databalik);
   };
   return (
     <>
