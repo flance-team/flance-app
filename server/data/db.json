@@ -9,6 +9,11 @@
       "mnemonic": "test2",
       "addressPrivate": "0x000000000000000",
       "addressPublic": "0x000000000000000"
+    },
+    {
+      "mnemonic": "test3",
+      "addressPrivate": "0x000000000000000",
+      "addressPublic": "0x000000000000000"
     }
   ],
   "types": [
@@ -62,6 +67,13 @@
       "signer": 2
     }
   ],
+  "depositUsers": [
+    {
+      "userId": 1,
+      "signer": 2,
+      "balance": 0
+    }
+  ],
   "employers": [
     {
       "email": "emp@mail.com",
@@ -84,8 +96,20 @@
       "PIC": "rio",
       "typeId": 1,
       "phoneNumber": "123456",
-      "signer": 1,
+      "signer": 3,
       "status": "pending"
+    }
+  ],
+  "depositEmployers": [
+    {
+      "employerId": 1,
+      "signer": 1,
+      "balance": 0
+    },
+    {
+      "employerId": 2,
+      "signer": 3,
+      "balance": 0
     }
   ]
 }

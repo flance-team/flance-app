@@ -1,4 +1,4 @@
-const { User, Employer } = require("../models/index");
+const { User, Employer, Signer, DepositUser } = require("../models/index");
 
 class UserController {
   static async registerUser(req, res, next) {
@@ -18,6 +18,9 @@ class UserController {
           code: 400,
         };
       }
+
+      const newSigner = await Signer.create({ mnemonic: "", addressPublic: "", addressPrivate: "" })
+
       const newUser = await User.create({
         email,
         password,
@@ -26,8 +29,12 @@ class UserController {
         address,
         phoneNumber,
         gender,
-        signer: "INIRAND0M$TRinG",
+        signer: newSigner.id,
       });
+
+      const newDepositUser = await DepositUser.create({ userId: newUser.id, signer: newSigner.id, balance: 0 })
+
+
       res.status(201).json(newUser);
     } catch (err) {
       next(err);

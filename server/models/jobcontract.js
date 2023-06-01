@@ -24,7 +24,10 @@ module.exports = (sequelize, DataTypes) => {
     employerId: DataTypes.INTEGER,
     timestamp: DataTypes.DATE,
     totalHours: DataTypes.INTEGER,
-    totalSalary: DataTypes.INTEGER
+    totalSalary: DataTypes.INTEGER,
+    hash: DataTypes.STRING,
+    agreementBlockchainId: DataTypes.STRING,
+    userBlockchainId: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'JobContract',

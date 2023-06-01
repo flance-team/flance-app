@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     categoryId: DataTypes.INTEGER,
     duration: DataTypes.INTEGER,
     hash: DataTypes.STRING,
+    jobBlockchainId: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Job',

@@ -1,4 +1,13 @@
-const { Job, Category, Schedule, Employer, JobList, JobContract } = require('../models');
+const { Job,
+    Category,
+    Schedule,
+    Employer,
+    JobList,
+    JobContract,
+    DepositEmployer,
+    DepositUser,
+    TransactionEmployer,
+    TransactionUser } = require('../models');
 
 class jobController {
 
@@ -26,15 +35,13 @@ class jobController {
 
     static async createJob(req, res, next) {
         try {
-            // const employerId = +req.identity.id;
-            const employerId = 1 //sementara dulu
+            const employerId = +req.identity.id;
 
             const {
                 title,
                 location,
                 salary,
                 expireDate,
-                status,
                 categoryId,
                 duration,
                 schedules
@@ -51,7 +58,7 @@ class jobController {
                 location,
                 salary,
                 expireDate,
-                status,
+                status: "active",
                 categoryId,
                 duration,
                 totalHours: totalHours,
@@ -75,8 +82,7 @@ class jobController {
     static async applyJob(req, res, next) {
         try {
             const id = +req.params.id;
-            // const userId = req.identity.id;
-            const userId = 1; //sementara dulu
+            const userId = req.identity.id;
 
             const job = await Job.findByPk(id);
 
@@ -103,8 +109,7 @@ class jobController {
         try {
 
             const id = +req.params.id;
-            // const userId = +req.identity.id;
-            const userId = 1; //sementara dulu
+            const userId = +req.identity.id;
 
             const jobList = await JobList.findOne({
                 where: { id: id },
@@ -167,6 +172,27 @@ class jobController {
         }
     }
 
+    static async topupEmployer(req, res, next) {
+        try {
+            const employerId = +req.identity.id;
+            const { amount } = req.body;
+
+            const deposit = await DepositEmployer.findOne({ where: { employerId: employerId } });
+            if (!deposit) {
+                throw ({ name: "not_found", message: "Deposit not found.", code: 404 })
+            }
+
+            const trans = await TransactionEmployer.create({ depositId: deposit.id, amount: amount, ref: "topup", transactionDate: new Date(), updatedBalance: deposit.balance + amount });
+            await deposit.update({ balance: deposit.balance + amount });
+
+
+            res.status(201).json(trans);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
     static async payUser(req, res, next) {
         try {
 
@@ -175,7 +201,7 @@ class jobController {
         }
     }
 
-    static async payEmployer(req, res, next) {
+    static async withdrawUser(req, res, next) {
         try {
 
         } catch (err) {
