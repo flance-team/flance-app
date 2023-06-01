@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.hasOne(models.User, { foreignKey: 'signer' })
       this.hasOne(models.Employer, { foreignKey: 'signer' })
+      this.hasOne(models.DepositEmployer, { foreignKey: 'signer' })
+      this.hasOne(models.DepositUser, { foreignKey: 'signer' })
     }
   }
   Signer.init({

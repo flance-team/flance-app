@@ -1,4 +1,6 @@
+"use client";
 import Image from "next/image";
+
 // import LoginForm from "./LoginForm/Page";
 import UserHome from "./UserHome/page";
 

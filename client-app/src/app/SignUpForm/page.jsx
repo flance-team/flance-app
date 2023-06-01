@@ -20,7 +20,7 @@ const SignUpForm = () => {
   return (
     <>
       <div className="flex flex-row ">
-        <div className="flex-initial w-6/12 h-5/6">
+        <div className="flex-initial w-7/12 h-5/6">
           <img src="./LoginPicUser.jpg" className="" />
         </div>
         <div className="flex flex-col">
@@ -30,11 +30,11 @@ const SignUpForm = () => {
               <button className="btn btn-outline">SignIn</button>
             </div>
           </div>
-          <div className="mt-3">
+          <div className="mt-8">
             <div>Welcome to Flance!</div>
             <div>Please register your account</div>
           </div>
-          <div className="mt-3">
+          <div className="mt-3 flex-row">
             <form>
               <div className="form-control w-full max-w-xs">
                 <label className="label">
@@ -87,8 +87,8 @@ const SignUpForm = () => {
                   <option>Female</option>
                 </select>
               </div>
-              <div className="form-control w-full max-w-xs">
-                <label className="label">
+              <div className="form-control w-full max-w-xs ">
+                <label className="label ">
                   <span className="label-text">Address:</span>
                 </label>
                 <textarea

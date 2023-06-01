@@ -27,7 +27,8 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING,
     totalHours: DataTypes.INTEGER,
     categoryId: DataTypes.INTEGER,
-    duration: DataTypes.INTEGER
+    duration: DataTypes.INTEGER,
+    hash: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Job',
