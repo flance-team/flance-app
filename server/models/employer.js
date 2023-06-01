@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Type, { foreignKey: "typeId" })
-      this.hasMany(models.JobContract, { foreignKey: "employerId" })
-      this.belongsTo(models.Signer, { foreignKey: "signer" })
+      this.belongsTo(models.Type, { foreignKey: "typeId" });
+      this.hasMany(models.JobContract, { foreignKey: "employerId" });
+      this.belongsTo(models.Signer, { foreignKey: "signer" });
+      this.hasOne(models.DepositEmployer, { foreignKey: "employerId" });
     }
   }
   Employer.init(
@@ -23,13 +24,13 @@ module.exports = (sequelize, DataTypes) => {
         unique: { msg: "Email already exists!" },
         validate: {
           notNull: {
-            msg: 'Email Must be filled!',
+            msg: "Email Must be filled!",
           },
           notEmpty: {
-            msg: 'Email Must be filled!',
+            msg: "Email Must be filled!",
           },
           isEmail: {
-            msg: 'Invalid Email Format!',
+            msg: "Invalid Email Format!",
           },
         },
       },
@@ -38,10 +39,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Password Must be filled!',
+            msg: "Password Must be filled!",
           },
           notEmpty: {
-            msg: 'Password Must be filled!',
+            msg: "Password Must be filled!",
           },
         },
       },
@@ -50,10 +51,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Company name Must be filled!',
+            msg: "Company name Must be filled!",
           },
           notEmpty: {
-            msg: 'Company name Must be filled!',
+            msg: "Company name Must be filled!",
           },
         },
       },
@@ -62,10 +63,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Address Must be filled!',
+            msg: "Address Must be filled!",
           },
           notEmpty: {
-            msg: 'Address Must be filled!',
+            msg: "Address Must be filled!",
           },
         },
       },
@@ -74,10 +75,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Location Must be filled!',
+            msg: "Location Must be filled!",
           },
           notEmpty: {
-            msg: 'Location Must be filled!',
+            msg: "Location Must be filled!",
           },
         },
       },
@@ -86,10 +87,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Phone Number Must be filled!',
+            msg: "Phone Number Must be filled!",
           },
           notEmpty: {
-            msg: 'Phone Number Must be filled!',
+            msg: "Phone Number Must be filled!",
           },
         },
       },
@@ -98,15 +99,28 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Person in Charge Must be filled!',
+            msg: "Person in Charge Must be filled!",
           },
           notEmpty: {
-            msg: 'Person in Charge Must be filled!',
+            msg: "Person in Charge Must be filled!",
           },
         },
       },
       typeId: DataTypes.INTEGER,
       signer: DataTypes.INTEGER,
+      status: {
+        type: DataTypes.STRING,
+        defaultValue: "pending",
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Status Must be filled!",
+          },
+          notEmpty: {
+            msg: "Status Must be filled!",
+          },
+        },
+      },
     },
     {
       sequelize,

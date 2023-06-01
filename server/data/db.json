@@ -72,7 +72,20 @@
       "PIC": "ojan",
       "typeId": 1,
       "phoneNumber": "123456",
-      "signer": 1
+      "signer": 1,
+      "status": "verified"
+    },
+    {
+      "email": "pending@mail.com",
+      "password": "admin",
+      "companyName": "Flance",
+      "address": "address",
+      "location": "Malang",
+      "PIC": "rio",
+      "typeId": 1,
+      "phoneNumber": "123456",
+      "signer": 1,
+      "status": "pending"
     }
   ]
 }
