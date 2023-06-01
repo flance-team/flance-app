@@ -16,8 +16,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   SkillList.init({
-    userId: DataTypes.INTEGER,
-    skillId: DataTypes.INTEGER
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'User ID Must be filled!',
+        },
+        notEmpty: {
+          msg: 'User ID Must be filled!',
+        },
+      },
+    },
+    skillId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Skill ID Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Skill ID Must be filled!',
+        },
+      },
+    }
   }, {
     sequelize,
     modelName: 'SkillList',

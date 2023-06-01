@@ -2,12 +2,14 @@ const { Job,
     Category,
     Schedule,
     Employer,
+    User,
     JobList,
     JobContract,
     DepositEmployer,
     DepositUser,
     TransactionEmployer,
     TransactionUser } = require('../models');
+const { Op } = require("sequelize");
 
 class jobController {
 
@@ -28,6 +30,30 @@ class jobController {
                 ]
             });
             res.status(200).json(jobs);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async getSchedules(req, res, next) {
+        try {
+            const id = +req.params.id;
+
+            const checkJob = await Job.findOne({
+                where: { id },
+                include: [
+                    { model: Category },
+                    { model: Employer, attributes: ['companyName', 'email'] },
+                    { model: Schedule }
+                ]
+            });
+
+            if (!checkJob) {
+                throw ({ name: "not_found", message: "Job not found", code: 404 });
+            }
+
+            res.status(200).json(checkJob);
+
         } catch (err) {
             next(err);
         }
@@ -99,6 +125,55 @@ class jobController {
             const jobList = await JobList.create({ userId, jobId: id, status: "applied" });
 
             res.status(201).json(jobList);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async listJob(req, res, next) {
+        try {
+            const employerId = +req.identity.id;
+
+            const jobs = await Job.findAll({ where: { employerId, expireDate: { [Op.gte]: new Date(), } } });
+
+            res.status(200).json(jobs);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async listApplier(req, res, next) {
+        try {
+
+            const id = +req.params.id;
+            const employerId = req.identity.id;
+
+            const checkJobId = await Job.findOne({ where: { id, employerId } });
+            if (!checkJobId) {
+                throw ({ name: "not_found", message: "Job not available", code: 404 })
+            }
+
+            const jobList = await JobList.findAll({ include: [{ model: Job }, { model: User, attributes: ["name", "gender", "address"] }], where: { status: "applied", jobId: id } });
+
+            res.status(200).json(jobList);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async listApplyJob(req, res, next) {
+        try {
+
+            const userId = req.identity.id;
+
+            const jobList = await JobList.findAll({
+                include: { model: Job, include: [{ model: Category }, { model: Employer, attributes: ["companyName"] }] },
+                where: { userId: userId }
+            });
+
+            res.status(200).json(jobList);
 
         } catch (err) {
             next(err);

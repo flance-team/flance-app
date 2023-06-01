@@ -19,15 +19,92 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Job.init({
-    title: DataTypes.STRING,
-    employerId: DataTypes.INTEGER,
-    location: DataTypes.STRING,
-    salary: DataTypes.INTEGER,
-    expireDate: DataTypes.DATE,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Title Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Title Must be filled!',
+        },
+      },
+    },
+    employerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Employer ID Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Employer ID Must be filled!',
+        },
+      },
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Location Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Location Must be filled!',
+        },
+      },
+    },
+    salary: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Salary Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Salary Must be filled!',
+        },
+      },
+    },
+    expireDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Expired Date Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Expired Date Must be filled!',
+        },
+      },
+    },
     status: DataTypes.STRING,
     totalHours: DataTypes.INTEGER,
-    categoryId: DataTypes.INTEGER,
-    duration: DataTypes.INTEGER,
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Category ID Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Category ID Must be filled!',
+        },
+      },
+    },
+    duration: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'duration Must be filled!',
+        },
+        notEmpty: {
+          msg: 'duration Must be filled!',
+        },
+      },
+    },
     hash: DataTypes.STRING,
     jobBlockchainId: DataTypes.STRING,
   }, {
