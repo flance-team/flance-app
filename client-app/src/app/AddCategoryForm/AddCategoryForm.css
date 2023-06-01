@@ -1,7 +1,12 @@
 /* CSS styling for the form */
-body {
+body,
+html {
    font-family: Arial, sans-serif;
    background-image: url("../assets/AddCategoryForm.jpg");
+   height: 100%;
+   /* Center and scale the image nicely */
+   background-position: center;
+   background-repeat: no-repeat;
    background-size: cover;
 }
 
@@ -18,6 +23,7 @@ body {
    align-items: center;
    margin-left: 20px;
    color: #fff;
+   background-image: url("../assets/logo.png");
 }
 
 .navbar-logo img {
@@ -37,8 +43,8 @@ body {
 .navbar-menu li a {
    color: blue;
    text-decoration: none;
-   border: 2px solid blue;
-   border-radius: 20px;
+   /* border: 2px solid blue;
+   border-radius: 20px; */
    padding: 10px 10px;
 }
 
@@ -50,16 +56,19 @@ body {
 }
 
 .container {
-   max-width: 400px;
-   margin-left: 140px;
-   margin-top: 75px;
+   max-width: 600px;
+   margin-left: 190px;
+   margin-top: 70px;
    padding: 20px;
    background-color: rgba(105, 105, 105, 0.5);
    border-radius: 20px;
 }
 
-h1 {
+/* h1 {
    text-align: center;
+   font-size: x-large;
+   color: black;
+   margin-bottom: 20px;
 }
 
 .form-group {
@@ -96,4 +105,4 @@ input[type="submit"]:hover {
    transition-duration: 0.5s;
    background-color: rgb(255, 72, 16);
    color: white;
-}
+} */

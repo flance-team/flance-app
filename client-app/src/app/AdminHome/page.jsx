@@ -1,22 +1,22 @@
 "use client";
+//signup User
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
-const UserHome = () => {
+import React, { useEffect, useState } from "react";
+const base_url_server = "http://localhost:3000";
+
+const AdminHome = () => {
    return (
       <React.Fragment>
          <div className="flex space-x-4 my-3">
             <div className="flex-1 text-black ml-2">
                <img
-                  src="/Logo.png"
+                  src="../assets/logo.png"
                   alt="me"
                   width="64"
                   height="64"
                />
-            </div>
-            <div className="flex flex-row text-black">
-               <div className="flex-none">Find Jobs</div>
-               <div className="flex-none ml-4">Best Match Resume</div>
             </div>
             <div className="flex-1 text-black flex justify-end items-center">
                <div className="dropdown dropdown-end">
@@ -31,10 +31,7 @@ const UserHome = () => {
                      tabIndex="0"
                      className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
                      <li>
-                        <a className="justify-between">
-                           Profile
-                           <span className="badge">New</span>
-                        </a>
+                        <a className="justify-between">Profile</a>
                      </li>
                      <li>
                         <a>Settings</a>
@@ -50,4 +47,4 @@ const UserHome = () => {
    );
 };
 
-export default UserHome;
+export default AdminHome;

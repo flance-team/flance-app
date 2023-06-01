@@ -1,7 +1,12 @@
 /* CSS styling for the form */
-body {
+body,
+html {
    font-family: Arial, sans-serif;
    background-image: url("../assets/AddScheduleForm.jpg");
+   height: 100%;
+   /* Center and scale the image nicely */
+   background-position: center;
+   background-repeat: no-repeat;
    background-size: cover;
 }
 
@@ -37,8 +42,8 @@ body {
 .navbar-menu li a {
    color: blue;
    text-decoration: none;
-   border: 2px solid blue;
-   border-radius: 20px;
+   /* border: 2px solid blue;
+   border-radius: 20px; */
    padding: 10px 10px;
 }
 
@@ -50,15 +55,24 @@ body {
 }
 
 .container {
-   max-width: 400px;
-   margin-left: 140px;
+   max-width: 500px;
+   margin-left: 160px;
    margin-top: 75px;
    padding: 20px;
    background-color: rgba(105, 105, 105, 0.5);
    border-radius: 20px;
 }
 
-h1 {
+.container {
+   max-width: 600px;
+   margin-left: 190px;
+   margin-top: 70px;
+   padding: 20px;
+   background-color: rgba(105, 105, 105, 0.5);
+   border-radius: 20px;
+}
+
+/* h1 {
    text-align: center;
 }
 
@@ -96,4 +110,4 @@ input[type="submit"]:hover {
    transition-duration: 0.5s;
    background-color: rgb(255, 72, 16);
    color: white;
-}
+} */
