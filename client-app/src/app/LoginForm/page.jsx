@@ -20,11 +20,8 @@ const LoginForm = () => {
     el.preventDefault();
     // const response = JSON.stringify(formValue);
     // console.log(response, "ini response");
-    const databalik = await axios.post(
-      "http://localhost:3000/login",
-      formValue
-    );
-    console.log(databalik);
+    const response = await axios.post("http://localhost:3000/login", formValue);
+    console.log(response);
   };
   return (
     <>
