@@ -1,4 +1,15 @@
-const { Job, Category, Schedule, Employer, JobList, JobContract } = require('../models');
+const { Job,
+    Category,
+    Schedule,
+    Employer,
+    User,
+    JobList,
+    JobContract,
+    DepositEmployer,
+    DepositUser,
+    TransactionEmployer,
+    TransactionUser } = require('../models');
+const { Op } = require("sequelize");
 
 class jobController {
 
@@ -24,17 +35,39 @@ class jobController {
         }
     }
 
+    static async getSchedules(req, res, next) {
+        try {
+            const id = +req.params.id;
+
+            const checkJob = await Job.findOne({
+                where: { id },
+                include: [
+                    { model: Category },
+                    { model: Employer, attributes: ['companyName', 'email'] },
+                    { model: Schedule }
+                ]
+            });
+
+            if (!checkJob) {
+                throw ({ name: "not_found", message: "Job not found", code: 404 });
+            }
+
+            res.status(200).json(checkJob);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
     static async createJob(req, res, next) {
         try {
-            // const employerId = +req.identity.id;
-            const employerId = 1 //sementara dulu
+            const employerId = +req.identity.id;
 
             const {
                 title,
                 location,
                 salary,
                 expireDate,
-                status,
                 categoryId,
                 duration,
                 schedules
@@ -51,7 +84,7 @@ class jobController {
                 location,
                 salary,
                 expireDate,
-                status,
+                status: "active",
                 categoryId,
                 duration,
                 totalHours: totalHours,
@@ -75,8 +108,7 @@ class jobController {
     static async applyJob(req, res, next) {
         try {
             const id = +req.params.id;
-            // const userId = req.identity.id;
-            const userId = 1; //sementara dulu
+            const userId = req.identity.id;
 
             const job = await Job.findByPk(id);
 
@@ -99,12 +131,60 @@ class jobController {
         }
     }
 
+    static async listJob(req, res, next) {
+        try {
+            const employerId = +req.identity.id;
+
+            const jobs = await Job.findAll({ where: { employerId, expireDate: { [Op.gte]: new Date(), } } });
+
+            res.status(200).json(jobs);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async listApplier(req, res, next) {
+        try {
+
+            const id = +req.params.id;
+            const employerId = req.identity.id;
+
+            const checkJobId = await Job.findOne({ where: { id, employerId } });
+            if (!checkJobId) {
+                throw ({ name: "not_found", message: "Job not available", code: 404 })
+            }
+
+            const jobList = await JobList.findAll({ include: [{ model: Job }, { model: User, attributes: ["name", "gender", "address"] }], where: { status: "applied", jobId: id } });
+
+            res.status(200).json(jobList);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async listApplyJob(req, res, next) {
+        try {
+
+            const userId = req.identity.id;
+
+            const jobList = await JobList.findAll({
+                include: { model: Job, include: [{ model: Category }, { model: Employer, attributes: ["companyName"] }] },
+                where: { userId: userId }
+            });
+
+            res.status(200).json(jobList);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
     static async acceptJob(req, res, next) {
         try {
 
             const id = +req.params.id;
-            // const userId = +req.identity.id;
-            const userId = 1; //sementara dulu
+            const userId = +req.identity.id;
 
             const jobList = await JobList.findOne({
                 where: { id: id },
@@ -167,17 +247,69 @@ class jobController {
         }
     }
 
-    static async payUser(req, res, next) {
+    static async topupEmployer(req, res, next) {
         try {
+            const employerId = +req.identity.id;
+            const { amount } = req.body;
+
+            const deposit = await DepositEmployer.findOne({ where: { employerId: employerId } });
+            if (!deposit) {
+                throw ({ name: "not_found", message: "Deposit not found.", code: 404 })
+            }
+
+            const trans = await TransactionEmployer.create({ depositId: deposit.id, amount: amount, ref: "topup", transactionDate: new Date(), updatedBalance: deposit.balance + amount });
+            await deposit.update({ balance: deposit.balance + amount });
+
+
+            res.status(201).json(trans);
 
         } catch (err) {
             next(err);
         }
     }
 
-    static async payEmployer(req, res, next) {
+    static async payUser(req, res, next) {
         try {
 
+            const employerId = +req.identity.id;
+            const { userId, amount } = req.body;
+
+            const depositEmp = await DepositEmployer.findOne({ where: { employerId: employerId } });
+            if (!depositEmp) {
+                throw ({ name: "not_found", message: "Deposit Employer not found.", code: 404 })
+            }
+            const depositUser = await DepositUser.findOne({ where: { userId: userId } });
+            if (!depositUser) {
+                throw ({ name: "not_found", message: "Deposit User not found.", code: 404 })
+            }
+
+            const transEmp = await TransactionEmployer.create({ depositId: depositEmp.id, amount: amount * -1, ref: `pay - user ${userId}`, transactionDate: new Date(), updatedBalance: depositEmp.balance - amount });
+            await depositEmp.update({ balance: depositEmp.balance - amount });
+
+            const transUser = await TransactionUser.create({ depositId: depositUser.id, amount: amount, ref: `payment from - employer ${employerId}`, transactionDate: new Date(), updatedBalance: depositUser.balance + amount });
+            await depositUser.update({ balance: depositUser.balance + amount });
+
+            res.status(201).json(transEmp);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async withdrawUser(req, res, next) {
+        try {
+            const idUser = +req.identity.id;
+            const { amount } = req.body;
+
+            const depositUser = await DepositUser.findOne({ where: { userId: idUser } });
+            if (!depositUser) {
+                throw ({ name: "not_found", message: "Deposit User not found.", code: 404 })
+            }
+
+            const transUser = await TransactionUser.create({ depositId: depositUser.id, amount: amount * -1, ref: `withdraw - user ${idUser}`, transactionDate: new Date(), updatedBalance: depositUser.balance - amount });
+            await depositUser.update({ balance: depositUser.balance - amount });
+
+            res.status(201).json(transUser);
         } catch (err) {
             next(err);
         }

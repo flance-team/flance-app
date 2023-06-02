@@ -1,5 +1,5 @@
-const { User, Employer } = require("../models/index");
-
+const { User, Employer, Signer, DepositUser } = require("../models/index");
+const axios = require("axios");
 class UserController {
   static async registerUser(req, res, next) {
     try {
@@ -18,6 +18,9 @@ class UserController {
           code: 400,
         };
       }
+
+      const newSigner = await Signer.create({ mnemonic: "", addressPublic: "", addressPrivate: "" })
+
       const newUser = await User.create({
         email,
         password,
@@ -26,8 +29,16 @@ class UserController {
         address,
         phoneNumber,
         gender,
-        signer: "INIRAND0M$TRinG",
+        signer: newSigner.id,
       });
+
+      const newDepositUser = await DepositUser.create({ userId: newUser.id, signer: newSigner.id, balance: 0 })
+      const dataSigner = await axios.post("https://flance-agreement-api.tianweb.dev/wallets", {}, {})
+
+      // await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic }, {
+      //   headers: { 'Content-Type': 'application/json' }
+      // })
+
       res.status(201).json(newUser);
     } catch (err) {
       next(err);

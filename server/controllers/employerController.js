@@ -1,4 +1,4 @@
-const { Employer, User } = require("../models/index");
+const { Employer, User, DepositEmployer, Signer } = require("../models/index");
 
 class EmployerController {
   static async registerEmployer(req, res, next) {
@@ -28,6 +28,8 @@ class EmployerController {
         };
       }
 
+      const newSigner = await Signer.create({ mnemonic: "", addressPublic: "", addressPrivate: "" })
+
       const newEmployer = await Employer.create({
         email,
         password,
@@ -37,8 +39,12 @@ class EmployerController {
         phoneNumber,
         PIC,
         typeId,
-        signer: "IniRandom$tr1NG",
+        signer: newSigner.id,
       });
+
+      const newDepositEmployer = await DepositEmployer.create({ employerId: newEmployer.id, signer: newSigner.id, balance: 0 })
+
+
       res.status(201).json(newEmployer);
     } catch (err) {
       next(err);

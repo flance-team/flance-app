@@ -58,6 +58,15 @@ module.exports = {
       totalSalary: {
         type: Sequelize.INTEGER
       },
+      hash: {
+        type: Sequelize.STRING
+      },
+      agreementBlockchainId: {
+        type: Sequelize.STRING
+      },
+      userBlockchainId: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

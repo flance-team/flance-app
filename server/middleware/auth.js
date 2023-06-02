@@ -5,18 +5,18 @@ async function authUser(req, res, next) {
     try {
         const { access_token } = req.headers;
         if (!access_token) {
-            throw { name: 'token_error', message: 'Invalid token' }
+            throw { name: 'token_error', message: 'Invalid token', code: 401 }
         }
 
         const payload = verifyToken(access_token);
 
         if (!payload) {
-            throw { name: 'token_error', message: 'Invalid token' }
+            throw { name: 'token_error', message: 'Invalid token', code: 401 }
         }
 
         const checkUser = await User.findByPk(payload.id);
         if (!checkUser) {
-            throw { name: 'unauthorized', message: 'Unauthorized Access' }
+            throw { name: 'unauthorized', message: 'Unauthorized Access', code: 403 }
         }
 
         req.identity = { id: checkUser.id, email: checkUser.email, role: "user" };
@@ -30,18 +30,18 @@ async function authEmployer(req, res, next) {
     try {
         const { access_token } = req.headers;
         if (!access_token) {
-            throw { name: 'token_error', message: 'Invalid token' }
+            throw { name: 'token_error', message: 'Invalid token', code: 401 }
         }
 
         const payload = verifyToken(access_token);
 
         if (!payload) {
-            throw { name: 'token_error', message: 'Invalid token' }
+            throw { name: 'token_error', message: 'Invalid token', code: 401 }
         }
 
         const checkEmployer = await Employer.findByPk(payload.id);
         if (!checkEmployer) {
-            throw { name: 'unauthorized', message: 'Unauthorized Access' }
+            throw { name: 'unauthorized', message: 'Unauthorized Access', code: 403 }
         }
 
         req.identity = { id: checkEmployer.id, email: checkEmployer.email, role: "employer" };
@@ -55,18 +55,18 @@ async function authAdmin(req, res, next) {
     try {
         const { access_token } = req.headers;
         if (!access_token) {
-            throw { name: 'token_error', message: 'Invalid token' }
+            throw { name: 'token_error', message: 'Invalid token', code: 401 }
         }
 
         const payload = verifyToken(access_token);
 
         if (!payload) {
-            throw { name: 'token_error', message: 'Invalid token' }
+            throw { name: 'token_error', message: 'Invalid token', code: 401 }
         }
 
         const checkAdmin = await Admin.findByPk(payload.id);
         if (!checkAdmin) {
-            throw { name: 'unauthorized', message: 'Unauthorized Access' }
+            throw { name: 'unauthorized', message: 'Unauthorized Access', code: 403 }
         }
 
         req.identity = { id: checkAdmin.id, email: checkAdmin.email, role: "admin" };

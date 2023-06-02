@@ -53,6 +53,9 @@ module.exports = {
       hash: {
         type: Sequelize.STRING
       },
+      jobBlockchainId: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

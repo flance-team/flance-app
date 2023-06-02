@@ -15,8 +15,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   TransactionUser.init({
-    depositId: DataTypes.INTEGER,
-    amount: DataTypes.INTEGER,
+    depositId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Deposit ID Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Deposit ID Must be filled!',
+        },
+      },
+    },
+    amount: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'amount Must be filled!',
+        },
+        notEmpty: {
+          msg: 'amount Must be filled!',
+        },
+      },
+    },
     transactionDate: DataTypes.DATE,
     ref: DataTypes.STRING,
     updatedBalance: DataTypes.INTEGER
