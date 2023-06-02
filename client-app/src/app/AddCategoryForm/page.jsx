@@ -63,10 +63,15 @@ const AddCategoryForm = () => {
                      placeholder="Type here"
                      name="category"
                      className="input input-bordered py-3 mb-2"
+                     onChange={inputForm}
                   />
                </div>
                <div className="justify-center items-center">
-                  <button className="btn btn-outline bg-gray-600 justify-center items-center py-2 px-4 ">Add</button>
+                  <button
+                     className="btn btn-outline bg-gray-600 justify-center items-center py-2 px-4"
+                     onClick={formOnSubmit}>
+                     Add
+                  </button>
                </div>
             </form>
          </div>
