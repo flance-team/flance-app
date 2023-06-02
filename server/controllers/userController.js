@@ -33,11 +33,9 @@ class UserController {
       });
 
       const newDepositUser = await DepositUser.create({ userId: newUser.id, signer: newSigner.id, balance: 0 })
-      const dataSigner = await axios.post("https://flance-agreement-api.tianweb.dev/wallets", {}, {})
+      const dataSigner = await axios.get("https://flance-agreement-api.tianweb.dev/wallets")
 
-      // await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic }, {
-      //   headers: { 'Content-Type': 'application/json' }
-      // })
+      await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic })
 
       res.status(201).json(newUser);
     } catch (err) {

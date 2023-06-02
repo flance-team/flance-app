@@ -10,6 +10,7 @@ const { Job,
     TransactionEmployer,
     TransactionUser } = require('../models');
 const { Op } = require("sequelize");
+const axios = require("axios");
 
 class jobController {
 
@@ -27,7 +28,10 @@ class jobController {
                     {
                         model: Schedule
                     }
-                ]
+                ],
+                where: {
+                    status: "active"
+                }
             });
             res.status(200).json(jobs);
         } catch (err) {
@@ -91,6 +95,7 @@ class jobController {
                 employerId
             });
 
+
             const scheduleCreate = schedules.map((schedule) => {
                 schedule.jobId = job.id;
                 return schedule;
@@ -98,7 +103,50 @@ class jobController {
 
             const schedulesList = await Schedule.bulkCreate(scheduleCreate);
 
+            const employer = await Employer.findOne({
+                include: { model: Signer },
+                where: { id: employerId }
+            });
+
+            const dataBlockchain = await axios.post("https://flance-agreement-api.tianweb.dev/jobs",
+                {
+                    jobTitle: title,
+                    companyName: employer.companyName,
+                    workHourPerWeek: totalHours,
+                    salaryPerHour: salary
+                },
+                {
+                    headers: {
+                        employerPrivateKey: employer.Signer.addressPrivate
+                    }
+                })
+
+            await job.update({ hash: dataBlockchain.data.hash, jobBlockchainId: dataBlockchain.data.jobBlockchainId });
+
             res.status(201).json(job);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async terminateJob(req, res, next) {
+        try {
+
+            const id = +req.params.id;
+
+            const job = await Job.findByPk(id);
+            if (!job) {
+                throw ({ name: "not_found", message: "Job ID not found.", code: 404 })
+            }
+
+            if (job.status !== "active") {
+                throw ({ name: "not_found", message: "Job already not active.", code: 404 })
+            }
+
+            await job.update({ status: "inacvtive" });
+
+            res.status(200).json(job);
 
         } catch (err) {
             next(err);
@@ -180,6 +228,19 @@ class jobController {
         }
     }
 
+    static async listEmployee(req, res, next) {
+        try {
+            const employerId = +req.identity.id;
+
+            const jobsContract = await JobContract.findAll({ include: [{ model: User }, { model: Job }], where: { employerId } });
+
+            const jobContractActive = jobsContract.filter((jobContract) => { return jobContract.timestamp + jobContract.Job.duration >= new Date() });
+            res.status(200).json(jobContractActive);
+        } catch (err) {
+            next(err);
+        }
+    }
+
     static async acceptJob(req, res, next) {
         try {
 
@@ -217,8 +278,46 @@ class jobController {
                 totalSalary: jobList.Job.salary
             });
 
+
+            const user = await User.findOne({ include: { model: Signer }, where: { id: userId } });
+            //nunggu beres
+            // const dataBlockchain = await axios.post("https://flance-agreement-api.tianweb.dev/agreements",
+            //     {
+            //         "jobId": jobList.jobId,
+            //         "userName": user.name,
+            //         "contractDuration": jobList.Job.duration,
+            //     },
+            //     {
+            //         headers: {
+            //             userPrivateKey: user.Signer.addressPrivate
+            //         }
+            //     });
+
+            // await smartContract.update({ hash: dataBlockchain.data.hash, agreementBlockchainId: dataBlockchain.data.agreementBlockchainId, userBlockchainId: user.Signer.addressPrivate });
+
             res.status(201).json(smartContract);
 
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async rejectJob(req, res, next) {
+        try {
+            const id = +req.params.id;
+
+            const jobList = await JobList.findByPk(id);
+            if (!jobList) {
+                throw ({ name: "not_found", message: "Job ID not found.", code: 404 })
+            }
+
+            if (jobList.status !== "pending") {
+                throw ({ name: "not_applicable", message: "You are not offered this job yet", code: 400 })
+            }
+
+            await jobList.update({ status: "rejected" });
+
+            res.status(200).json(jobList);
         } catch (err) {
             next(err);
         }
@@ -242,6 +341,27 @@ class jobController {
 
             res.status(200).json({ message: "Applicant accepted successfully" })
 
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async rejectApply(req, res, next) {
+        try {
+            const id = +req.params.id;
+
+            const jobList = await JobList.findByPk(id);
+            if (!jobList) {
+                throw ({ name: "not_found", message: "Job ID not found.", code: 404 })
+            }
+
+            if (jobList.status !== "applied") {
+                throw ({ name: "not_applicable", message: "Joblist are not applied yet", code: 400 })
+            }
+
+            await jobList.update({ status: "rejected" });
+
+            res.status(200).json(jobList);
         } catch (err) {
             next(err);
         }
