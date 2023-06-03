@@ -5,9 +5,9 @@ import Image from "next/image";
 import UserHome from "./UserHome/page";
 
 export default function Home() {
-  return (
-    <div className="bg-white p-1">
-      <UserHome />
-    </div>
-  );
+   return (
+      <div className="bg-white p-1">
+         <UserHome />
+      </div>
+   );
 }

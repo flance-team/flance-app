@@ -1,5 +1,5 @@
 const { Employer, User, DepositEmployer, Signer } = require("../models/index");
-
+const axios = require("axios");
 class EmployerController {
   static async registerEmployer(req, res, next) {
     try {
@@ -43,6 +43,9 @@ class EmployerController {
       });
 
       const newDepositEmployer = await DepositEmployer.create({ employerId: newEmployer.id, signer: newSigner.id, balance: 0 })
+      const dataSigner = await axios.get("https://flance-agreement-api.tianweb.dev/wallets")
+
+      await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic })
 
 
       res.status(201).json(newEmployer);

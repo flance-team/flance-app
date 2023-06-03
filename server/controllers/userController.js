@@ -1,4 +1,4 @@
-const { User, Employer, Signer, DepositUser } = require("../models/index");
+const { User, Employer, Signer, DepositUser, SkillList } = require("../models/index");
 const axios = require("axios");
 class UserController {
   static async registerUser(req, res, next) {
@@ -33,11 +33,9 @@ class UserController {
       });
 
       const newDepositUser = await DepositUser.create({ userId: newUser.id, signer: newSigner.id, balance: 0 })
-      const dataSigner = await axios.post("https://flance-agreement-api.tianweb.dev/wallets", {}, {})
+      const dataSigner = await axios.get("https://flance-agreement-api.tianweb.dev/wallets")
 
-      // await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic }, {
-      //   headers: { 'Content-Type': 'application/json' }
-      // })
+      await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic })
 
       res.status(201).json(newUser);
     } catch (err) {
@@ -51,6 +49,24 @@ class UserController {
         attributes: { exclude: ["password", "signer"] },
       });
       res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async addSkills(req, res, next) {
+    try {
+      const id = req.identity.id;
+      const { skills } = req.body;
+      const user = await User.findOne({
+        where: { id },
+      });
+
+      const newSkills = await SkillList.bulkCreate(skills);
+
+      res.status(201).json(newSkills);
+
+
     } catch (err) {
       next(err);
     }
