@@ -43,7 +43,6 @@ describe("Employer success register and read", () => {
 
   it("GET /employers, should return all employers", async () => {
     const res = await request(app).get("/employers").expect(200);
-    console.log(res.body);
 
     expect(typeof res.body).toBe("object");
     expect(res.body.rows[0]).toHaveProperty("companyName");
