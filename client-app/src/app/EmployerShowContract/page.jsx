@@ -3,46 +3,20 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/layout";
 
-const EmployerApprove = () => {
+const EmployerShowContract = () => {
    const base_url_server = "http://localhost:3000";
 
-   const [jobsAppliedByUsers, setJobsAppliedByUsers] = useState([]);
-   const getJobsAppliedByUsers = async (id) => {
+   const [contracts, setContracts] = useState([]);
+   const getContracts = async () => {
       const headers = {
          access_token: localStorage.getItem("access_token"),
       };
-      const { data: res } = await axios.get(`${base_url_server}/jobs/list-applier/${id}`);
-      setJobsAppliedByUsers(res);
+      const { data: res } = await axios.get(`${base_url_server}/jobs/list-employee`);
+      setContracts(res);
    };
    useEffect(() => {
-      getJobsAppliedByUsers();
+      getContracts();
    }, []);
-
-   const statusAccept = async (id) => {
-      const headers = {
-         access_token: localStorage.getItem("access_token"),
-      };
-      const response = await axios.patch(`${base_url_server}/jobs/offer/${id}`);
-   };
-
-   const buttonAction = (status, id) => {
-      if (status === "applied") {
-         return (
-            <React.Fragment>
-               <button
-                  className="btn btn-success mr-2"
-                  onClick={() => {
-                     statusAccept(id);
-                  }}>
-                  Accept
-               </button>
-            </React.Fragment>
-         );
-      }
-   };
-   useEffect(() => {
-      buttonAction();
-   }, [statusAccept]);
 
    return (
       <React.Fragment>
@@ -55,7 +29,7 @@ const EmployerApprove = () => {
                   height="48"
                />
             </div>
-            {JSON.stringify(jobsAppliedByUsers)}
+            {JSON.stringify(contracts)}
             <div className="flex-1 text-white flex justify-end items-center">
                <div className="dropdown dropdown-end mt-4 mr-8">
                   <label
@@ -87,7 +61,7 @@ const EmployerApprove = () => {
             </div>
          </div>
          <div className="p-5 h-screen bg-gray-100">
-            <h1 className="text-3xl mb-6 mt-2 text-gray-600">Jobs Applied by Users</h1>
+            <h1 className="text-3xl mb-6 mt-2 text-gray-600">Employer Show Contract</h1>
 
             <div className="overflow-x-auto">
                <table className="table">
@@ -95,23 +69,25 @@ const EmployerApprove = () => {
                      <tr>
                         <th>No.</th>
                         <th>Applier Name</th>
-                        <th>Gender</th>
-                        <th>Address</th>
-                        <th>Applied Job</th>
-                        <th>Action</th>
+                        <th>Title</th>
+                        <th>Timestamp</th>
+                        <th>End Date</th>
+                        <th>Total Hours</th>
+                        <th>Total Salary</th>
                      </tr>
                   </thead>
-                  <tbody className="text-3xl text-black">
-                     {jobsAppliedByUsers &&
-                        jobsAppliedByUsers.map((jobsAppliedByUser) => {
+                  <tbody className="text-3xl">
+                     {contracts &&
+                        contracts.map((contract) => {
                            return (
-                              <tr key={jobsAppliedByUser.id}>
-                                 <td> {jobsAppliedByUser.id} </td>
-                                 <td> {jobsAppliedByUser.User.name} </td>
-                                 <td> {jobsAppliedByUser.User.gender} </td>
-                                 <td> {jobsAppliedByUser.User.address} </td>
-                                 <td> {jobsAppliedByUser.Job.title} </td>
-                                 <td> {buttonAction(jobsAppliedByUser.status, jobsAppliedByUser.id)} </td>
+                              <tr key={contract.id}>
+                                 <td> {contract.id} </td>
+                                 <td> {contract.Job.title} </td>
+                                 <td> {contract.User.name} </td>
+                                 <td> {contract.timestamp} </td>
+                                 <td> {contract.endDate} </td>
+                                 <td> {contract.totalHours} </td>
+                                 <td> {contract.totalSalary} </td>
                               </tr>
                            );
                         })}
@@ -123,4 +99,4 @@ const EmployerApprove = () => {
    );
 };
 
-export default EmployerApprove;
+export default EmployerShowContract;

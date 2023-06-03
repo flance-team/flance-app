@@ -5,13 +5,16 @@ import Layout from "../components/layout";
 
 const EmployerShowJobs = () => {
    const base_url_server = "http://localhost:3000";
-   const [jobs, setJobs] = useState([]);
-   const getJobs = async () => {
-      const { data: res } = await axios.get(`${base_url_server}/jobs`);
-      setJobs(res);
+   const [createdJobs, setCreatedJobs] = useState([]);
+   const getCreatedJobs = async () => {
+      const headers = {
+         access_token: localStorage.getItem("access_token"),
+      };
+      const { data: res } = await axios.get(`${base_url_server}/jobs/list`);
+      setCreatedJobs(res);
    };
    useEffect(() => {
-      getJobs();
+      getCreatedJobs();
    }, []);
 
    return (
@@ -20,11 +23,12 @@ const EmployerShowJobs = () => {
             <div className="flex-1 text-black ml-7 mt-4">
                <img
                   // src="/Logo.png"
-                  alt="me"
+                  alt="Logo"
                   width="48"
                   height="48"
                />
             </div>
+            {JSON.stringify(createdJobs)}
             <div className="flex-1 text-white flex justify-end items-center">
                <div className="dropdown dropdown-end mt-4 mr-8">
                   <label
@@ -55,37 +59,42 @@ const EmployerShowJobs = () => {
                </div>
             </div>
          </div>
-         <hr className="mt-4"></hr>
-         <div className="container w-full px-4 mt-4 flex flex-col w-5/12">
-            <h1 className="text-5xl font-bold text-gray-600 mb-2">Your Created Jobs</h1>
-            <hr className="mb-4 mt-4"></hr>
-            <table className="table-auto">
-               <thead className="text-4xl font-bold text-gray-600">
-                  <tr>
-                     <th>No. </th>
-                     <th>Job Title</th>
-                     <th>Action</th>
-                  </tr>
-               </thead>
-               <tbody className="text-3xl text-black">
-                  {jobs &&
-                     jobs.map((job) => {
-                        return (
-                           <tr key={job.id}>
-                              <td> {job.id}</td>
-                              <td> {job.title} </td>
-                              <td>
-                                 <button
-                                    type="submit"
-                                    className="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer">
-                                    Detail
-                                 </button>
-                              </td>
-                           </tr>
-                        );
-                     })}
-               </tbody>
-            </table>
+         <div className="p-5 h-screen bg-gray-100">
+            <h1 className="text-3xl mb-6 mt-2 text-gray-600">Your Created Jobs</h1>
+
+            <div className="overflow-x-auto">
+               <table className="table">
+                  <thead>
+                     <tr>
+                        <th>No.</th>
+                        <th>Title</th>
+                        <th>Location</th>
+                        <th>Salary</th>
+                        <th>Expired Date</th>
+                        <th>Status</th>
+                        <th>Total Hours</th>
+                        <th>Duration</th>
+                     </tr>
+                  </thead>
+                  <tbody className="text-3xl text-black">
+                     {createdJobs &&
+                        createdJobs.map((createdJob) => {
+                           return (
+                              <tr key={createdJob.id}>
+                                 <td> {createdJob.id} </td>
+                                 <td> {createdJob.title} </td>
+                                 <td> {createdJob.location} </td>
+                                 <td> {createdJob.salary} </td>
+                                 <td> {createdJob.expireDate} </td>
+                                 <td> {createdJob.status} </td>
+                                 <td> {createdJob.totalHours} </td>
+                                 <td> {createdJob.duration} </td>
+                              </tr>
+                           );
+                        })}
+                  </tbody>
+               </table>
+            </div>
          </div>
       </React.Fragment>
    );

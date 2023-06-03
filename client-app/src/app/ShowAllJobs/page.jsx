@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/layout";
 
-const EmployerShowJobs = () => {
+const ShowAllJobs = () => {
    const base_url_server = "http://localhost:3000";
    const [jobs, setJobs] = useState([]);
    const getJobs = async () => {
@@ -25,7 +25,7 @@ const EmployerShowJobs = () => {
                   height="48"
                />
             </div>
-            {JSON.stringify(jobs)}
+
             <div className="flex-1 text-white flex justify-end items-center">
                <div className="dropdown dropdown-end mt-4 mr-8">
                   <label
@@ -57,7 +57,7 @@ const EmployerShowJobs = () => {
             </div>
          </div>
          <div className="p-5 h-screen bg-gray-100">
-            <h1 className="text-xl mb-6 mt-2 text-gray-600">All Jobs</h1>
+            <h1 className="text-3xl mb-6 mt-2 text-gray-600">All Jobs</h1>
 
             <div className="overflow-x-auto">
                <table className="table">
@@ -93,4 +93,4 @@ const EmployerShowJobs = () => {
    );
 };
 
-export default EmployerShowJobs;
+export default ShowAllJobs;
