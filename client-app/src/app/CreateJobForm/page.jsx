@@ -1,151 +1,228 @@
 "use client";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./CreateJobForm.css";
+import Layout from "../components/layout";
+import axios from "axios";
 
 const CreateJobForm = () => {
-   return (
-      <React.Fragment>
-         <div className="flex space-x-4">
-            <div className="flex-1 text-black ml-7 mt-4">
-               <img
-                  src="/Logo.png"
-                  alt="me"
-                  width="48"
-                  height="48"
-               />
+  const base_url_server = "http://localhost:3000";
+  const backgroundImage = "../assets/CreateJobForm.jpg";
+  const [dataCat, setDataCat] = useState();
+  const [formValue, setFormValue] = useState({
+    title: "",
+    location: "",
+    salary: "",
+    expireDate: "",
+    categoryId: "",
+    duration: "",
+    day: "",
+    hour: "",
+    totalhour: "",
+  });
+  const inputForm = (el) => {
+    setFormValue({
+      ...formValue,
+      [el.target.name]: el.target.value,
+    });
+  };
+  const formOnSubmit = async (el) => {
+    el.preventDefault();
+    // const response = JSON.stringify(formValue);
+    // console.log(response, "ini response");
+    // const response = await axios.post("http://localhost:3000/login", formValue);
+    console.log(response);
+  };
+  const dataCategory = async () => {
+    try {
+      const response = await axios.get(`${base_url_server}/admins/category`);
+      const dataCat = response.data.rows;
+      setDataCat(dataCat);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    dataCategory();
+  }, []);
+  return (
+    <>
+      <Layout />
+      {/* <div
+        className="h-screen w-screen flex items-center justify-center bg-cover"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      > */}
+      <div className="bg-white rounded-lg shadow-md">
+        <h1 className="text-3xl w-full items-center">Create Job</h1>
+        <form className="flex flex-wrap">
+          <div className="w-full md:w-1/2">
+            <div className="form-control mb-4">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Title:
+              </label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                placeholder="Enter title"
+                className="border border-gray-300 p-2 rounded-md w-full"
+                onChange={inputForm}
+              />
             </div>
-            <div className="flex-1 text-white flex justify-end items-center">
-               <div className="dropdown dropdown-end mt-4 mr-8">
-                  <label
-                     tabIndex="0"
-                     className="btn btn-ghost btn-circle avatar">
-                     <div className="w-10 rounded-full">
-                        <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                     </div>
-                  </label>
-                  <ul
-                     tabIndex="0"
-                     className="mt-4 p-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-                     <li>
-                        <a className="justify-between">Home</a>
-                     </li>
-                     <li>
-                        <a className="justify-between">Profile</a>
-                     </li>
-                     <li>
-                        <a>Settings</a>
-                     </li>
-                     <li>
-                        <a>Logout</a>
-                     </li>
-                  </ul>
-               </div>
+            <div className="form-control mb-4">
+              <label
+                htmlFor="location"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Location:
+              </label>
+              <input
+                type="text"
+                id="location"
+                name="location"
+                placeholder="Enter location"
+                className="border border-gray-300 p-2 rounded-md w-full"
+                onChange={inputForm}
+              />
             </div>
-         </div>
-         <hr className="mt-4"></hr>
-         <div
-            class="container"
-            className="flex flex-col justify-center items-center w-5/12">
-            <div className="text-center mb-5">
-               <h1 className="text-3xl font-bold text-gray-600 mb-4">Create New Job</h1>
+            <div className="form-control mb-4">
+              <label
+                htmlFor="salary"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Salary:
+              </label>
+              <input
+                type="text"
+                id="salary"
+                name="salary"
+                placeholder="Enter salary"
+                className="border border-gray-300 p-2 rounded-md w-full"
+                onChange={inputForm}
+              />
             </div>
-            <form className="flex flex-col justify-center">
-               <div className="form-control">
-                  <label className="label">
-                     <span className="label-text text-gray-600">Job Title:</span>
-                  </label>
-                  <input
-                     type="text"
-                     placeholder="Type here"
-                     name="job-title"
-                     className="input input-bordered py-3 mb-2"
-                  />
-               </div>
-               <div className="form-control">
-                  <label className="label">
-                     <span className="label-text text-gray-600">ID Employee:</span>
-                  </label>
-                  <input
-                     type="text"
-                     placeholder="Type here"
-                     name="id-employee"
-                     className="input input-bordered py-3 mb-2"
-                  />
-               </div>
-               <div className="form-control">
-                  <label className="label">
-                     <span className="label-text text-gray-600">Location:</span>
-                  </label>
-                  <select
-                     className="select select-bordered"
-                     name="location">
-                     <option defaultValue="old-location">Current Location</option>
-                     <option value="new-location">New Location</option>
-                  </select>
-               </div>
-               <div className="form-control">
-                  <label className="label">
-                     <span className="label-text text-gray-600">Add New Location (Optional):</span>
-                  </label>
-                  <input
-                     type="text"
-                     placeholder="Type here"
-                     name="add-location"
-                     className="input input-bordered py-3 mb-2"
-                  />
-               </div>
-               <div className="form-control">
-                  <label className="label">
-                     <span className="label-text text-gray-600">Salary Per Hour:</span>
-                  </label>
-                  <input
-                     type="number"
-                     placeholder="Type here"
-                     name="salary"
-                     className="input input-bordered py-3 mb-2"
-                  />
-               </div>
-               <div className="form-control">
-                  <label className="label">
-                     <span className="label-text text-gray-600">Expired Date:</span>
-                  </label>
-                  <input
-                     type="date"
-                     placeholder="Type here"
-                     name="expired-date"
-                     className="input input-bordered py-3 mb-2"
-                  />
-               </div>
-               <div className="form-control">
-                  <label className="label">
-                     <span className="label-text text-gray-600">Status:</span>
-                  </label>
-                  <select
-                     className="select select-bordered mb-2"
-                     name="status">
-                     <option defaultValue="active">Active</option>
-                     <option value="inactive">Inactive</option>
-                  </select>
-               </div>
-               <div className="form-control">
-                  <label className="label">
-                     <span className="label-text text-gray-600">Duration:</span>
-                  </label>
-                  <select
-                     className="select select-bordered mb-6"
-                     name="status">
-                     <option defaultValue="weekly">Weekly</option>
-                     <option value="monthly">Monthly</option>
-                  </select>
-               </div>
-               <div className="justify-center items-center">
-                  <button className="btn btn-outline bg-gray-600 justify-center items-center py-2 px-4 ">Create</button>
-               </div>
-            </form>
-         </div>
-      </React.Fragment>
-   );
+          </div>
+          <div className="w-full md:w-1/2">
+            <div className="form-control mb-4">
+              <label
+                htmlFor="expiredDate"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Expired Date:
+              </label>
+              <input
+                type="date"
+                id="expiredDate"
+                name="expiredDate"
+                placeholder="Enter expired date"
+                className="border border-gray-300 p-2 rounded-md w-full"
+                onChange={inputForm}
+              />
+            </div>
+            <div className="form-control mb-4">
+              <label
+                htmlFor="typeId"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Type of Company:
+              </label>
+              <select
+                className="select select-bordered w-full"
+                id="typeId"
+                name="typeId"
+                onChange={inputForm}
+              >
+                <option defaultValue>Choose one</option>
+                {dataCat?.map((el) => {
+                  return (
+                    <option key={el.id} value={el.id}>
+                      {el.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="form-control mb-4">
+              <label
+                htmlFor="duration"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Duration:
+              </label>
+              <input
+                type="text"
+                id="duration"
+                name="duration"
+                placeholder="Enter duration"
+                className="border border-gray-300 p-2 rounded-md w-full"
+                onChange={inputForm}
+              />
+            </div>
+            <div className="form-control mb-4 flex">
+              <div className="w-1/3 pr-2">
+                <label
+                  htmlFor="day"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Day:
+                </label>
+                <input
+                  type="text"
+                  id="day"
+                  name="day"
+                  placeholder="Enter day"
+                  className="border border-gray-300 p-2 rounded-md w-full"
+                  onChange={inputForm}
+                />
+              </div>
+              <div className="w-1/3 px-2">
+                <label
+                  htmlFor="startHour"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Start Hour:
+                </label>
+                <input
+                  type="text"
+                  id="startHour"
+                  name="startHour"
+                  placeholder="Enter start hour"
+                  className="border border-gray-300 p-2 rounded-md w-full"
+                  onChange={inputForm}
+                />
+              </div>
+              <div className="w-1/3 pl-2">
+                <label
+                  htmlFor="totalHour"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Total Hour:
+                </label>
+                <input
+                  type="text"
+                  id="totalHour"
+                  name="totalHour"
+                  placeholder="Enter total hour"
+                  className="border border-gray-300 p-2 rounded-md w-full"
+                  onChange={inputForm}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="w-full">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer w-full"
+            >
+              SUBMIT
+            </button>
+          </div>
+        </form>
+      </div>
+      {/* </div> */}
+    </>
+  );
 };
 
 export default CreateJobForm;
