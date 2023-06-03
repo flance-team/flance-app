@@ -1,4 +1,4 @@
-const { User, Employer, Signer, DepositUser, SkillList } = require("../models/index");
+const { User, Employer, Signer, DepositUser, SkillList, Skill } = require("../models/index");
 const axios = require("axios");
 class UserController {
   static async registerUser(req, res, next) {
@@ -49,6 +49,37 @@ class UserController {
         attributes: { exclude: ["password", "signer"] },
       });
       res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getUserById(req, res, next) {
+    try {
+      const id = +req.params.id;
+
+      const user = await User.findOne({
+        where: { id },
+      });
+      if (!user) {
+        throw {
+          name: "Not Found",
+          message: "User not found",
+          code: 404,
+        };
+      }
+
+      res.status(200).json(user);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getSkills(req, res, next) {
+    try {
+      const skills = await Skill.findAll();
+
+      res.status(200).json(skills);
     } catch (err) {
       next(err);
     }

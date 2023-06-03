@@ -3,6 +3,7 @@ const { Job,
     Schedule,
     Employer,
     User,
+    SkillList,
     Signer,
     JobList,
     JobContract,
@@ -34,6 +35,36 @@ class jobController {
                     status: "active"
                 }
             });
+            res.status(200).json(jobs);
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async getAllJobsUser(req, res, next) {
+        try {
+            const id = req.identity.id;
+            const user = await User.findOne({ include: [{ model: SkillList, include: { model: Skill, attributes: ['name'] } }], where: { id } });
+
+            const jobs = await Job.findAll({
+                include: [
+                    {
+                        model: Category
+                    },
+                    {
+                        model: Employer,
+                        attributes: ['companyName', 'email']
+                    },
+                    {
+                        model: Schedule
+                    }
+                ],
+                where: {
+                    status: "active"
+                }
+            });
+
+
             res.status(200).json(jobs);
         } catch (err) {
             next(err);
