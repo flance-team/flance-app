@@ -6,6 +6,11 @@ const SIGNERS = [
     addressPublic: "testingPublicAddress",
     addressPrivate: "testingPrivateAddress",
   },
+  {
+    mnemonic: "testingMnemonic2",
+    addressPublic: "testingPublicAddress2",
+    addressPrivate: "testingPrivateAddress2",
+  },
 ];
 
 const createSigners = async () => {

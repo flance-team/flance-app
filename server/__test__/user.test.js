@@ -18,7 +18,7 @@ describe("User success register and read", () => {
         name: "John Doe",
         address: "Jalan Kopi Kenangan",
         phoneNumber: "0811111111",
-        gender: "m",
+        gender: "male",
       })
       .expect(201);
 
