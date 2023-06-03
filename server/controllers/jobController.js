@@ -264,10 +264,9 @@ class jobController {
         try {
             const employerId = +req.identity.id;
 
-            const jobsContract = await JobContract.findAll({ include: [{ model: User }, { model: Job }], where: { employerId } });
+            const jobsContract = await JobContract.findAll({ include: [{ model: User }, { model: Job }], where: { employerId, endDate: { [Op.gte]: new Date() } } });
 
-            const jobContractActive = jobsContract.filter((jobContract) => { return jobContract.timestamp + jobContract.Job.duration >= new Date() });
-            res.status(200).json(jobContractActive);
+            res.status(200).json(jobsContract);
         } catch (err) {
             next(err);
         }
@@ -305,13 +304,15 @@ class jobController {
                 }
             });
 
+            let date = new Date();
+
             const smartContract = await JobContract.create({
                 jobListId: id,
                 jobId: jobList.jobId,
                 userId,
                 employerId: jobList.Job.employerId,
                 timestamp: new Date(),
-                endDate: new Date() + jobList.Job.duration,
+                endDate: date.setDate(date.getDate() + jobList.Job.duration),
                 totalHours: jobList.Job.totalHours,
                 totalSalary: jobList.Job.salary
             });

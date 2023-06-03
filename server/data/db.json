@@ -1,19 +1,19 @@
 {
   "signers": [
     {
-      "mnemonic": "test",
-      "addressPrivate": "0x000000000000000",
-      "addressPublic": "0x000000000000000"
+      "mnemonic": "combine rally immense police steel drift planet swarm document spell rug hood grass message camera carbon window ivory timber shy open oxygen predict eye",
+      "addressPublic": "0x316C56AFd86A33629Dc9f49813611881692c746b",
+      "addressPrivate": "c49f45acf155ad8e697ed94821a5e3bd03f1fa67eb055b81877b1118547c45e2"
     },
     {
-      "mnemonic": "test2",
-      "addressPrivate": "0x000000000000000",
-      "addressPublic": "0x000000000000000"
+      "mnemonic": "neck bomb dumb other truck rookie grit argue laptop people sun tourist veteran obvious cigar miracle cook gallery fit couch corn jungle opera six",
+      "addressPublic": "0x25cC1b5DA872325Cf09Db948BFA50f89d90a06F2",
+      "addressPrivate": "02cbdd6603bbf945612765b6ac83451a8fcbdb9f811b2b58961df30e37002885"
     },
     {
-      "mnemonic": "test3",
-      "addressPrivate": "0x000000000000000",
-      "addressPublic": "0x000000000000000"
+      "mnemonic": "horse market tomorrow choice sign salute brown oppose tip call noble town paddle profit normal critic panic exchange trade eye allow bulb job gospel",
+      "addressPublic": "0x88d6534961403816a31298105Af0a0F00FB2c8F2",
+      "addressPrivate": "7d428d3a8b1c5bbbdcfb8757a669547af6dba5c2adbd9c092c489c74cec586dc"
     }
   ],
   "types": [
@@ -37,6 +37,11 @@
     {
       "name": "Cleaning"
     }
+  ],
+  "skillTypes": [
+    { "skillId": 1, "typeId": 1 },
+    { "skillId": 1, "typeId": 2 },
+    { "skillId": 2, "typeId": 1 }
   ],
   "categories": [
     {
