@@ -52,6 +52,9 @@ module.exports = {
       timestamp: {
         type: Sequelize.DATE
       },
+      endDate: {
+        type: Sequelize.DATE
+      },
       totalHours: {
         type: Sequelize.INTEGER
       },

@@ -3,6 +3,7 @@ const { Job,
     Schedule,
     Employer,
     User,
+    Signer,
     JobList,
     JobContract,
     DepositEmployer,
@@ -262,6 +263,11 @@ class jobController {
                 throw ({ name: "not_applicable", message: "You are not offered this job yet", code: 400 })
             }
 
+            const checkOtherJobs = await JobContract.findOne({ where: { userId: userId, endDate: { [Op.gte]: new Date() } } });
+            if (checkOtherJobs) {
+                throw ({ name: "not_applicable", message: "You still have another contract", code: 400 })
+            }
+
             const updateJobList = await JobList.update({ status: "accepted" }, {
                 where: {
                     id
@@ -274,26 +280,26 @@ class jobController {
                 userId,
                 employerId: jobList.Job.employerId,
                 timestamp: new Date(),
+                endDate: new Date() + jobList.Job.duration,
                 totalHours: jobList.Job.totalHours,
                 totalSalary: jobList.Job.salary
             });
 
 
             const user = await User.findOne({ include: { model: Signer }, where: { id: userId } });
-            //nunggu beres
-            // const dataBlockchain = await axios.post("https://flance-agreement-api.tianweb.dev/agreements",
-            //     {
-            //         "jobId": jobList.jobId,
-            //         "userName": user.name,
-            //         "contractDuration": jobList.Job.duration,
-            //     },
-            //     {
-            //         headers: {
-            //             userPrivateKey: user.Signer.addressPrivate
-            //         }
-            //     });
+            const dataBlockchain = await axios.post("https://flance-agreement-api.tianweb.dev/agreements",
+                {
+                    jobBlockchainId: jobList.Job.jobBlockchainId,
+                    userName: user.name,
+                    contractDuration: jobList.Job.duration,
+                },
+                {
+                    headers: {
+                        userPrivateKey: user.Signer.addressPrivate
+                    }
+                });
 
-            // await smartContract.update({ hash: dataBlockchain.data.hash, agreementBlockchainId: dataBlockchain.data.agreementBlockchainId, userBlockchainId: user.Signer.addressPrivate });
+            await smartContract.update({ hash: dataBlockchain.data.hash, agreementBlockchainId: dataBlockchain.data.agreementBlockchainId, userBlockchainId: user.Signer.addressPrivate });
 
             res.status(201).json(smartContract);
 
@@ -410,6 +416,15 @@ class jobController {
             await depositUser.update({ balance: depositUser.balance + amount });
 
             res.status(201).json(transEmp);
+
+        } catch (err) {
+            next(err);
+        }
+    }
+
+    static async bulkPayUser(req, res, next) {
+        try {
+            const employerId = +req.identity.id;
 
         } catch (err) {
             next(err);

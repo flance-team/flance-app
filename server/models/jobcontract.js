@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     employerId: DataTypes.INTEGER,
     timestamp: DataTypes.DATE,
+    endDate: DataTypes.DATE,
     totalHours: DataTypes.INTEGER,
     totalSalary: DataTypes.INTEGER,
     hash: DataTypes.STRING,

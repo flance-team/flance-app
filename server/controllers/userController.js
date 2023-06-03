@@ -1,4 +1,4 @@
-const { User, Employer, Signer, DepositUser } = require("../models/index");
+const { User, Employer, Signer, DepositUser, SkillList } = require("../models/index");
 const axios = require("axios");
 class UserController {
   static async registerUser(req, res, next) {
@@ -49,6 +49,24 @@ class UserController {
         attributes: { exclude: ["password", "signer"] },
       });
       res.status(200).json(users);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async addSkills(req, res, next) {
+    try {
+      const id = req.identity.id;
+      const { skills } = req.body;
+      const user = await User.findOne({
+        where: { id },
+      });
+
+      const newSkills = await SkillList.bulkCreate(skills);
+
+      res.status(201).json(newSkills);
+
+
     } catch (err) {
       next(err);
     }
