@@ -84,13 +84,6 @@ const UserAcceptOffer = () => {
         </>
       );
     }
-    // else {
-    //   return (
-    //     <>
-    //       <button className="btn btn-success mr-2">Detail</button>
-    //     </>
-    //   );
-    // }
   };
   useEffect(() => {
     buttonAction();
