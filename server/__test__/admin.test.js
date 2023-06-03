@@ -9,22 +9,26 @@ const createSkills = require("../lib/createSkills");
 const deleteSkills = require("../lib/deleteSkills");
 const createEmployers = require("../lib/createEmployers");
 const deleteEmployers = require("../lib/deleteEmployers");
+const createSigners = require("../lib/createSigners");
+const deleteSigners = require("../lib/deleteSigners");
 
 // seeding
-beforeAll(() => {
-  createCategories();
-  createTypes();
-  createSkills();
-  createEmployers();
+beforeAll(async () => {
+  await createCategories();
+  await createTypes();
+  await createSkills();
+  await createSigners();
+  await createEmployers();
 });
 
 // cleaning;
-afterAll(() => {
-  deleteAdmins();
-  deleteCategories();
-  deleteTypes();
-  deleteSkills();
-  deleteEmployers();
+afterAll(async () => {
+  await deleteAdmins();
+  await deleteCategories();
+  await deleteTypes();
+  await deleteSkills();
+  await deleteEmployers();
+  await deleteSigners();
 });
 
 describe("Admin success register and login", () => {
