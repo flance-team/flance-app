@@ -3,7 +3,7 @@ const axios = require("axios");
 class UserController {
   static async registerUser(req, res, next) {
     try {
-      const { email, password, username, name, address, phoneNumber, gender } =
+      const { email, password, username, name, address, phoneNumber, gender, skills } =
         req.body;
 
       // checking if email is already registered on Employer
@@ -45,7 +45,7 @@ class UserController {
 
   static async getUser(req, res, next) {
     try {
-      const users = await User.findAndCountAll({
+      const users = await User.findAll({
         attributes: { exclude: ["password", "signer"] },
       });
       res.status(200).json(users);
