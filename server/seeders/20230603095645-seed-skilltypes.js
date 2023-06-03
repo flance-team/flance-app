@@ -1,15 +1,15 @@
 'use strict';
 const data = require('../data/db.json');
 
-const skillTypes = data.skillTypes.map(skilltype => {
-  skilltype.createdAt = skilltype.updatedAt = new Date();
-  return skilltype;
+const skillCategories = data.skillCategories.map(skillCategory => {
+  skillCategory.createdAt = skillCategory.updatedAt = new Date();
+  return skillCategory;
 })
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('SkillTypes', skillTypes, {})
+    await queryInterface.bulkInsert('SkillCategories', skillCategories, {})
 
     /**
      * Add seed commands here.
@@ -23,7 +23,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('SkillTypes', null, {});
+    await queryInterface.bulkDelete('SkillCategories', null, {});
 
     /**
      * Add commands to revert seed here.

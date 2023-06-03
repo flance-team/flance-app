@@ -14,6 +14,7 @@ router.patch("/reject/:id", authEmployer, jobController.rejectApply);// proses r
 router.get("/schedules-job/:id", authEmployer, jobController.getSchedules);// menampilkan schedule dari job
 
 ////USER END POINTS
+router.get("/home", authUser, jobController.getAllJobsUser); //list job di home yg sesuai dengan user skills, lokasi, etc
 router.get("/list-apply/", authUser, jobController.listApplyJob);//list lowongan yang sudah diapply oleh user
 router.post("/apply/:id", authUser, jobController.applyJob); //apply lowongan
 router.patch("/accept/:id", authUser, jobController.acceptJob); //accept offer dari employer ktika apply jobnya disetujui oleh employer

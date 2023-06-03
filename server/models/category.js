@@ -12,6 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.Job, { foreignKey: 'categoryId' })
+      this.hasMany(models.SkillCategory, { foreignKey: 'categoryId' });
+
     }
   }
   Category.init({

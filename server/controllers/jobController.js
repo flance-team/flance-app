@@ -3,7 +3,9 @@ const { Job,
     Schedule,
     Employer,
     User,
+    Skill,
     SkillList,
+    SkillCategory,
     Signer,
     JobList,
     JobContract,
@@ -41,35 +43,110 @@ class jobController {
         }
     }
 
+    // static async getAllJobsUser(req, res, next) {
+    //     try {
+    //         const id = req.identity.id;
+    //         const user = await User.findOne({ include: [{ model: SkillList, include: { model: Skill, attributes: ['name'] } }], where: { id } });
+
+    //         const jobs = await Job.findAll({
+    //             include: [
+    //                 {
+    //                     model: Category
+    //                 },
+    //                 {
+    //                     model: Employer,
+    //                     attributes: ['companyName', 'email']
+    //                 },
+    //                 {
+    //                     model: Schedule
+    //                 }
+    //             ],
+    //             where: {
+    //                 status: "active"
+    //             }
+    //         });
+
+
+    //         res.status(200).json(jobs);
+    //     } catch (err) {
+    //         next(err);
+    //     }
+    // }
+
+
     static async getAllJobsUser(req, res, next) {
         try {
             const id = req.identity.id;
-            const user = await User.findOne({ include: [{ model: SkillList, include: { model: Skill, attributes: ['name'] } }], where: { id } });
+            const user = await User.findOne({
+                include: [
+                    {
+                        model: SkillList,
+                        include: {
+                            model: Skill,
+                            attributes: ['name'],
+                        },
+                    },
+                ],
+                where: { id },
+            });
+
+            const skillNames = user.SkillLists.map((skillList) => skillList.Skill.name);
+
+            console.log(skillNames);
 
             const jobs = await Job.findAll({
                 include: [
                     {
-                        model: Category
+                        model: Category,
+                        include: {
+                            model: SkillCategory,
+                            include: {
+                                model: Skill,
+                                attributes: ['name'],
+                                where: { name: skillNames }, // Match the job skills with the user's skill names
+                                // attributes: [],
+                            },
+                        },
                     },
                     {
                         model: Employer,
-                        attributes: ['companyName', 'email']
+                        attributes: ['companyName', 'email'],
                     },
                     {
-                        model: Schedule
-                    }
+                        model: Schedule,
+                    },
                 ],
                 where: {
-                    status: "active"
+                    status: 'active',
+                    // location: user.address, // Filter jobs based on user's location
+                },
+            });
+
+            console.log(jobs)
+
+            // Sort the jobs based on relevance, where recommended jobs and jobs in the user's location come first
+            const sortedJobs = jobs.sort((jobA, jobB) => {
+                const jobASkills = jobA.Category.SkillCategories.map((skill) => skill.Skill.name);
+                const jobBSkills = jobB.Category.SkillCategories.map((skill) => skill.Skill.name);
+
+                const jobAHasMatchingSkill = skillNames.some((skillName) => jobASkills.includes(skillName));
+                const jobBHasMatchingSkill = skillNames.some((skillName) => jobBSkills.includes(skillName));
+
+                if (jobAHasMatchingSkill && !jobBHasMatchingSkill) {
+                    return -1;
+                } else if (!jobAHasMatchingSkill && jobBHasMatchingSkill) {
+                    return 1;
+                } else {
+                    return 0;
                 }
             });
 
-
-            res.status(200).json(jobs);
+            res.status(200).json(sortedJobs);
         } catch (err) {
             next(err);
         }
     }
+
 
     static async getSchedules(req, res, next) {
         try {

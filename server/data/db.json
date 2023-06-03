@@ -38,10 +38,10 @@
       "name": "Cleaning"
     }
   ],
-  "skillTypes": [
-    { "skillId": 1, "typeId": 1 },
-    { "skillId": 1, "typeId": 2 },
-    { "skillId": 2, "typeId": 1 }
+  "skillCategories": [
+    { "skillId": 1, "categoryId": 1 },
+    { "skillId": 1, "categoryId": 2 },
+    { "skillId": 2, "categoryId": 1 }
   ],
   "categories": [
     {
