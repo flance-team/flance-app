@@ -4,10 +4,10 @@ import { useRef } from "react";
 import "../../styles/global.css";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const pages = () => {
-  const baseUrl = "http://localhost:3000/";
+  const baseUrl = "http://localhost:3000";
   const router = useRouter();
   const input = {
     email: useRef(),
@@ -24,8 +24,16 @@ const pages = () => {
         email: input.email.current.value,
         password: input.password.current.value,
       });
+      // console.log(data);
+      localStorage.setItem("access_token", data.access_token);
 
-      localStorage.setItem("access_token", data.token);
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `Login Success`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
       router.push("/home");
     } catch (err) {
       console.log(err);

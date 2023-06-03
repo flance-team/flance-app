@@ -43,36 +43,6 @@ class jobController {
         }
     }
 
-    // static async getAllJobsUser(req, res, next) {
-    //     try {
-    //         const id = req.identity.id;
-    //         const user = await User.findOne({ include: [{ model: SkillList, include: { model: Skill, attributes: ['name'] } }], where: { id } });
-
-    //         const jobs = await Job.findAll({
-    //             include: [
-    //                 {
-    //                     model: Category
-    //                 },
-    //                 {
-    //                     model: Employer,
-    //                     attributes: ['companyName', 'email']
-    //                 },
-    //                 {
-    //                     model: Schedule
-    //                 }
-    //             ],
-    //             where: {
-    //                 status: "active"
-    //             }
-    //         });
-
-
-    //         res.status(200).json(jobs);
-    //     } catch (err) {
-    //         next(err);
-    //     }
-    // }
-
 
     static async getAllJobsUser(req, res, next) {
         try {
@@ -92,7 +62,6 @@ class jobController {
 
             const skillNames = user.SkillLists.map((skillList) => skillList.Skill.name);
 
-            console.log(skillNames);
 
             const jobs = await Job.findAll({
                 include: [
@@ -103,8 +72,6 @@ class jobController {
                             include: {
                                 model: Skill,
                                 attributes: ['name'],
-                                where: { name: skillNames }, // Match the job skills with the user's skill names
-                                // attributes: [],
                             },
                         },
                     },
@@ -118,7 +85,7 @@ class jobController {
                 ],
                 where: {
                     status: 'active',
-                    // location: user.address, // Filter jobs based on user's location
+                    location: user.address, // Filter jobs based on user's location
                 },
             });
 
