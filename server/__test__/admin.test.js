@@ -3,16 +3,28 @@ const app = require("../app");
 const deleteAdmins = require("../lib/deleteAdmins");
 const createCategories = require("../lib/createCategories");
 const deleteCategories = require("../lib/deleteCategories");
+const createTypes = require("../lib/createTypes");
+const deleteTypes = require("../lib/deleteTypes");
+const createSkills = require("../lib/createSkills");
+const deleteSkills = require("../lib/deleteSkills");
+const createEmployers = require("../lib/createEmployers");
+const deleteEmployers = require("../lib/deleteEmployers");
 
 // seeding
 beforeAll(() => {
   createCategories();
+  createTypes();
+  createSkills();
+  createEmployers();
 });
 
 // cleaning;
 afterAll(() => {
   deleteAdmins();
   deleteCategories();
+  deleteTypes();
+  deleteSkills();
+  deleteEmployers();
 });
 
 describe("Admin success register and login", () => {
@@ -166,6 +178,140 @@ describe("Admin success crud category", () => {
     const res = await request(app)
       .delete("/admins/deletecategory/1")
       .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("Admin success crud type", () => {
+  let token = "";
+
+  const getAccessToken = async () => {
+    const res = await request(app)
+      .post("/admins/login")
+      .send({ email: "test@admin.com", password: "123456" })
+      .expect(200);
+
+    return res.body.access_token;
+  };
+
+  it("GET /admins/type, should return all types", async () => {
+    const res = await request(app).get("/admins/type").expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body.rows[0]).toHaveProperty("name");
+  });
+
+  it("POST /admins/addtype, should return new type", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .post("/admins/addtype")
+      .set("access_token", token)
+      .send({ name: "restaurant" })
+      .expect(201);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("id");
+  });
+
+  it("PUT /admins/edittype/:id, should return edited type", async () => {
+    const res = await request(app)
+      .put("/admins/edittype/1")
+      .set("access_token", token)
+      .send({ name: "Mini market" })
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("DELETE /admins/deletetype/:id, should return edited type", async () => {
+    const res = await request(app)
+      .delete("/admins/deletetype/1")
+      .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("Admin success crud skill", () => {
+  let token = "";
+
+  const getAccessToken = async () => {
+    const res = await request(app)
+      .post("/admins/login")
+      .send({ email: "test@admin.com", password: "123456" })
+      .expect(200);
+
+    return res.body.access_token;
+  };
+
+  it("GET /admins/skill, should return all skills", async () => {
+    const res = await request(app).get("/admins/skill").expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body.rows[0]).toHaveProperty("name");
+  });
+
+  it("POST /admins/addskill, should return new skill", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .post("/admins/addskill")
+      .set("access_token", token)
+      .send({ name: "restaurant" })
+      .expect(201);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("id");
+  });
+
+  it("PUT /admins/editskill/:id, should return edited skill", async () => {
+    const res = await request(app)
+      .put("/admins/editskill/1")
+      .set("access_token", token)
+      .send({ name: "Mini market" })
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("DELETE /admins/deleteskill/:id, should return edited skill", async () => {
+    const res = await request(app)
+      .delete("/admins/deleteskill/1")
+      .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("Admin success verify employer", () => {
+  let token = "";
+
+  const getAccessToken = async () => {
+    const res = await request(app)
+      .post("/admins/login")
+      .send({ email: "test@admin.com", password: "123456" })
+      .expect(200);
+
+    return res.body.access_token;
+  };
+
+  it("PATCH /admins/verifyemployer/:id, should return verify Employer status", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .patch("/admins/verifyemployer/1")
+      .set("access_token", token)
+      .send({ status: "active" })
       .expect(200);
 
     expect(typeof res.body).toBe("object");
