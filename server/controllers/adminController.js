@@ -5,6 +5,7 @@ const {
   Employer,
   User,
   Category,
+  SkillCategory,
   Type,
   Skill,
   Job,
@@ -79,7 +80,7 @@ class AdminController {
 
   static async getCategory(req, res, next) {
     try {
-      const categories = await Category.findAndCountAll();
+      const categories = await Category.findAndCountAll({ include: { model: SkillCategory, include: Skill } });
       res.status(200).json(categories);
     } catch (err) {
       next(err);

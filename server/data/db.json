@@ -67,6 +67,7 @@
       "username": "applicant",
       "name": "Mustakim",
       "address": "address",
+      "city": "Malang",
       "phoneNumber": "123456",
       "gender": "male",
       "signer": 2

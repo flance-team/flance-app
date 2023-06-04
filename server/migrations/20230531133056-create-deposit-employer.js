@@ -32,6 +32,9 @@ module.exports = {
       balance: {
         type: Sequelize.INTEGER
       },
+      accountNumber: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

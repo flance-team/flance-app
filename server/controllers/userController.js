@@ -37,6 +37,24 @@ class UserController {
 
       await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic })
 
+      let arrSkill = [];
+
+      for (let i = 0; i < skills.length; i++) {
+        const [skill, created] = await Skill.findOrCreate({
+          where: {
+            name: skills[i],
+          },
+          defaults: {
+            name: skills[i],
+          },
+        });
+
+        arrSkill.push({ skillId: skill.id, userId: newUser.id });
+      }
+
+      const newSkills = await SkillList.bulkCreate(arrSkill);
+
+
       res.status(201).json(newUser);
     } catch (err) {
       next(err);

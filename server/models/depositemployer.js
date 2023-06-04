@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
   DepositEmployer.init({
     employerId: DataTypes.INTEGER,
     signer: DataTypes.INTEGER,
-    balance: DataTypes.INTEGER
+    balance: DataTypes.INTEGER,
+    accountNumber: DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'DepositEmployer',
