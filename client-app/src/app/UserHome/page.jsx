@@ -52,9 +52,9 @@ const UserHome = () => {
                   <h2 className="card-title">
                     Search anything, anywhere here...
                   </h2>
-                  <p className="text-sm">
+                  <h4 className="text-xs">
                     see what happends when you start finding
-                  </p>
+                  </h4>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col">
                       <h2 className="text-lg">What...</h2>

@@ -75,7 +75,8 @@ const UserAcceptOffer = () => {
       return (
         <>
           <button
-            className="btn btn-success mr-1"
+            type="button"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             onClick={() => {
               statusAccept(id);
             }}
@@ -83,7 +84,8 @@ const UserAcceptOffer = () => {
             Accept
           </button>
           <button
-            className="btn btn-error mr-1"
+            type="button"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             onClick={() => {
               statusDecline(id);
             }}
@@ -91,7 +93,8 @@ const UserAcceptOffer = () => {
             Decline
           </button>
           <button
-            className="btn btn-outline btn-info mr-1"
+            type="button"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             onClick={() => {
               setOpen(true);
             }}
@@ -102,7 +105,8 @@ const UserAcceptOffer = () => {
       );
     } else {
       <button
-        className="btn btn-outline btn-info mr-2"
+        type="button"
+        className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
         onClick={() => {
           setOpen(true);
         }}
@@ -128,7 +132,7 @@ const UserAcceptOffer = () => {
         <header className="bg-white shadow">{/* Header content */}</header>
         <div className="flex flex-grow">
           <aside className="bg-white w-64">{/* Sidebar content */}</aside>
-          <main className="flex-wrap bg-white py-1 justify-center">
+          <main className="flex-wrap bg-white py-1 justify-center static">
             {/* Main content */}
             <div className="flex justify-start my-2">
               <h1 className="text-3xl">Hello, User</h1>
@@ -138,78 +142,47 @@ const UserAcceptOffer = () => {
                 You have (amount) of jobs you applied:
               </h1>
             </div>
-            <div className="overflow-x-auto">
-              <table className="table">
-                {/* head */}
-                <thead>
-                  <tr>
-                    <th>No</th>
-                    <th>Title</th>
-                    <th>Company Name</th>
-                    <th>Location</th>
-                    <th>Expired Date</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map((el) => {
-                    return (
-                      <tr key={el.id}>
-                        <td>{el.id}</td>
-                        <td>{el.title}</td>
-                        <td>{el.Employer.CompanyName}</td>
-                        <td>{el.location}</td>
-                        <td>{el.expireDate}</td>
-                        <td>{el.status}</td>
-                        <td>{buttonAction(el.status, el.id)}</td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-                {/* foot */}
-              </table>
-            </div>
-            <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
-              <h3 className="text-base font-semibold leading-6 text-gray-900">
-                Job Postings
-              </h3>
-            </div>
-            <ul role="list" className="divide-y divide-gray-100">
-              {data.map((person) => (
-                <li
-                  key={person.id}
-                  className="flex justify-between gap-x-6 py-5"
-                >
-                  <div className="flex gap-x-4">
-                    <img
-                      className="h-12 w-12 flex-none rounded-full bg-gray-50"
-                      src={person.imageUrl}
-                      alt=""
-                    />
-                    <div className="min-w-0 flex-auto">
-                      <p className="text-sm font-semibold leading-6 text-gray-900">
-                        {person.title}
+
+            <div className="absolute w-3/5">
+              <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+                <h3 className="text-base font-semibold leading-6 text-gray-900">
+                  Job Postings
+                </h3>
+              </div>
+              <ul role="list" className="divide-y divide-gray-100">
+                {data.map((person) => (
+                  <li
+                    key={person.id}
+                    className="flex justify-between gap-x-6 py-5"
+                  >
+                    <div className="flex gap-x-4">
+                      <img
+                        className="h-12 w-12 flex-none rounded-full bg-gray-50"
+                        src={person.imageUrl}
+                        alt=""
+                      />
+                      <div className="min-w-0 flex-auto">
+                        <p className="text-sm font-semibold leading-6 text-gray-900">
+                          {person.title}
+                        </p>
+                        <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                          {person.Employer.CompanyName}, {person.location}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="hidden sm:flex sm:flex-col sm:items-end">
+                      <p className="text-sm leading-6 text-gray-900">
+                        {person.status}, until: {person.expireDate}
                       </p>
-                      <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                        {person.Employer.CompanyName}, {person.location}
+                      <p className="mt-1 text-xs leading-5 text-gray-500 py-2 px-2">
+                        {buttonAction(person.status, person.id)}
                       </p>
                     </div>
-                  </div>
-                  <div className="hidden sm:flex sm:flex-col sm:items-end">
-                    <p className="text-sm leading-6 text-gray-900">
-                      {person.status}, until: {person.expireDate}
-                    </p>
-
-                    <p className="mt-1 text-xs leading-5 text-gray-500">
-                      disini
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </main>
-
           <aside className="bg-white w-64 my-2">
             {/* Sidebar content */}
             {/* <div className="card w-56 bg-base-100 shadow-xl">
@@ -226,7 +199,7 @@ const UserAcceptOffer = () => {
               </div>
             </div> */}
 
-            <div className="flex flex-col text-xs mt-4">
+            {/* <div className="flex flex-col text-xs mt-4">
               <div className="flex flex-wrap flex-row space-x-3">
                 <a>About</a>
                 <a>Accessbility</a>
@@ -235,7 +208,7 @@ const UserAcceptOffer = () => {
                 <a>Help Center</a>
                 <a>Get Flance App</a>
               </div>
-            </div>
+            </div> */}
           </aside>
         </div>
         <footer className="bg-white shadow">{/* Footer content */}</footer>
