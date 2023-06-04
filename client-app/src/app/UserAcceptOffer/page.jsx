@@ -124,41 +124,123 @@ const UserAcceptOffer = () => {
   return (
     <>
       <NavBarUser />
-      <div>
-        <h1>List of jobs Apllied</h1>
+      <div className="bg-white min-h-screen flex flex-col mx-7 my-2">
+        <header className="bg-white shadow">{/* Header content */}</header>
+        <div className="flex flex-grow">
+          <aside className="bg-white w-64">{/* Sidebar content */}</aside>
+          <main className="flex-wrap bg-white py-1 justify-center">
+            {/* Main content */}
+            <div className="flex justify-start my-2">
+              <h1 className="text-3xl">Hello, User</h1>
+            </div>
+            <div className="flex justify-start my-2">
+              <h1 className="text-1xl">
+                You have (amount) of jobs you applied:
+              </h1>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="table">
+                {/* head */}
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Title</th>
+                    <th>Company Name</th>
+                    <th>Location</th>
+                    <th>Expired Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {data.map((el) => {
+                    return (
+                      <tr key={el.id}>
+                        <td>{el.id}</td>
+                        <td>{el.title}</td>
+                        <td>{el.Employer.CompanyName}</td>
+                        <td>{el.location}</td>
+                        <td>{el.expireDate}</td>
+                        <td>{el.status}</td>
+                        <td>{buttonAction(el.status, el.id)}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+                {/* foot */}
+              </table>
+            </div>
+            <div className="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+              <h3 className="text-base font-semibold leading-6 text-gray-900">
+                Job Postings
+              </h3>
+            </div>
+            <ul role="list" className="divide-y divide-gray-100">
+              {data.map((person) => (
+                <li
+                  key={person.id}
+                  className="flex justify-between gap-x-6 py-5"
+                >
+                  <div className="flex gap-x-4">
+                    <img
+                      className="h-12 w-12 flex-none rounded-full bg-gray-50"
+                      src={person.imageUrl}
+                      alt=""
+                    />
+                    <div className="min-w-0 flex-auto">
+                      <p className="text-sm font-semibold leading-6 text-gray-900">
+                        {person.title}
+                      </p>
+                      <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                        {person.Employer.CompanyName}, {person.location}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="hidden sm:flex sm:flex-col sm:items-end">
+                    <p className="text-sm leading-6 text-gray-900">
+                      {person.status}, until: {person.expireDate}
+                    </p>
+
+                    <p className="mt-1 text-xs leading-5 text-gray-500">
+                      disini
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </main>
+
+          <aside className="bg-white w-64 my-2">
+            {/* Sidebar content */}
+            {/* <div className="card w-56 bg-base-100 shadow-xl">
+              <div class="w-24 mask mask-squircle">
+                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              </div>
+              <h2 className="card-title text-sm my-2 mx-2">Sponsors:</h2>
+              <div className="card-body items-center text-center">
+                <h3 className="container bg-gray-200">YOUR LOGO HERE</h3>
+                <p>Support flance by becoming a sponsor</p>
+                <div className="card-actions">
+                  <button className="btn btn-primary">Buy Now</button>
+                </div>
+              </div>
+            </div> */}
+
+            <div className="flex flex-col text-xs mt-4">
+              <div className="flex flex-wrap flex-row space-x-3">
+                <a>About</a>
+                <a>Accessbility</a>
+              </div>
+              <div className="flex flex-wrap flex-row space-x-3 mt-2">
+                <a>Help Center</a>
+                <a>Get Flance App</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <footer className="bg-white shadow">{/* Footer content */}</footer>
       </div>
-      <div className="overflow-x-auto">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Title</th>
-              <th>Company Name</th>
-              <th>Location</th>
-              <th>Expired Date</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((el) => {
-              return (
-                <tr key={el.id}>
-                  <td>{el.id}</td>
-                  <td>{el.title}</td>
-                  <td>{el.Employer.CompanyName}</td>
-                  <td>{el.location}</td>
-                  <td>{el.expireDate}</td>
-                  <td>{el.status}</td>
-                  <td>{buttonAction(el.status, el.id)}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-          {/* foot */}
-        </table>
-      </div>
+
       {/* Show Contract Modal */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog
