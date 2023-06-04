@@ -191,7 +191,6 @@ const page = () => {
                 Related Skills
               </label>
               <BadgeInput onBadgesChange={handleBadgesChange} />
-              <p>{parentBadges.join(", ")}</p>
             </div>
           )}
           <button

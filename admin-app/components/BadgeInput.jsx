@@ -7,6 +7,7 @@ const BadgeInput = ({ onBadgesChange }) => {
   const [inputValue, setInputValue] = useState("");
   const [badges, setBadges] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
 
   useEffect(() => {
     onBadgesChange(badges);
@@ -16,17 +17,35 @@ const BadgeInput = ({ onBadgesChange }) => {
     const value = e.target.value;
     setInputValue(value);
     fetchSuggestions(value);
+    if (value === "") {
+      setSuggestions([]);
+    }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === "Tab" || e.key === "Enter") {
       e.preventDefault();
-      if (suggestions.length > 0) {
-        setInputValue(suggestions[0]);
-        addBadge(suggestions[0]);
+      if (selectedIndex !== -1 && suggestions.length > 0) {
+        setInputValue(suggestions[selectedIndex]);
+        addBadge(suggestions[selectedIndex]);
       } else {
         addBadge(inputValue.trim());
       }
+      setSelectedIndex(-1);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      const nextIndex = selectedIndex + 1;
+      if (nextIndex < suggestions.length) {
+        setSelectedIndex(nextIndex);
+      }
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      const prevIndex = selectedIndex - 1;
+      if (prevIndex >= 0) {
+        setSelectedIndex(prevIndex);
+      }
+    } else if (e.key === "Escape") {
+      setSuggestions([]);
     }
   };
 
@@ -47,7 +66,9 @@ const BadgeInput = ({ onBadgesChange }) => {
     if (badge.trim() !== "") {
       setBadges([...badges, badge.trim()]);
       setInputValue("");
+      setSelectedIndex(-1);
     }
+    setSuggestions([]);
   };
 
   const removeBadge = (index, e) => {
@@ -89,11 +110,13 @@ const BadgeInput = ({ onBadgesChange }) => {
         className="border border-gray-300 rounded p-2 mt-2 w-full"
       />
       {suggestions.length > 0 && (
-        <ul className="mt-2">
+        <ul className="mt-2 bg-gray-100">
           {suggestions.map((suggestion, index) => (
             <li
               key={index}
-              className="cursor-pointer bg-gray-300 hover:bg-gray-400 p-2"
+              className={`cursor-pointer p-2 ${
+                index === selectedIndex ? "bg-gray-300" : ""
+              }`}
               onClick={() => handleSuggestionClick(suggestion)}
             >
               {suggestion}
