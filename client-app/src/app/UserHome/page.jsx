@@ -40,4 +40,5 @@ const UserHome = () => {
   );
 };
 
-module.exports = UserHome;
+// module.exports = UserHome;
+export default UserHome;

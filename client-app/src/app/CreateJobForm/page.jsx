@@ -1,15 +1,15 @@
 import React from "react";
-import "./AddScheduleForm.css";
+import "./CreateJobForm.css";
 
-const AddScheduleForm = () => {
+const CreateJobForm = () => {
   return (
     <React.Fragment>
-      <div className="navbar">
-        <div className="navbar-logo">
+      <div class="navbar">
+        <div class="navbar-logo">
           <img src="../assets/logo.png" alt="Logo" />
           <span>Logo</span>
         </div>
-        <ul className="navbar-menu">
+        <ul class="navbar-menu">
           <li>
             <a href="#">Menu 1</a>
           </li>
@@ -21,15 +21,15 @@ const AddScheduleForm = () => {
           </li>
         </ul>
       </div>
-      <div className="container">
+      <div class="container">
         <h1>Add Schedule</h1>
         <form>
-          <div className="form-group">
-            <label htmlFor="day">Day:</label>
+          <div class="form-group">
+            <label for="day">Day:</label>
             <input type="text" id="day" name="day" placeholder="Enter day" />
           </div>
-          <div className="form-group">
-            <label htmlFor="startHour">Start Hour:</label>
+          <div class="form-group">
+            <label for="startHour">Start Hour:</label>
             <input
               type="text"
               id="startHour"
@@ -37,8 +37,8 @@ const AddScheduleForm = () => {
               placeholder="Enter start hour"
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="totalHour">Total Hour:</label>
+          <div class="form-group">
+            <label for="totalHour">Total Hour:</label>
             <input
               type="text"
               id="totalHour"
@@ -53,5 +53,5 @@ const AddScheduleForm = () => {
   );
 };
 
-// module.exports = AddScheduleForm;
-export default AddScheduleForm;
+// module.exports = CreateJobForm;
+export default CreateJobForm;
