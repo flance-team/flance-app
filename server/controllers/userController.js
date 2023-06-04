@@ -99,10 +99,10 @@ class UserController {
       for (let i = 0; i < skills.length; i++) {
         const [skill, created] = await Skill.findOrCreate({
           where: {
-            name: skills[i].name,
+            name: skills[i],
           },
           defaults: {
-            name: skills[i].name,
+            name: skills[i],
           },
         });
 
