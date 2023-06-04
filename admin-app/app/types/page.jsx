@@ -27,7 +27,9 @@ const page = () => {
           text: `${error}`,
         });
       } finally {
-        setLoading(false);
+        setTimeout(() => {
+          setLoading(false);
+        }, 800);
       }
     };
 
