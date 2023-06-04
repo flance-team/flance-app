@@ -34,6 +34,16 @@ describe("User or Employer success login", () => {
     expect(typeof res.body).toBe("object");
     expect(res.body).toHaveProperty("access_token");
   });
+
+  it("POST /login, should return new access token for user or employer", async () => {
+    const res = await request(app)
+      .post("/login")
+      .send({ email: "test@employer.com", password: "123456" })
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("access_token");
+  });
 });
 
 describe("User or Employer failed login", () => {

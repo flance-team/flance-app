@@ -375,7 +375,7 @@ class jobController {
                     }
                 });
 
-            await smartContract.update({ hash: dataBlockchain.data.hash, agreementBlockchainId: dataBlockchain.data.agreementBlockchainId, userBlockchainId: user.Signer.addressPrivate });
+            await smartContract.update({ hash: dataBlockchain.data.hash, agreementBlockchainId: dataBlockchain.data.agreementBlockchainId, userBlockchainId: dataBlockchain.data.userBlockchainId });
 
             res.status(201).json(smartContract);
 
