@@ -4,7 +4,7 @@ const JOBS = [
   {
     title: "kasir famima",
     employerId: 1,
-    location: "BSD",
+    location: "Tangerang Selatan",
     salary: 30000,
     expireDate: "2023-08-08",
     categoryId: 1,

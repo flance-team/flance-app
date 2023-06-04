@@ -15,6 +15,11 @@ const SIGNERS = [
     addressPrivate:
       "886e43bcc1b86722cc35bd68dfd5a0caa502e2778ad0ad29665103273634ecaa",
   },
+  {
+    mnemonic: "testingMnemonic",
+    addressPublic: "testAddress",
+    addressPrivate: "testAddress",
+  },
 ];
 
 const createSigners = async () => {

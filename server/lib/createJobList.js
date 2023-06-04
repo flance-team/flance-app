@@ -6,6 +6,11 @@ const JOB_LIST = [
     jobId: 1,
     status: "applied",
   },
+  {
+    userId: 2,
+    jobId: 1,
+    status: "applied",
+  },
 ];
 
 const createJobList = async () => {
