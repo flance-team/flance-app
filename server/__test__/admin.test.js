@@ -135,7 +135,7 @@ describe("Admin failed register and login", () => {
   });
 });
 
-describe("Admin success crud category", () => {
+describe("Admin success read dashboard and crud category", () => {
   let token = "";
 
   const getAccessToken = async () => {
@@ -147,6 +147,18 @@ describe("Admin success crud category", () => {
     return res.body.access_token;
   };
 
+  it("GET /admins/dashboard, should return all categories", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .get("/admins/dashboard")
+      .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("totalUsers");
+  });
+
   it("GET /admins/category, should return all categories", async () => {
     const res = await request(app).get("/admins/category").expect(200);
 
@@ -155,8 +167,6 @@ describe("Admin success crud category", () => {
   });
 
   it("POST /admins/addcategory, should return new category", async () => {
-    token = await getAccessToken();
-
     const res = await request(app)
       .post("/admins/addcategory")
       .set("access_token", token)

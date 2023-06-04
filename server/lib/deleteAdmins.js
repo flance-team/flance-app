@@ -1,15 +1,11 @@
 const { Admin } = require("../models");
 
 const deleteAdmins = async () => {
-  try {
-    await Admin.destroy({
-      restartIdentity: true,
-      truncate: true,
-      cascade: true,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  await Admin.destroy({
+    restartIdentity: true,
+    truncate: true,
+    cascade: true,
+  });
 };
 
 module.exports = deleteAdmins;

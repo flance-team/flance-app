@@ -15,12 +15,7 @@ const USERS = [
 ];
 
 const createUsers = async () => {
-  try {
-    console.log("Users created");
-    await User.bulkCreate(USERS);
-  } catch (error) {
-    console.log(error);
-  }
+  await User.bulkCreate(USERS);
 };
 
 module.exports = createUsers;

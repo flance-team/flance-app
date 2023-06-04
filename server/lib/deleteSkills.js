@@ -1,15 +1,11 @@
 const { Skill } = require("../models");
 
 const deleteSkills = async () => {
-  try {
-    await Skill.destroy({
-      restartIdentity: true,
-      truncate: true,
-      cascade: true,
-    });
-  } catch (error) {
-    console.log(error);
-  }
+  await Skill.destroy({
+    restartIdentity: true,
+    truncate: true,
+    cascade: true,
+  });
 };
 
 module.exports = deleteSkills;

@@ -10,11 +10,7 @@ const SKILLS = [
 ];
 
 const createSkills = async () => {
-  try {
-    await Skill.bulkCreate(SKILLS);
-  } catch (error) {
-    console.log(error);
-  }
+  await Skill.bulkCreate(SKILLS);
 };
 
 module.exports = createSkills;
