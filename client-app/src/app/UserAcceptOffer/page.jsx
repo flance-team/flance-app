@@ -5,6 +5,7 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NavBarUser from "../components/navbarUser";
 const UserAcceptOffer = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -122,7 +123,7 @@ const UserAcceptOffer = () => {
   }, [statusAccept]);
   return (
     <>
-      {/* <NavBar /> */}
+      <NavBarUser />
       <div>
         <h1>List of jobs Apllied</h1>
       </div>
