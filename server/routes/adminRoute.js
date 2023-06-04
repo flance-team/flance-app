@@ -23,6 +23,7 @@ router.post("/addskill", authAdmin, AdminController.createSkill);
 router.put("/editskill/:id", authAdmin, AdminController.editSkill);
 router.delete("/deleteskill/:id", authAdmin, AdminController.deleteSkill);
 
+router.get("/employer/:id", authAdmin, AdminController.getEmployerById);
 router.patch("/verifyemployer/:id", authAdmin, AdminController.verifyEmployer);
 
 module.exports = router;

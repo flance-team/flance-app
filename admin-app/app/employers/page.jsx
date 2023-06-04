@@ -1,17 +1,18 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Loading from "../../components/Loading";
 import "../../styles/global.css";
-import BadgeInput from "../../components/BadgeInput";
-
+import DetailModal from "../../components/DetailModal";
 const baseUrl = "http://localhost:3000";
 
 const page = () => {
   const [employers, setEmployers] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [selectedEmployer, setSelectedEmployer] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [flag, setFlag] = useState(false);
 
   useEffect(() => {
     const fetchEmployers = async () => {
@@ -36,7 +37,52 @@ const page = () => {
     };
 
     fetchEmployers();
-  }, []);
+  }, [flag]);
+
+  const handleDetail = (employerId) => {
+    const selected = employers.find((employer) => employer.id === employerId);
+    setSelectedEmployer(selected);
+    setShowModal(true);
+  };
+
+  const handleVerify = async (employerId, status) => {
+    setFlag(true);
+    try {
+      const { data } = await axios.patch(
+        `${baseUrl}/admins/verifyemployer/${employerId}`,
+        { status },
+        {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        }
+      );
+
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `Employer Verification process completed successfully`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (err) {
+      console.log(err);
+      const error = err.response.data.error;
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    } finally {
+      setFlag(false);
+    }
+  };
+
+  const closeModal = () => {
+    setSelectedEmployer(null);
+    setShowModal(false);
+  };
 
   if (loading) {
     return <Loading />;
@@ -60,24 +106,40 @@ const page = () => {
               <td className="py-2 px-4 border-b">{employer.companyName}</td>
               <td className="py-2 px-4 border-b">{employer.status}</td>
               <td className="py-2 px-4 border-b">{employer.location}</td>
-              <td className="py-2 px-4 border-b">
+              <td className="py-2 px-4 border-b text-center">
                 <button
                   className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded mr-2"
                   onClick={() => handleDetail(employer.id)}
                 >
                   Detail
                 </button>
-                <button
-                  className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded"
-                  onClick={() => handleVerify(employer.id)}
-                >
-                  Verify
-                </button>
+                {employer.status === "pending" ? (
+                  <>
+                    <button
+                      className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded mr-2"
+                      onClick={() => handleVerify(employer.id, "verified")}
+                    >
+                      Verify
+                    </button>
+                    <button
+                      className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded mr-2"
+                      onClick={() => handleVerify(employer.id, "rejected")}
+                    >
+                      Reject
+                    </button>
+                  </>
+                ) : (
+                  <></>
+                )}
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {showModal && selectedEmployer && (
+        <DetailModal employer={selectedEmployer} closeModal={closeModal} />
+      )}
     </div>
   );
 };

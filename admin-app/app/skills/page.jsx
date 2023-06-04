@@ -26,10 +26,66 @@ const page = () => {
     name = skill.name;
   };
 
+  const handleDelete = (entity) => {
+    Swal.fire({
+      title: `Do you want to delete ${entity.name}?`,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Delete",
+      denyButtonText: `Nope`,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const { data } = await axios.delete(
+            `${baseUrl}/admins/deleteskill/${entity.id}`,
+            {
+              headers: {
+                access_token: localStorage.getItem("access_token"),
+              },
+            }
+          );
+          Swal.fire({
+            width: 200,
+            icon: "success",
+            text: `${entity.name} has been deleted.`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setSkills(skills.filter((skill) => skill.id !== entity.id));
+        } catch (err) {
+          console.log(err);
+          const error = err.response.data.message;
+
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: `${error}`,
+          });
+        }
+      } else if (result.isDenied) {
+        Swal.fire("Nothings deleted", "", "info");
+      }
+    });
+  };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     try {
       if (selectedSkill) {
+        const { data } = await axios.put(
+          `${baseUrl}/admins/editskill/${selectedSkill.id}`,
+          { name: name.current.value },
+          {
+            headers: { access_token: localStorage.getItem("access_token") },
+          }
+        );
+        Swal.fire({
+          width: 200,
+          icon: "success",
+          text: `Skill ${name.current.value} updated successfully`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
       } else {
         const { data } = await axios.post(
           `${baseUrl}/admins/addskill`,
@@ -46,8 +102,6 @@ const page = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        name = "";
-        setShowForm(false);
       }
     } catch (err) {
       console.log(err);
@@ -58,6 +112,9 @@ const page = () => {
         title: "Oops...",
         text: `${error}`,
       });
+    } finally {
+      name = "";
+      setShowForm(false);
     }
   };
 
@@ -114,7 +171,7 @@ const page = () => {
               id="name"
               name="name"
               ref={name}
-              value={name}
+              defaultValue={selectedSkill ? selectedSkill.name : ""}
               className="border border-gray-300 rounded py-2 px-4 w-full"
             />
           </div>
@@ -122,7 +179,7 @@ const page = () => {
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
           >
-            Submit
+            {selectedSkill ? "Update" : "Submit"}
           </button>
         </form>
       ) : (
@@ -140,11 +197,14 @@ const page = () => {
                 <td className="py-2 px-4 border-b text-center">
                   <button
                     className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded mr-2"
-                    onClick={handleEdit(skill)}
+                    onClick={() => handleEdit(skill)}
                   >
                     Edit
                   </button>
-                  <button className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded">
+                  <button
+                    className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
+                    onClick={() => handleDelete(skill)}
+                  >
                     Delete
                   </button>
                 </td>

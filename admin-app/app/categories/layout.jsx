@@ -1,6 +1,6 @@
 export const metadata = {
-  title: "Employers",
-  description: "Employers Data",
+  title: "Categories",
+  description: "Categories Data",
 };
 
 export default function RootLayout({ children }) {
