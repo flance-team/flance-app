@@ -93,7 +93,23 @@ class UserController {
         where: { id },
       });
 
-      const newSkills = await SkillList.bulkCreate(skills);
+
+      let arrSkill = [];
+
+      for (let i = 0; i < skills.length; i++) {
+        const [skill, created] = await Skill.findOrCreate({
+          where: {
+            name: skills[i].name,
+          },
+          defaults: {
+            name: skills[i].name,
+          },
+        });
+
+        arrSkill.push({ skillId: skill.id, userId: user.id });
+      }
+
+      const newSkills = await SkillList.bulkCreate(arrSkill);
 
       res.status(201).json(newSkills);
 
