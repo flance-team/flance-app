@@ -21,13 +21,14 @@ describe("User success register and read", () => {
     const res = await request(app)
       .post("/users")
       .send({
-        email: "test2@user.com",
+        email: "test@user.com",
         password: "123456",
         username: "testUser",
         name: "John Doe",
         address: "Jalan Kopi Kenangan",
         phoneNumber: "0811111111",
         gender: "male",
+        skills: ["Brewing", "Cooking", "Calculating"],
       })
       .expect(201);
 
@@ -84,7 +85,7 @@ describe("User success crud skill", () => {
   const getAccessToken = async () => {
     const res = await request(app)
       .post("/login")
-      .send({ email: "test2@user.com", password: "123456" })
+      .send({ email: "test@user.com", password: "123456" })
       .expect(200);
 
     return res.body.access_token;
@@ -99,7 +100,6 @@ describe("User success crud skill", () => {
 
   it("POST /users/skills, should return new user skills", async () => {
     token = await getAccessToken();
-    console.log(token);
 
     const res = await request(app)
       .post("/users/skills")
