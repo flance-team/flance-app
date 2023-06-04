@@ -7,20 +7,25 @@ const USERS = [
     password: hasher("123456"),
     username: "testUser",
     name: "John Doe",
-    address: "Jalan Kopi Kenangan",
+    address: "Tangerang Selatan",
     phoneNumber: "0811111111",
     gender: "male",
     signer: 2,
   },
+  {
+    email: "test3@user.com",
+    password: hasher("123456"),
+    username: "testUser",
+    name: "Jenny Doe",
+    address: "Tangerang Selatan",
+    phoneNumber: "0811111111",
+    gender: "female",
+    signer: 3,
+  },
 ];
 
 const createUsers = async () => {
-  try {
-    console.log("Users created");
-    await User.bulkCreate(USERS);
-  } catch (error) {
-    console.log(error);
-  }
+  await User.bulkCreate(USERS);
 };
 
 module.exports = createUsers;

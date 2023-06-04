@@ -10,11 +10,7 @@ const TYPES = [
 ];
 
 const createTypes = async () => {
-  try {
-    await Type.bulkCreate(TYPES);
-  } catch (error) {
-    console.log(error);
-  }
+  await Type.bulkCreate(TYPES);
 };
 
 module.exports = createTypes;

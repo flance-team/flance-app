@@ -1,6 +1,6 @@
 const request = require("supertest");
 const app = require("../app");
-const deleteUsers = require("../lib/deleteUser");
+const deleteUsers = require("../lib/deleteUsers");
 const deleteSigners = require("../lib/deleteSigners");
 const deleteEmployers = require("../lib/deleteEmployers");
 const deleteTypes = require("../lib/deleteTypes");

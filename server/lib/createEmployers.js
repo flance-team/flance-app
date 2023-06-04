@@ -16,11 +16,7 @@ const EMPLOYERS = [
 ];
 
 const createEmployers = async () => {
-  try {
-    await Employer.bulkCreate(EMPLOYERS);
-  } catch (error) {
-    console.log(error);
-  }
+  await Employer.bulkCreate(EMPLOYERS);
 };
 
 module.exports = createEmployers;

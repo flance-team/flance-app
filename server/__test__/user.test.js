@@ -1,8 +1,9 @@
 const request = require("supertest");
 const app = require("../app");
-const deleteUsers = require("../lib/deleteUser");
+const deleteUsers = require("../lib/deleteUsers");
 const createSkills = require("../lib/createSkills");
 const deleteSkills = require("../lib/deleteSkills");
+const deleteSkillLists = require("../lib/deleteSkillList");
 
 beforeAll(async () => {
   await createSkills();
@@ -12,6 +13,7 @@ beforeAll(async () => {
 afterAll(async () => {
   await deleteUsers();
   await deleteSkills();
+  await deleteSkillLists();
 });
 
 describe("User success register and read", () => {
@@ -97,14 +99,15 @@ describe("User success crud skill", () => {
 
   it("POST /users/skills, should return new user skills", async () => {
     token = await getAccessToken();
+    console.log(token);
 
     const res = await request(app)
       .post("/users/skills")
       .set("access_token", token)
-      .send(["1", "2", "3"]);
+      .send({ skills: ["Brewing", "Cooking", "Calculating"] })
+      .expect(201);
 
-    console.log(res.body);
     expect(typeof res.body).toBe("object");
-    // expect(res.body).toHaveProperty("id");
+    expect(res.body[0]).toHaveProperty("id");
   });
 });

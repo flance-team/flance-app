@@ -10,11 +10,7 @@ const CATEGORIES = [
 ];
 
 const createCategories = async () => {
-  try {
-    await Category.bulkCreate(CATEGORIES);
-  } catch (error) {
-    console.log(error);
-  }
+  await Category.bulkCreate(CATEGORIES);
 };
 
 module.exports = createCategories;
