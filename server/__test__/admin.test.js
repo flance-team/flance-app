@@ -170,7 +170,10 @@ describe("Admin success read dashboard and crud category", () => {
     const res = await request(app)
       .post("/admins/addcategory")
       .set("access_token", token)
-      .send({ name: "ui/ux designer" })
+      .send({
+        name: "ui/ux designer",
+        skills: ["Brewing", "Cooking", "Calculating"],
+      })
       .expect(201);
 
     expect(typeof res.body).toBe("object");
@@ -244,7 +247,7 @@ describe("Admin success crud type", () => {
 
   it("DELETE /admins/deletetype/:id, should return edited type", async () => {
     const res = await request(app)
-      .delete("/admins/deletetype/1")
+      .delete("/admins/deletetype/3")
       .set("access_token", token)
       .expect(200);
 
@@ -270,6 +273,13 @@ describe("Admin success crud skill", () => {
 
     expect(typeof res.body).toBe("object");
     expect(res.body.rows[0]).toHaveProperty("name");
+  });
+
+  it("GET /admins/skill, should return all skills", async () => {
+    const res = await request(app).get("/admins/skill?s=Cooking").expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body[0]).toHaveProperty("name");
   });
 
   it("POST /admins/addskill, should return new skill", async () => {
@@ -318,6 +328,19 @@ describe("Admin success verify employer", () => {
 
     return res.body.access_token;
   };
+
+  it("GET /admins/employer/:id, should return Employer data", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .get("/admins/employer/1")
+      .set("access_token", token)
+      .expect(200);
+
+    console.log(res.body);
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("companyName");
+  });
 
   it("PATCH /admins/verifyemployer/:id, should return verify Employer status", async () => {
     token = await getAccessToken();
