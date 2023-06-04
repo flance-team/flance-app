@@ -15,7 +15,7 @@ class LoginController {
       });
 
       if (!findUser && !findEmployer) {
-        throw { name: "Not Found", mesage: "Not Registered", code: 404 };
+        throw { name: "Not Found", message: "Not Registered", code: 404 };
       }
       //   console.log(findUser, findEmployer);
       // checking password
