@@ -35,3 +35,35 @@ describe("User or Employer success login", () => {
     expect(res.body).toHaveProperty("access_token");
   });
 });
+
+describe("User or Employer failed login", () => {
+  it("POST /login, should return error Not Registered", async () => {
+    const res = await request(app)
+      .post("/login")
+      .send({ email: "test4@user.com", password: "1234567" })
+      .expect(404);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("POST /login, should return error email or password is incorrect", async () => {
+    const res = await request(app)
+      .post("/login")
+      .send({ email: "test2@user.com", password: "1234567" })
+      .expect(403);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("POST /login, should return error email or password is incorrect", async () => {
+    const res = await request(app)
+      .post("/login")
+      .send({ email: "test@employer.com", password: "1234567" })
+      .expect(403);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
