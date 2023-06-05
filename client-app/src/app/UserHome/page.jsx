@@ -9,6 +9,19 @@ import NavBarUser from "../components/navbarUser";
 
 const UserHome = () => {
   const base_url_server = "http://localhost:3000";
+  const [searchQuery, setSearchQuery] = useState("");
+  const [locationQuery, setLocationQuery] = useState("");
+  const handleSearchQueryChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+  const handleLocationQueryChange = (event) => {
+    setLocationQuery(event.target.value);
+  };
+  const handleSearchSubmit = () => {
+    // Perform search functionality here
+    console.log("Search query:", searchQuery);
+    console.log("Location query:", locationQuery);
+  };
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [dataJob, setDataJob] = useState();
@@ -52,9 +65,7 @@ const UserHome = () => {
                   <h2 className="card-title">
                     Search anything, anywhere here...
                   </h2>
-                  <h4 className="text-xs">
-                    see what happends when you start finding
-                  </h4>
+
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col">
                       <h2 className="text-lg">What...</h2>
@@ -68,6 +79,8 @@ const UserHome = () => {
                         id="input1"
                         type="text"
                         className="input input-bordered"
+                        value={searchQuery}
+                        onChange={handleSearchQueryChange}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -82,13 +95,21 @@ const UserHome = () => {
                         id="input2"
                         type="text"
                         className="input input-bordered"
+                        value={locationQuery}
+                        onChange={handleLocationQueryChange}
                       />
                     </div>
                   </div>
                   <div className="card-actions justify-center mt-2">
-                    <button className="btn btn-primary w-full">
+                    <button
+                      className="btn btn-primary w-full"
+                      onClick={handleSearchSubmit}
+                    >
                       Find Jobs
                     </button>
+                    <h4 className="text-xs">
+                      see what happends when you start finding
+                    </h4>
                   </div>
                 </div>
               </div>
