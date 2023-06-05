@@ -269,8 +269,4 @@ const UserHome = () => {
   );
 };
 
-<<<<<<< HEAD
-// module.exports = UserHome;
-=======
->>>>>>> 331126a5fbf90e10e60111d485dac2e4650a607e
 export default UserHome;
