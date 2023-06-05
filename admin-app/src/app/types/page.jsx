@@ -4,10 +4,11 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Loading from "../../components/Loading";
 import "../../styles/global.css";
+import authMiddleware from "@app/middleware";
 
 const baseUrl = "http://localhost:3000";
 
-const page = () => {
+const TypePage = () => {
   const [types, setTypes] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -217,4 +218,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default authMiddleware(TypePage);

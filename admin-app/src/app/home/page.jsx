@@ -4,10 +4,11 @@ import "../../styles/global.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Loading from "../../components/Loading";
+import authMiddleware from "@app/middleware";
 
 const baseUrl = "http://localhost:3000";
 
-const page = () => {
+const HomePage = () => {
   const [dataDashboard, setDataDashboard] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -116,4 +117,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default authMiddleware(HomePage);
