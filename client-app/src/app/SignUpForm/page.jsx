@@ -3,7 +3,10 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import BadgeInput from "../components/BadgeInput";
 const base_url_server = "http://localhost:3000";
+
 const SignUpForm = () => {
   const router = useRouter();
   const [dataSkill, setDataSkill] = useState();
@@ -19,16 +22,12 @@ const SignUpForm = () => {
 
   const [selectedValues, setSelectedValues] = useState([]);
   const [skill, setSkill] = useState([]);
-  console.log(selectedValues, "Here");
-  // for (let i = 0; i < selectedValues.length; i++) {
-  //   for (let j = 0; j < dataSkill.length; j++) {
-  //     if (selectedValues[i] === dataSkill[j]) {
-  //       console.log(selectedValues[0], dataSkill[0], "ini");
-  //       setSkill(dataSkill[i]);
-  //     }
-  //   }
-  // }
-  console.log(skill, "list skill");
+  const [parentBadges, setParentBadges] = useState([]);
+
+  const handleBadgesChange = (badges) => {
+    setParentBadges(badges);
+  };
+
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -37,6 +36,7 @@ const SignUpForm = () => {
     address: "",
     phoneNumber: "",
     gender: "",
+    city: "",
   });
   const inputForm = (el) => {
     setFormValue({
@@ -44,12 +44,30 @@ const SignUpForm = () => {
       [el.target.name]: el.target.value,
     });
   };
-  const formOnSubmit = async (el) => {
-    el.preventDefault();
-    const response = await axios.post(`${base_url_server}/users`, formValue);
-    const inputSkills = await axios.post(`${base_url_server}/users/addSkills`, {
-      skills: selectedValues,
-    });
+
+  const formOnSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      formValue.skills = parentBadges;
+      const { data } = await axios.post(`${base_url_server}/users`, formValue);
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `User Registered successfully`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      router.push("/LoginForm");
+    } catch (err) {
+      console.log(err);
+      const error = err.response.data.message;
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    }
   };
 
   const handleChange = (event) => {
@@ -57,22 +75,11 @@ const SignUpForm = () => {
     if (!selectedValues.includes(selectedValue)) {
       setSelectedValues([...selectedValues, selectedValue]);
     }
-    // for (let i = 0; i < selectedValues.length; i++) {
-    //   for (let j = 0; j < dataSkill.length; j++) {
-    //     if (selectedValues[i] === dataSkill[j]) {
-    //       console.log(selectedValues[0], dataSkill[0], "ini");
-    //       setSkill(dataSkill[i]);
-    //     }
-    //   }
-    // }
   };
 
-  useEffect(() => {
-    dataSkills();
-  }, []);
   return (
     <React.Fragment>
-      <div className="flex flex-row w-screen h-screen">
+      <div className="flex flex-row w-screen h-max">
         <div className="flex-initial w-5/12 h-screen">
           <img
             src="./SignUpUser.jpg"
@@ -81,7 +88,7 @@ const SignUpForm = () => {
           />
         </div>
         <div className="flex flex-col justify-center items-center w-7/12">
-          <div className="text-center mb-8 space-y-2">
+          <div className="text-center mb-2 space-y-2">
             <h1 className="text-3xl font-bold mb-2">Welcome to Flance!</h1>
             <p className="text-lg">Please fill the form below!</p>
           </div>
@@ -172,32 +179,23 @@ const SignUpForm = () => {
               ></textarea>
             </div>
             <div className="form-control col-span-2">
-              <label htmlFor="selectInput" className="block text-gray-700">
-                Select an option:
+              <label className="label">
+                <span className="label-text">City:</span>
               </label>
-              <select
-                id="selectInput"
-                onChange={handleChange}
-                name="skills"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              >
-                <option value="">-- Select --</option>
-                {dataSkill?.map((el) => {
-                  return (
-                    <option key={el.id} value={el.id}>
-                      {el.name}
-                    </option>
-                  );
-                })}
-              </select>
-              <div className="mt-2">
-                <p>Selected values:</p>
-                <ul>
-                  {selectedValues.map((value) => (
-                    <li key={value}>{value}</li>
-                  ))}
-                </ul>
-              </div>
+              <input
+                type="text"
+                placeholder="Type here"
+                name="city"
+                className="input input-bordered w-full"
+                onChange={inputForm}
+              />
+            </div>
+            <div className="form-control col-span-2">
+              <label className="label">
+                <span className="label-text">Skills:</span>
+              </label>
+
+              <BadgeInput onBadgesChange={handleBadgesChange} />
             </div>
             <div className="col-span-2">
               <button className="btn btn-outline w-full" onClick={formOnSubmit}>
