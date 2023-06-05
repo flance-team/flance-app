@@ -49,6 +49,7 @@ class LoginController {
         role: findUser ? "user" : "employer",
         id: findUser?.id ? findUser.id : findEmployer.id,
         email: findUser?.email ? findUser.email : findEmployer.email,
+        name: findUser?.name ? findUser.name : findEmployer.companyName,
       });
     } catch (err) {
       next(err);

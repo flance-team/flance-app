@@ -9,6 +9,7 @@ const base_url_server = "http://localhost:3000";
 
 const SignUpForm = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [dataSkill, setDataSkill] = useState();
   const dataSkills = async () => {
     try {
@@ -47,6 +48,7 @@ const SignUpForm = () => {
 
   const formOnSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       formValue.skills = parentBadges;
       const { data } = await axios.post(`${base_url_server}/users`, formValue);
@@ -67,6 +69,8 @@ const SignUpForm = () => {
         title: "Oops...",
         text: `${error}`,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
