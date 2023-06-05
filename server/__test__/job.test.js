@@ -186,6 +186,40 @@ describe("Employer success crud job", () => {
   });
 });
 
+describe("Employer failed auth", () => {
+  it("GET /jobs/list, should return errors", async () => {
+    const res = await request(app)
+      .get("/jobs/list")
+      .send()
+      .expect(401);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("GET /jobs/list, should return errors because not valid", async () => {
+    const res = await request(app)
+      .get("/jobs/list")
+      .set("access_token", "eyJhbGciOiJIUzI1NiIsInR5I6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU1NDE2MzZ9.v3g_0xp02_a698HoozyWHsGyr2Su35FnZOTA5HGEFyw")
+      .send()
+      .expect(401);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("GET /jobs/list, should return errors because wrong payload", async () => {
+    const res = await request(app)
+      .get("/jobs/list")
+      .set("access_token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQHVzZXIuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MTAwLCJpYXQiOjE2ODU5NzQ5Nzh9.XPhP2AemqaQpRvdWEb25t9YGhy8ncbX8v2yBhr3Bohg")
+      .send()
+      .expect(403);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
 describe("User success crud job", () => {
   let token = "";
 

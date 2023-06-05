@@ -12,10 +12,6 @@ function errorHandler(err, req, res, next) {
     res.status(401).json({
       message: "Invalid token",
     });
-  } else if (err.name === "SequelizeDatabaseError") {
-    res.status(400).json({
-      message: err.message,
-    });
   } else if (err.name === "SequelizeUniqueConstraintError") {
     let dataErr = err.errors.map((er) => {
       return er.message;

@@ -202,6 +202,54 @@ describe("Admin success read dashboard and crud category", () => {
   });
 });
 
+describe("Admin failed crud category", () => {
+  let token = "";
+
+  const getAccessToken = async () => {
+    const res = await request(app)
+      .post("/admins/login")
+      .send({ email: "test@admin.com", password: "123456" })
+      .expect(200);
+
+    return res.body.access_token;
+  };
+
+  it("POST /admins/addcategory, should return error", async () => {
+    token = await getAccessToken();
+    const res = await request(app)
+      .post("/admins/addcategory")
+      .set("access_token", token)
+      .send({
+        skills: ["Brewing", "Cooking", "Calculating"],
+      })
+      .expect(400);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("PUT /admins/editcategory/:id, should return error", async () => {
+    const res = await request(app)
+      .put("/admins/editcategory/1")
+      .set("access_token", token)
+      .send({ name: "" })
+      .expect(400);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("DELETE /admins/deletecategory/:id, should return error", async () => {
+    const res = await request(app)
+      .delete("/admins/deletecategory/100")
+      .set("access_token", token)
+      .expect(500)
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
 describe("Admin success crud type", () => {
   let token = "";
 
@@ -250,6 +298,53 @@ describe("Admin success crud type", () => {
       .delete("/admins/deletetype/3")
       .set("access_token", token)
       .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("Admin failed crud type", () => {
+  let token = "";
+
+  const getAccessToken = async () => {
+    const res = await request(app)
+      .post("/admins/login")
+      .send({ email: "test@admin.com", password: "123456" })
+      .expect(200);
+
+    return res.body.access_token;
+  };
+
+  it("POST /admins/addtype, should return error", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .post("/admins/addtype")
+      .set("access_token", token)
+      .send()
+      .expect(400);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("PUT /admins/edittype/:id, should return error", async () => {
+    const res = await request(app)
+      .put("/admins/edittype/1")
+      .set("access_token", token)
+      .send({ name: "" })
+      .expect(400);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("DELETE /admins/deletetype/:id, should return error", async () => {
+    const res = await request(app)
+      .delete("/admins/deletetype/100")
+      .set("access_token", token)
+      .expect(500);
 
     expect(typeof res.body).toBe("object");
     expect(res.body).toHaveProperty("message");
@@ -317,6 +412,53 @@ describe("Admin success crud skill", () => {
   });
 });
 
+describe("Admin failed crud type", () => {
+  let token = "";
+
+  const getAccessToken = async () => {
+    const res = await request(app)
+      .post("/admins/login")
+      .send({ email: "test@admin.com", password: "123456" })
+      .expect(200);
+
+    return res.body.access_token;
+  };
+
+  it("POST /admins/addskill, should return error", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .post("/admins/addskill")
+      .set("access_token", token)
+      .send({ name: "" })
+      .expect(400);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("PUT /admins/editskill/:id, should return error", async () => {
+    const res = await request(app)
+      .put("/admins/editskill/1")
+      .set("access_token", token)
+      .send({ name: "" })
+      .expect(400);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("DELETE /admins/deleteskill/:id, should return error", async () => {
+    const res = await request(app)
+      .delete("/admins/deleteskill/100")
+      .set("access_token", token)
+      .expect(500);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
 describe("Admin success verify employer", () => {
   let token = "";
 
@@ -337,7 +479,6 @@ describe("Admin success verify employer", () => {
       .set("access_token", token)
       .expect(200);
 
-    console.log(res.body);
     expect(typeof res.body).toBe("object");
     expect(res.body).toHaveProperty("companyName");
   });
@@ -350,6 +491,78 @@ describe("Admin success verify employer", () => {
       .set("access_token", token)
       .send({ status: "active" })
       .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("Admin failed verify employer", () => {
+  let token = "";
+
+  const getAccessToken = async () => {
+    const res = await request(app)
+      .post("/admins/login")
+      .send({ email: "test@admin.com", password: "123456" })
+      .expect(200);
+
+    return res.body.access_token;
+  };
+
+  it("GET /admins/employer/:id, should return error", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .get("/admins/employer/100")
+      .set("access_token", token)
+      .expect(404);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("PATCH /admins/verifyemployer/:id, should return error", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .patch("/admins/verifyemployer/100")
+      .set("access_token", token)
+      .send({ status: "" })
+      .expect(400);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("Admin failed auth", () => {
+  it("POST /admins/addcategory, should return errors", async () => {
+    const res = await request(app)
+      .post("/admins/addcategory")
+      .send()
+      .expect(401);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("POST /admins/addcategory, should return errors because not valid", async () => {
+    const res = await request(app)
+      .post("/admins/addcategory")
+      .set("access_token", "eyJhbGciOiJIUzI1NiIsInR5I6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU1NDE2MzZ9.v3g_0xp02_a698HoozyWHsGyr2Su35FnZOTA5HGEFyw")
+      .send()
+      .expect(401);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("POST /admins/addcategory, should return errors because wrong payload", async () => {
+    const res = await request(app)
+      .post("/admins/addcategory")
+      .set("access_token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQHVzZXIuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MTAwLCJpYXQiOjE2ODU5NzQ5Nzh9.XPhP2AemqaQpRvdWEb25t9YGhy8ncbX8v2yBhr3Bohg")
+      .send()
+      .expect(403);
 
     expect(typeof res.body).toBe("object");
     expect(res.body).toHaveProperty("message");
