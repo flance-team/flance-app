@@ -4,8 +4,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const router = useRouter();
+  const base_url_server = "http://localhost:3000";
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -20,8 +23,16 @@ const LoginForm = () => {
     el.preventDefault();
     // const response = JSON.stringify(formValue);
     // console.log(response, "ini response");
-    const response = await axios.post("http://localhost:3000/login", formValue);
-    console.log(response);
+    console.log(formValue);
+    try {
+      const response = await axios.post(`${base_url_server}/login`, formValue);
+      localStorage.setItem("access_token", response.data.access_token);
+      if (response.data.role === "user") {
+        router.push("/UserHome");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <React.Fragment>
