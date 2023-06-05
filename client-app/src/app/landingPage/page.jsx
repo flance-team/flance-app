@@ -10,7 +10,7 @@ import { Pricing } from "../components/Pricing";
 import { Faqs } from "../components/Faqs";
 import { Footer } from "../components/Footer";
 
-const landingPage = () => {
+const LandingPage = () => {
   return (
     <>
       <Head>
@@ -34,4 +34,4 @@ const landingPage = () => {
     </>
   );
 };
-export default landingPage;
+export default LandingPage;

@@ -15,9 +15,14 @@ const UserAcceptOffer = () => {
     const headers = {
       access_token: localStorage.getItem("access_token"),
     };
-    const response = await axios.patch(`${base_url_server}/jobs/accept/${id}`, {
-      headers,
-    });
+    const response = await axios.patch(
+      `${base_url_server}/jobs/accept/${id}`,
+      null,
+      {
+        headers,
+      }
+    );
+    this.appliedJob();
   };
   const statusDecline = async (id) => {
     const headers = {
@@ -25,8 +30,10 @@ const UserAcceptOffer = () => {
     };
     const response = await axios.patch(
       `${base_url_server}/jobs/reject-user/${id}`,
+      null,
       { headers }
     );
+    this.appliedJob();
   };
   const appliedJob = async () => {
     const headers = {
@@ -36,7 +43,6 @@ const UserAcceptOffer = () => {
       headers,
     });
     setData(response.data);
-    console.log(response);
   };
   const buttonAction = (status, id) => {
     if (status === "pending") {
@@ -93,6 +99,7 @@ const UserAcceptOffer = () => {
   useEffect(() => {
     buttonAction();
   }, [statusAccept]);
+
   useEffect(() => {
     appliedJob();
   }, []);
@@ -106,7 +113,9 @@ const UserAcceptOffer = () => {
           <main className="flex-wrap bg-white py-1 justify-center static">
             {/* Main content */}
             <div className="flex justify-start my-2">
-              <h1 className="text-3xl">Hello, User</h1>
+              <h1 className="text-3xl">
+                Hello, {localStorage.getItem("nameUser")}
+              </h1>
             </div>
             <div className="flex justify-start my-2">
               <h1 className="text-1xl">
