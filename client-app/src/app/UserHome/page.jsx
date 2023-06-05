@@ -4,7 +4,6 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
-
 import NavBarUser from "../components/navbarUser";
 
 const UserHome = () => {
@@ -25,8 +24,8 @@ const UserHome = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [dataJob, setDataJob] = useState([]);
-
   const [detailJob, setDetailJob] = useState();
+
   const jobs = async () => {
     const data = await axios.get(`${base_url_server}/jobs`);
     setDataJob(data.data);
@@ -39,6 +38,18 @@ const UserHome = () => {
       headers,
     });
     setDetailJob(data.data);
+  };
+  const clickAccept = async () => {
+    setOpen(false);
+    const headers = {
+      access_token: localStorage.getItem("access_token"),
+    };
+    const id = detailJob.id;
+    const response = await axios.post(
+      `${base_url_server}/jobs/apply/${id}`,
+      null,
+      { headers }
+    );
   };
 
   useEffect(() => {
@@ -137,10 +148,12 @@ const UserHome = () => {
                     key={el.id}
                   >
                     <div className="card-body">
-                      <h2 className="card-title">{el.Employer.companyName}</h2>
+                      <h2 className="card-title text-xl">
+                        {el.Employer.companyName}
+                      </h2>
                       <p>Job Required: {el.title}</p>
-                      <p>{el.location}</p>
-                      <div>formatedDate({el.expireDate})</div>
+                      <p>Location: {el.location}</p>
+                      {/* <div>formatedDate({el.expireDate})</div> */}
                       <div className="card-actions justify-end">
                         <button
                           className="btn btn-primary"
@@ -230,7 +243,7 @@ const UserHome = () => {
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900"
                       >
-                        Job details
+                        JOB DETAILS
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-base font-medium">
@@ -240,7 +253,16 @@ const UserHome = () => {
                           <h3>Hours needed: {detailJob?.totalHours}</h3>
                           <h3>Hash: {detailJob?.hash}</h3>
                           <h3>Salary: {detailJob?.salary}</h3>
-                          <h3>Comh3any: {detailJob?.Employer.companyName}</h3>
+                          <h3>Company: {detailJob?.Employer.companyName}</h3>
+                          {detailJob?.Schedules.map((el) => {
+                            return (
+                              <>
+                                <h3>Day: {el.day}</h3>
+                                <h3>Start: {el.startHour}</h3>
+                                <h3>Total Hour: {el.totalHour}</h3>
+                              </>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
@@ -249,7 +271,7 @@ const UserHome = () => {
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                      onClick={() => setOpen(false)}
+                      onClick={() => clickAccept()}
                     >
                       Apply
                     </button>
