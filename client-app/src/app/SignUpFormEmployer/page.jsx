@@ -2,11 +2,13 @@
 "use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
+import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
+import Loading from "../components/Loading";
 const base_url_server = "http://localhost:3000";
 const SignUpForm = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [dataCat, setDataCat] = useState();
   const [formValue, setFormValue] = useState({
     email: "",
@@ -18,24 +20,44 @@ const SignUpForm = () => {
     PIC: "",
     typeId: "",
   });
+
   const inputForm = (el) => {
     setFormValue({
       ...formValue,
       [el.target.name]: el.target.value,
     });
   };
-  const formOnSubmit = async (el) => {
-    el.preventDefault();
-    console.log(formValue, "form value");
+
+  const formOnSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         `${base_url_server}/employers`,
         formValue
       );
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `Employer has been created successfully`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      router.push("/LoginForm");
     } catch (err) {
       console.log(err);
+      const error = err.response.data.message;
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    } finally {
+      setLoading(false);
     }
   };
+
   const dataCategory = async () => {
     try {
       const response = await axios.get(`${base_url_server}/admins/type`);
@@ -45,9 +67,14 @@ const SignUpForm = () => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     dataCategory();
   }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <>
@@ -170,9 +197,7 @@ const SignUpForm = () => {
             <div className="col-span-2">
               <button
                 className="btn btn-outline w-full"
-                onClick={() => {
-                  formOnSubmit;
-                }}
+                onClick={(e) => formOnSubmit(e)}
               >
                 Sign Up
               </button>
