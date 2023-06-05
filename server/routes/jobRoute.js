@@ -12,6 +12,7 @@ router.get("/list-employee", authEmployer, jobController.listEmployee); //list u
 router.patch("/offer/:id", authEmployer, jobController.acceptApply); // proses accept pelamar kerja
 router.patch("/reject/:id", authEmployer, jobController.rejectApply); // proses reject pelamar kerja
 router.get("/schedules-job/:id", authEmployer, jobController.getSchedules); // menampilkan schedule dari job
+router.patch("/terminate-job/:id", authEmployer, jobController.terminateJob); //terminate job
 
 ////USER END POINTS
 

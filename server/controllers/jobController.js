@@ -217,7 +217,7 @@ class jobController {
                 throw ({ name: "not_found", message: "Job already not active.", code: 404 })
             }
 
-            await job.update({ status: "inacvtive" });
+            await job.update({ status: "inactive" });
 
             res.status(200).json(job);
 

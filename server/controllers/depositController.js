@@ -56,15 +56,6 @@ class DepositController {
     }
   }
 
-  static async bulkPayUser(req, res, next) {
-    try {
-      const employerId = +req.identity.id;
-
-    } catch (err) {
-      next(err);
-    }
-  }
-
   static async withdrawUser(req, res, next) {
     try {
       const idUser = +req.identity.id;
@@ -123,14 +114,6 @@ class DepositController {
       });
 
       res.status(200).json(balance);
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  static async test(req, res, next) {
-    try {
-      console.log(1);
     } catch (err) {
       next(err);
     }
