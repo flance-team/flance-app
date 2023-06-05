@@ -2,7 +2,8 @@
 import axios from "axios";
 import { useEffect, useRef, useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/24/outline";
+
+import CurrencyInput from "react-currency-input-field";
 
 const baseUrl = `http://localhost:3000`;
 
@@ -33,15 +34,21 @@ const UserDeposit = () => {
   }
 
   const withdraw = async () => {
-    const currentValue = +amountToWithdraw.current.value;
+    const currentValue = amountToWithdraw.current.value;
+    console.log(amountToWithdraw.current.value);
+
+    const res = currentValue.replace(/\D/g, "");
+
     if (currentValue > balance) {
       return console.log("under budget");
+    } else if (currentValue < 0) {
+      return console.log("Value cant be negative");
     } else {
       try {
         const response = await axios.post(
           `${baseUrl}/transactions/user/withdraw`,
           {
-            amount: currentValue,
+            amount: +res,
           },
           {
             headers: {
@@ -64,7 +71,7 @@ const UserDeposit = () => {
     //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU4NjQzMzV9.Yh_4J9q1XMHMdH5i0vyRA5FBkWXhS5AnL7-EWvPpnm8"
     // );
     getBalance();
-  }, []);
+  }, [balance]);
 
   console.log(balance);
 
@@ -74,7 +81,7 @@ const UserDeposit = () => {
         <div className="hero min-h-screen bg-base-200">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl font-bold">Your Deposit</h1>
+              <h1 className="text-5xl font-bold">Your Wallet</h1>
               <p className="py-6">
                 You can easily view your pay off balance by logging into your
                 online account. The pay off balance can be accessed and checked
@@ -119,10 +126,12 @@ const UserDeposit = () => {
                 </div>
                 <div className="form-control">
                   <label htmlFor="">Amount you want to withdraw</label>
-                  <input
+                  <CurrencyInput
                     className="input input-bordered w-full max-w-xs"
-                    type="number"
+                    // type="number"
+                    prefix="Rp."
                     ref={amountToWithdraw}
+                    decimalsLimit={2}
                     min={0}
                   />
                 </div>
@@ -229,13 +238,14 @@ const UserDeposit = () => {
                   >
                     Balance History
                   </Dialog.Title>
-                  <div className="mt-2">
+                  <div className="mt-2 flex justify-center">
                     <p className="text-sm text-gray-500">
                       Your payment has been successfully submitted. We’ve sent
                       you an email with all of the details of your order.
                     </p>
                     <p>{}</p>
-                    <table className="table">
+                    <div className="divider divider-horizontal"></div>
+                    <table className="table overflow-x-auto">
                       <thead>
                         <tr>
                           <th>#</th>
@@ -248,7 +258,7 @@ const UserDeposit = () => {
                       <tbody>
                         {historyB?.map((e, i) => {
                           return (
-                            <tr>
+                            <tr key={i}>
                               <td>{i}</td>
                               <td>{e.ref}</td>
                               <td>{e.transactionDate}</td>
@@ -275,7 +285,7 @@ const UserDeposit = () => {
                     </table>
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-4 flex justify-end">
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
