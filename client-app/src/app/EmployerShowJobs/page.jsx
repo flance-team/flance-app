@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Layout from "../components/layout";
 
@@ -39,6 +40,7 @@ const EmployerShowJobs = () => {
                         <th>Status</th>
                         <th>Total Hours</th>
                         <th>Duration</th>
+                        <th>Action</th>
                      </tr>
                   </thead>
                   <tbody className="text-2xl">
@@ -54,6 +56,9 @@ const EmployerShowJobs = () => {
                                  <td> {createdJob.status} </td>
                                  <td> {createdJob.totalHours} </td>
                                  <td> {createdJob.duration} </td>
+                                 <td>
+                                    <Link href={`/EmployerApprove/${createdJob.id}`}>Detail</Link>
+                                 </td>
                               </tr>
                            );
                         })}
