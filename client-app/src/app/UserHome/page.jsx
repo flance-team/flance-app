@@ -28,15 +28,19 @@ const UserHome = () => {
           <aside className="bg-white w-64">
             {/* Sidebar content */}
             <div className="card w-56 bg-base-100 shadow-xl">
-              <div className="w-24 mask mask-squircle">
-                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              <div className="w-32 h-32 flex items-center justify-center rounded-full overflow-hidden">
+                <img src="./userprofile.png" alt="Profile Image" className="" />
               </div>
-              <div className="card-body items-center text-center">
-                <h2 className="card-title">Andre Makmur</h2>
-                <p>Full-stack developer</p>
-                <div className="card-actions">
+              <div className="card-body text-center items-center">
+                <h2 className="card-title text-xl font-semibold place-items-center">
+                  Andre Makmur
+                </h2>
+                <p className="text-sm text-gray-500 text-xs">
+                  Full-stack developer
+                </p>
+                {/* <div className="flex justify-center mt-4">
                   <button className="btn btn-primary">View Details</button>
-                </div>
+                </div> */}
               </div>
             </div>
           </aside>
@@ -45,8 +49,54 @@ const UserHome = () => {
             <div className="flex bg-white rounded-lg flex-col items-center space-y-2">
               <div className="card w-fit bg-base-100 shadow-xl">
                 <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>If a dog chews shoes, whose shoes does he choose?</p>
+                  <h2 className="card-title">
+                    Search anything, anywhere here...
+                  </h2>
+                  <h4 className="text-xs">
+                    see what happends when you start finding
+                  </h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex flex-col">
+                      <h2 className="text-lg">What...</h2>
+                      <label
+                        htmlFor="input1"
+                        className="input-label text-xs my-1"
+                      >
+                        job title, keyword, company name
+                      </label>
+                      <input
+                        id="input1"
+                        type="text"
+                        className="input input-bordered"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <h2 className="text-lg">Where...</h2>
+                      <label
+                        htmlFor="input2"
+                        className="input-label text-xs my-1"
+                      >
+                        city or state
+                      </label>
+                      <input
+                        id="input2"
+                        type="text"
+                        className="input input-bordered"
+                      />
+                    </div>
+                  </div>
+                  <div className="card-actions justify-center mt-2">
+                    <button className="btn btn-primary w-full">
+                      Find Jobs
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="card w-11/12 bg-base-100 shadow-xl">
+                <div className="card-body">
+                  <h2 className="card-title">Company Name here</h2>
+                  <p>Job Required here (fullstack developer)</p>
                   <div className="card-actions justify-end">
                     <button
                       className="btn btn-primary"
@@ -59,15 +109,7 @@ const UserHome = () => {
                   </div>
                 </div>
               </div>
-              <div className="card w-fit bg-base-100 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>If a dog chews shoes, whose shoes does he choose?</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
-                  </div>
-                </div>
-              </div>
+
               <div className="card w-fit bg-base-100 shadow-xl">
                 <div className="card-body">
                   <h2 className="card-title">Card title!</h2>
@@ -122,7 +164,7 @@ const UserHome = () => {
               <div class="w-24 mask mask-squircle">
                 <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
               </div>
-              <h2 className="card-title text-sm">Sponsors:</h2>
+              <h2 className="card-title text-sm my-2 mx-2">Sponsors:</h2>
               <div className="card-body items-center text-center">
                 <h3 className="container bg-gray-200">YOUR LOGO HERE</h3>
                 <p>Support flance by becoming a sponsor</p>
@@ -227,4 +269,8 @@ const UserHome = () => {
   );
 };
 
+<<<<<<< HEAD
+// module.exports = UserHome;
+=======
+>>>>>>> 331126a5fbf90e10e60111d485dac2e4650a607e
 export default UserHome;

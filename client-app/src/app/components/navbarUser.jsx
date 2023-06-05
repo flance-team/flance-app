@@ -2,7 +2,12 @@
 
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  BellIcon,
+  WalletIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
 
@@ -59,31 +64,15 @@ const NavBarUser = () => {
                     {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
                     <a
                       onClick={() => router.push("/UserHome")}
-                      className={`inline-flex items-center border-b-2 ${
-                        isActive("/UserHome")
-                          ? "border-indigo-500"
-                          : "border-transparent"
-                      } px-1 pt-1 text-sm font-medium ${
-                        isActive("/UserHome")
-                          ? "text-gray-900"
-                          : "text-gray-500 hover:text-gray-700"
-                      }`}
+                      className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                     >
                       Home
                     </a>
                     <a
                       onClick={() => router.push("/UserAcceptOffer")}
-                      className={`inline-flex items-center border-b-2 ${
-                        isActive("/UserAcceptOffer")
-                          ? "border-indigo-500"
-                          : "border-transparent"
-                      } px-1 pt-1 text-sm font-medium ${
-                        isActive("/UserAcceptOffer")
-                          ? "text-gray-900"
-                          : "text-gray-500 hover:text-gray-700"
-                      }`}
+                      className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                     >
-                      Apllied Jobs
+                      Applied Jobs
                     </a>
                     <a className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                       Projects
@@ -103,7 +92,7 @@ const NavBarUser = () => {
                       className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                       <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
+                      <WalletIcon className="h-6 w-6" aria-hidden="true" />
                     </button>
 
                     {/* Profile dropdown */}
