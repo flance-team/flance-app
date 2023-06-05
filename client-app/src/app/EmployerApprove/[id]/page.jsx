@@ -1,37 +1,50 @@
 "use client";
 import axios from "axios";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import Layout from "../components/layout";
+import Layout from "../../components/layout";
 
 const EmployerApprove = () => {
+   const params = useParams();
+   const { id } = params;
+   // console.log(params);
    const base_url_server = "http://localhost:3000";
 
    const [jobsAppliedByUsers, setJobsAppliedByUsers] = useState([]);
 
-   const getJobsAppliedByUsers = async (id) => {
-      // const headers = {
-      //    access_token: localStorage.getItem("access_token"),
-      //  };
-      const headers = {
-         "Content-Type": "application/json",
-         access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU3ODEwOTd9.gOZst1XQIdYcUJAEvjM-al_XJBW8GR9DGeSoXwGkTwk",
-      };
-      const { data: res } = await axios.get(`${base_url_server}/jobs/list-applier/${id}`, { headers });
-      setJobsAppliedByUsers(res);
+   const getJobsAppliedByUsers = async () => {
+      try {
+         // const headers = {
+         //    access_token: localStorage.getItem("access_token"),
+         //  };
+         const headers = {
+            access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtcEBtYWlsLmNvbSIsInJvbGUiOiJlbXBsb3llciIsImlkIjoxLCJpYXQiOjE2ODU2MjI2MjF9.mpa36-Uzhif7XpLYpuPoULPl0JAojw9SLtjytz22dT4",
+         };
+         const { data: res } = await axios.get(`${base_url_server}/jobs/list-applier/${id}`, { headers });
+         setJobsAppliedByUsers(res);
+      } catch (err) {
+         console.log(err);
+      }
    };
    useEffect(() => {
       getJobsAppliedByUsers();
    }, []);
 
    const statusAccept = async (id) => {
-      // const headers = {
-      //    access_token: localStorage.getItem("access_token"),
-      //  };
-      const headers = {
-         "Content-Type": "application/json",
-         access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU3ODEwOTd9.gOZst1XQIdYcUJAEvjM-al_XJBW8GR9DGeSoXwGkTwk",
-      };
-      const response = await axios.patch(`${base_url_server}/jobs/offer/${id}`, { headers });
+      try {
+         // const headers = {
+         //    access_token: localStorage.getItem("access_token"),
+         //  };
+         const response = await axios({
+            method: "patch",
+            url: `${base_url_server}/jobs/offer/${id}`,
+            headers: {
+               access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtcEBtYWlsLmNvbSIsInJvbGUiOiJlbXBsb3llciIsImlkIjoxLCJpYXQiOjE2ODU2MjI2MjF9.mpa36-Uzhif7XpLYpuPoULPl0JAojw9SLtjytz22dT4",
+            },
+         });
+      } catch (err) {
+         console.log(err);
+      }
    };
 
    const buttonAction = (status, id) => {
@@ -41,6 +54,7 @@ const EmployerApprove = () => {
                <button
                   className="btn btn-success mr-2"
                   onClick={() => {
+                     // console.log(id);
                      statusAccept(id);
                   }}>
                   Accept
@@ -56,7 +70,6 @@ const EmployerApprove = () => {
    return (
       <React.Fragment>
          <Layout />
-         {JSON.stringify(jobsAppliedByUsers)}
          <div className="p-5 h-screen bg-gray-100">
             <h1 className="text-3xl mb-6 mt-2 text-gray-600">Jobs Applied by Users</h1>
 

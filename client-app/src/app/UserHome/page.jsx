@@ -4,7 +4,6 @@ import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
-
 import NavBarUser from "../components/navbarUser";
 
 const UserHome = () => {
@@ -25,24 +24,34 @@ const UserHome = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [dataJob, setDataJob] = useState([]);
-
   const [detailJob, setDetailJob] = useState();
+
   const jobs = async () => {
     const data = await axios.get(`${base_url_server}/jobs`);
-    console.log(data.data);
     setDataJob(data.data);
   };
   const jobDetail = async (id) => {
     const headers = {
       access_token: localStorage.getItem("access_token"),
     };
-    const data = await axios.get(`${base_url_server}//schedules/${id}`, {
+    const data = await axios.get(`${base_url_server}/jobs/schedules/${id}`, {
       headers,
     });
-
-    setDetailJob(data);
+    setDetailJob(data.data);
   };
-  console.log(dataJob, "disini");
+  const clickAccept = async () => {
+    setOpen(false);
+    const headers = {
+      access_token: localStorage.getItem("access_token"),
+    };
+    const id = detailJob.id;
+    const response = await axios.post(
+      `${base_url_server}/jobs/apply/${id}`,
+      null,
+      { headers }
+    );
+  };
+
   useEffect(() => {
     jobs();
   }, []);
@@ -57,7 +66,11 @@ const UserHome = () => {
             {/* Sidebar content */}
             <div className="card w-56 bg-base-100 shadow-xl items-center">
               <div className="w-32 h-32 flex  justify-center rounded-full overflow-hidden">
-                <img src="./userprofile.png" alt="Profile Image" className="" />
+                <img
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt="Profile Image"
+                  className=""
+                />
               </div>
               <div className="card-body text-center items-center">
                 <h2 className="card-title text-xl font-semibold place-items-center">
@@ -128,23 +141,32 @@ const UserHome = () => {
                   </div>
                 </div>
               </div>
-              {dataJob.map((el) => {
-                <div className="card w-11/12 bg-base-100 shadow-xl">
-                  <div className="card-body">
-                    <h2 className="card-title">Company Name here</h2>
-                    <p>Job Required here (fullstack developer)</p>
-                    <div className="card-actions justify-end">
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => {
-                          setOpen(true), jobDetail(id);
-                        }}
-                      >
-                        Details
-                      </button>
+              {dataJob?.map((el) => {
+                return (
+                  <div
+                    className="card w-11/12 bg-base-100 shadow-xl"
+                    key={el.id}
+                  >
+                    <div className="card-body">
+                      <h2 className="card-title text-xl">
+                        {el.Employer.companyName}
+                      </h2>
+                      <p>Job Required: {el.title}</p>
+                      <p>Location: {el.location}</p>
+                      {/* <div>formatedDate({el.expireDate})</div> */}
+                      <div className="card-actions justify-end">
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => {
+                            setOpen(true), jobDetail(el.id);
+                          }}
+                        >
+                          Details
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>;
+                );
               })}
             </div>
           </main>
@@ -153,7 +175,7 @@ const UserHome = () => {
             {/* Sidebar content */}
             <div className="card w-56 bg-base-100 shadow-xl">
               <div className="w-24 mask mask-squircle">
-                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                <img src="" />
               </div>
               <h2 className="card-title text-sm my-2 mx-2">Sponsors:</h2>
               <div className="card-body items-center text-center">
@@ -221,15 +243,27 @@ const UserHome = () => {
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900"
                       >
-                        Job details
+                        JOB DETAILS
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Eius aliquam laudantium explicabo pariatur iste
-                          dolorem animi vitae error totam. At sapiente aliquam
-                          accusamus facere veritatis.
+                        <p className="text-base font-medium">
+                          {detailJob?.title}
                         </p>
+                        <div className="mt-1 text-xs">
+                          <h3>Hours needed: {detailJob?.totalHours}</h3>
+                          <h3>Hash: {detailJob?.hash}</h3>
+                          <h3>Salary: {detailJob?.salary}</h3>
+                          <h3>Company: {detailJob?.Employer.companyName}</h3>
+                          {detailJob?.Schedules.map((el) => {
+                            return (
+                              <>
+                                <h3>Day: {el.day}</h3>
+                                <h3>Start: {el.startHour}</h3>
+                                <h3>Total Hour: {el.totalHour}</h3>
+                              </>
+                            );
+                          })}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -237,9 +271,9 @@ const UserHome = () => {
                     <button
                       type="button"
                       className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:col-start-2"
-                      onClick={() => setOpen(false)}
+                      onClick={() => clickAccept()}
                     >
-                      Deactivate
+                      Apply
                     </button>
                     <button
                       type="button"
