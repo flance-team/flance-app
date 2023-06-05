@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const baseUrl = `http://localhost:3000`;
 
 const EmployerDeposit = () => {
-  const [balance, setBalance] = useState({});
+  const [balance, setBalance] = useState(0);
 
   const getBalance = async () => {
     const response = await axios.get(
@@ -14,7 +14,11 @@ const EmployerDeposit = () => {
         headers: { access_token: localStorage.getItem("access_token") },
       }
     );
-    setBalance(response.data);
+    const formattedAmount = response.data.balance.toLocaleString("id-ID", {
+      style: "currency",
+      currency: "IDR",
+    });
+    setBalance(formattedAmount);
   };
 
   useEffect(() => {
@@ -61,6 +65,7 @@ const EmployerDeposit = () => {
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Withdraw</button>
               </div>
+              <div className="divider"></div>
               <div className="form-control">
                 <label htmlFor="">Amount you want to deposit</label>
                 <input
