@@ -74,7 +74,7 @@ const UserHome = () => {
               </div>
               <div className="card-body text-center items-center">
                 <h2 className="card-title text-xl font-semibold place-items-center">
-                  Andre Makmur
+                  {localStorage.getItem("nameUser")}
                 </h2>
                 <p className="text-sm text-gray-500 text-xs">
                   Full-stack developer
