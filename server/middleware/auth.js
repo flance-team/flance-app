@@ -10,10 +10,6 @@ async function authUser(req, res, next) {
 
         const payload = verifyToken(access_token);
 
-        if (!payload) {
-            throw { name: 'token_error', message: 'Invalid token', code: 401 }
-        }
-
         const checkUser = await User.findByPk(payload.id);
         if (!checkUser) {
             throw { name: 'unauthorized', message: 'Unauthorized Access', code: 403 }
@@ -35,10 +31,6 @@ async function authEmployer(req, res, next) {
 
         const payload = verifyToken(access_token);
 
-        if (!payload) {
-            throw { name: 'token_error', message: 'Invalid token', code: 401 }
-        }
-
         const checkEmployer = await Employer.findByPk(payload.id);
         if (!checkEmployer) {
             throw { name: 'unauthorized', message: 'Unauthorized Access', code: 403 }
@@ -59,10 +51,6 @@ async function authAdmin(req, res, next) {
         }
 
         const payload = verifyToken(access_token);
-
-        if (!payload) {
-            throw { name: 'token_error', message: 'Invalid token', code: 401 }
-        }
 
         const checkAdmin = await Admin.findByPk(payload.id);
         if (!checkAdmin) {

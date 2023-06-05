@@ -4,8 +4,19 @@ const deleteUsers = require("../lib/deleteUsers");
 const createSkills = require("../lib/createSkills");
 const deleteSkills = require("../lib/deleteSkills");
 const deleteSkillLists = require("../lib/deleteSkillList");
+const createTypes = require("../lib/createTypes");
+const createSigners = require("../lib/createSigners");
+const createEmployers = require("../lib/createEmployers");
+const deleteTypes = require("../lib/deleteTypes");
+const deleteEmployers = require("../lib/deleteEmployers");
+const deleteSigners = require("../lib/deleteSigners");
+const createUsers = require("../lib/createUsers");
 
 beforeAll(async () => {
+  await createTypes();
+  await createSigners();
+  await createEmployers();
+  await createUsers()
   await createSkills();
 });
 
@@ -14,6 +25,9 @@ afterAll(async () => {
   await deleteUsers();
   await deleteSkills();
   await deleteSkillLists();
+  await deleteTypes();
+  await deleteEmployers();
+  await deleteSigners();
 });
 
 describe("User success register and read", () => {
@@ -56,7 +70,26 @@ describe("User failed register and read", () => {
     const res = await request(app)
       .post("/users")
       .send({
-        email: "test2@user.com",
+        email: "test@user.com",
+        password: "123456",
+        companyName: "Kopi Kenangan",
+        address: "Jalan Kopi Kenangan",
+        location: "Tangerang Selatan",
+        phoneNumber: "0811111111",
+        PIC: "John Doe",
+        typeId: 1,
+      })
+      .expect(400);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("POST /users, should return error email has already registered in another entity", async () => {
+    const res = await request(app)
+      .post("/users")
+      .send({
+        email: "test@employer.com",
         password: "123456",
         companyName: "Kopi Kenangan",
         address: "Jalan Kopi Kenangan",
@@ -109,5 +142,65 @@ describe("User success crud skill", () => {
 
     expect(typeof res.body).toBe("object");
     expect(res.body[0]).toHaveProperty("id");
+  });
+});
+
+describe("User failed crud skill", () => {
+  let token = "";
+
+  const getAccessToken = async () => {
+    const res = await request(app)
+      .post("/login")
+      .send({ email: "test@user.com", password: "123456" })
+      .expect(200);
+
+    return res.body.access_token;
+  };
+
+  it("POST /users/skills, should return errors", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .post("/users/skills")
+      .set("access_token", token)
+      .send()
+      .expect(500);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+});
+
+describe("User failed auth", () => {
+  it("POST /users/skills, should return errors", async () => {
+    const res = await request(app)
+      .post("/users/skills")
+      .send()
+      .expect(401);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("POST /users/skills, should return errors because not valid", async () => {
+    const res = await request(app)
+      .post("/users/skills")
+      .set("access_token", "eyJhbGciOiJIUzI1NiIsInR5I6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU1NDE2MzZ9.v3g_0xp02_a698HoozyWHsGyr2Su35FnZOTA5HGEFyw")
+      .send()
+      .expect(401);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("POST /users/skills, should return errors because wrong payload", async () => {
+    const res = await request(app)
+      .post("/users/skills")
+      .set("access_token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQHVzZXIuY29tIiwicm9sZSI6InVzZXIiLCJpZCI6MTAwLCJpYXQiOjE2ODU5NzQ5Nzh9.XPhP2AemqaQpRvdWEb25t9YGhy8ncbX8v2yBhr3Bohg")
+      .send()
+      .expect(403);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
   });
 });
