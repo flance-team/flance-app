@@ -6,7 +6,7 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import NavBarUser from "../components/navbarUser";
 
-const UserHome = () => {
+const EmployerHome = () => {
   const base_url_server = "http://localhost:3000";
   const [searchQuery, setSearchQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
@@ -74,7 +74,7 @@ const UserHome = () => {
               </div>
               <div className="card-body text-center items-center">
                 <h2 className="card-title text-xl font-semibold place-items-center">
-                  {localStorage.getItem("nameUser")}
+                  Andre Makmur
                 </h2>
                 <p className="text-sm text-gray-500 text-xs">
                   Full-stack developer
@@ -294,4 +294,4 @@ const UserHome = () => {
   );
 };
 
-export default UserHome;
+export default EmployerHome;

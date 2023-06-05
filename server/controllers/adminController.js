@@ -25,26 +25,21 @@ class AdminController {
   }
 
   static async dashboard(req, res, next) {
-    try {
+    const totalUsers = await User.count();
+    const totalEmployers = await Employer.count();
+    const totalJobs = await Job.count();
+    const totalCategories = await Category.count();
+    const totalTypes = await Type.count();
+    const totalSkills = await Skill.count();
 
-      const totalUsers = await User.count();
-      const totalEmployers = await Employer.count();
-      const totalJobs = await Job.count();
-      const totalCategories = await Category.count();
-      const totalTypes = await Type.count();
-      const totalSkills = await Skill.count();
-
-      res.status(200).json({
-        totalUsers,
-        totalEmployers,
-        totalJobs,
-        totalCategories,
-        totalTypes,
-        totalSkills
-      });
-    } catch (err) {
-      next(err);
-    }
+    res.status(200).json({
+      totalUsers,
+      totalEmployers,
+      totalJobs,
+      totalCategories,
+      totalTypes,
+      totalSkills
+    });
   }
 
   static async adminLogin(req, res, next) {
@@ -81,12 +76,8 @@ class AdminController {
   }
 
   static async getCategory(req, res, next) {
-    try {
-      const categories = await Category.findAndCountAll({ include: { model: SkillCategory, include: Skill } });
-      res.status(200).json(categories);
-    } catch (err) {
-
-    }
+    const categories = await Category.findAndCountAll({ include: { model: SkillCategory, include: Skill } });
+    res.status(200).json(categories);
   }
 
   static async createCategory(req, res, next) {
@@ -140,6 +131,12 @@ class AdminController {
   static async deleteCategory(req, res, next) {
     try {
       const { id } = req.params;
+      const findCategory = await Category.findOne({
+        where: { id },
+      });
+      if(!findCategory) {
+        throw { name: "Not Found" };
+      }
       const destroyCategory = await Category.destroy({
         where: { id },
       });
@@ -152,12 +149,8 @@ class AdminController {
   }
 
   static async getType(req, res, next) {
-    try {
       const types = await Type.findAndCountAll();
       res.status(200).json(types);
-    } catch (err) {
-      next(err);
-    }
   }
 
   static async createType(req, res, next) {
@@ -167,7 +160,7 @@ class AdminController {
 
       res.status(201).json(newType);
     } catch (err) {
-
+      next(err);
     }
   }
 
@@ -192,6 +185,12 @@ class AdminController {
   static async deleteType(req, res, next) {
     try {
       const { id } = req.params;
+      const findType = await Type.findOne({
+        where: { id },
+      });
+      if(!findType) {
+        throw { name: "Not Found" };
+      }
       const destroyType = await Type.destroy({
         where: { id },
       });
@@ -204,21 +203,17 @@ class AdminController {
   }
 
   static async getSkill(req, res, next) {
-    try {
-      if (Object.keys(req.query).length === 0) {
-        const skills = await Skill.findAndCountAll();
-        res.status(200).json(skills);
-      }
-      else {
-        const skills = await Skill.findAll({
-          where: {
-            name: { [Op.iLike]: `%${req.query.s}%` },
-          },
-        });
-        res.status(200).json(skills);
-      }
-    } catch (err) {
-
+    if (Object.keys(req.query).length === 0) {
+      const skills = await Skill.findAndCountAll();
+      res.status(200).json(skills);
+    }
+    else {
+      const skills = await Skill.findAll({
+        where: {
+          name: { [Op.iLike]: `%${req.query.s}%` },
+        },
+      });
+      res.status(200).json(skills);
     }
   }
 
@@ -253,6 +248,12 @@ class AdminController {
   static async deleteSkill(req, res, next) {
     try {
       const { id } = req.params;
+      const findSkill = await Skill.findOne({
+        where: { id },
+      });
+      if(!findSkill) {
+        throw { name: "Not Found" };
+      }
       const destroySkill = await Skill.destroy({ where: { id } });
       res.status(200).json({
         message: "Skill has been deleted",
@@ -305,4 +306,5 @@ class AdminController {
     }
   }
 }
+
 module.exports = AdminController;

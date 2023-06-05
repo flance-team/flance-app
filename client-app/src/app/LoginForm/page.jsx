@@ -1,10 +1,9 @@
-// import { useState } from "react";
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
+import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
+import Loading from "../components/Loading";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -13,27 +12,46 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
+
   const inputForm = (el) => {
     setFormValue({
       ...formValue,
       [el.target.name]: el.target.value,
     });
   };
+
   const formOnSubmit = async (el) => {
     el.preventDefault();
-    // const response = JSON.stringify(formValue);
-    // console.log(response, "ini response");
-    console.log(formValue);
+    setLoading(true);
     try {
       const response = await axios.post(`${base_url_server}/login`, formValue);
       localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("nameUser", response.data.name);
+      localStorage.setItem("role", response.data.role);
       if (response.data.role === "user") {
         router.push("/UserHome");
+      } else {
+        router.push("/EmployerHome");
       }
     } catch (err) {
       console.log(err);
+      const error = err.response.data.message;
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <React.Fragment>
       <div className="flex flex-row w-screen h-screen">

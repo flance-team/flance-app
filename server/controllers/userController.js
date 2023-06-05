@@ -93,14 +93,10 @@ class UserController {
     }
   }
 
-  static async getSkills(req, res, next) {
-    try {
-      const skills = await Skill.findAll();
+  static async getSkills(req, res) {
+    const skills = await Skill.findAll();
 
-      res.status(200).json(skills);
-    } catch (err) {
-      next(err);
-    }
+    res.status(200).json(skills);
   }
 
   static async addSkills(req, res, next) {
@@ -110,7 +106,6 @@ class UserController {
       const user = await User.findOne({
         where: { id },
       });
-
 
       let arrSkill = [];
 
