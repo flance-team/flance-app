@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useRef, useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import NavBarUser from "../components/navbarUser";
 
 const baseUrl = `http://localhost:3000`;
 
@@ -71,14 +72,15 @@ const UserDeposit = () => {
   return (
     <>
       <div className="min-w-screen">
+        <NavBarUser />
         <div className="hero min-h-screen bg-base-200">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl font-bold">Your Deposit</h1>
+              <h1 className="text-5xl font-bold">Your Balance</h1>
               <p className="py-6">
                 You can easily view your pay off balance by logging into your
                 online account. The pay off balance can be accessed and checked
-                at any time through the dedicated mobile app..
+                at any time.
               </p>
             </div>
             <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">

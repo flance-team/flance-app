@@ -74,7 +74,7 @@ const UserHome = () => {
               </div>
               <div className="card-body text-center items-center">
                 <h2 className="card-title text-xl font-semibold place-items-center">
-                  {localStorage.getItem("nameUser") || "noname"}
+                  {localStorage.getItem("nameUser")}
                 </h2>
                 <p className="text-sm text-gray-500 text-xs">
                   Full-stack developer
@@ -103,6 +103,7 @@ const UserHome = () => {
                       <input
                         id="input1"
                         type="text"
+                        placeholder="job title, keyword, company name"
                         className="input input-bordered"
                         value={searchQuery}
                         onChange={handleSearchQueryChange}
@@ -249,8 +250,8 @@ const UserHome = () => {
                           <h3 className="mb-1">
                             HOURS REQUIRED: {detailJob?.totalHours} hours
                           </h3>
-                          <h3 className="mb-2 flex-wrap">
-                            Blockchain Hash: {detailJob?.hash}
+                          <h3 className="mb-2 flex-wrap break-all">
+                            Hash: {detailJob?.hash}
                           </h3>
                           <h3 className="mb-2">
                             Salary: Rp. {detailJob?.salary}
@@ -260,10 +261,9 @@ const UserHome = () => {
                           </h3>
                           {detailJob?.Schedules.map((el) => (
                             <div key={el.id} className="space-y-1">
-                              <h3 className="mb-1">Day: {el.day}</h3>
-                              <h3 className="mb-1">Start: {el.startHour}</h3>
                               <h3 className="mb-1">
-                                Total Hour: {el.totalHour}
+                                Day: {el.day}, Start: {el.startHour}, Total
+                                Hour: {el.totalHour}
                               </h3>
                             </div>
                           ))}
