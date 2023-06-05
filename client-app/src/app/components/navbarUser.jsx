@@ -42,6 +42,10 @@ const NavBarUser = () => {
       console.log(err);
     }
   };
+  const signOut = () => {
+    localStorage.clear();
+    router.push("/");
+  };
   useEffect(() => {
     balanceRender();
   });
@@ -156,9 +160,6 @@ const NavBarUser = () => {
                                 {active && (
                                   <div className="absolute mt-2 py-2 w-56 bg-white rounded-md shadow-lg">
                                     <div className="p-4">
-                                      {/* <h2 className="text-lg font-semibold text-sm">
-                                        your pocket!
-                                      </h2> */}
                                       <p className="text-gray-600">
                                         You have {balance}
                                       </p>
@@ -178,33 +179,6 @@ const NavBarUser = () => {
                               </div>
                             )}
                           </Menu.Item>
-
-                          {/* <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Settings
-                              </a>
-                            )}
-                          </Menu.Item> */}
-                          {/* <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Sign out
-                              </a>
-                            )}
-                          </Menu.Item> */}
                         </Menu.Items>
                       </Transition>
                     </Menu>
@@ -259,11 +233,13 @@ const NavBarUser = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="#"
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700"
                                 )}
+                                onClick={() => {
+                                  signOut();
+                                }}
                               >
                                 Sign out
                               </a>

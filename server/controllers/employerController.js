@@ -55,14 +55,10 @@ class EmployerController {
   }
 
   static async getEmployer(req, res, next) {
-    try {
-      const employers = await Employer.findAndCountAll({
-        attributes: { exclude: ["password", "signer"] },
-      });
-      res.status(200).json(employers);
-    } catch (err) {
-
-    }
+    const employers = await Employer.findAndCountAll({
+      attributes: { exclude: ["password", "signer"] },
+    });
+    res.status(200).json(employers);
   }
 }
 
