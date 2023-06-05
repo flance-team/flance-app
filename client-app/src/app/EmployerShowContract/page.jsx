@@ -8,15 +8,19 @@ const EmployerShowContract = () => {
 
    const [contracts, setContracts] = useState([]);
    const getContracts = async () => {
-      // const headers = {
-      //    access_token: localStorage.getItem("access_token"),
-      //  };
-      const headers = {
-         "Content-Type": "application/json",
-         access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU3ODEwOTd9.gOZst1XQIdYcUJAEvjM-al_XJBW8GR9DGeSoXwGkTwk",
-      };
-      const { data: res } = await axios.get(`${base_url_server}/jobs/list-employee`, { headers });
-      setContracts(res);
+      try {
+         // const headers = {
+         //    access_token: localStorage.getItem("access_token"),
+         //  };
+         const headers = {
+            "Content-Type": "application/json",
+            access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU3ODEwOTd9.gOZst1XQIdYcUJAEvjM-al_XJBW8GR9DGeSoXwGkTwk",
+         };
+         const { data: res } = await axios.get(`${base_url_server}/jobs/list-employee`, { headers });
+         setContracts(res);
+      } catch (err) {
+         console.log(err);
+      }
    };
    useEffect(() => {
       getContracts();
@@ -49,8 +53,8 @@ const EmployerShowContract = () => {
                                  <td> {contract.id} </td>
                                  <td> {contract.Job.title} </td>
                                  <td> {contract.User.name} </td>
-                                 <td> {contract.timestamp} </td>
-                                 <td> {contract.endDate} </td>
+                                 <td> {new Date(contract.timestamp).toISOString().substring(0, 10)} </td>
+                                 <td> {new Date(contract.endDate).toISOString().substring(0, 10)} </td>
                                  <td> {contract.totalHours} </td>
                                  <td> {contract.totalSalary} </td>
                               </tr>
