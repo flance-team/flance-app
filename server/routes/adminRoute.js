@@ -6,6 +6,8 @@ const router = express.Router();
 router.post("/", AdminController.registerAdmin);
 router.post("/login", AdminController.adminLogin);
 
+router.get("/dashboard", authAdmin, AdminController.dashboard);
+
 router.get("/category", AdminController.getCategory);
 router.post("/addcategory", authAdmin, AdminController.createCategory);
 router.put("/editcategory/:id", authAdmin, AdminController.editCategory);

@@ -12,10 +12,22 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.hasMany(models.SkillList, { foreignKey: 'skillId' })
+      this.hasMany(models.SkillCategory, { foreignKey: 'skillId' })
     }
   }
   Skill.init({
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Name Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Name Must be filled!',
+        },
+      },
+    }
   }, {
     sequelize,
     modelName: 'Skill',

@@ -52,11 +52,23 @@ module.exports = {
       timestamp: {
         type: Sequelize.DATE
       },
+      endDate: {
+        type: Sequelize.DATE
+      },
       totalHours: {
         type: Sequelize.INTEGER
       },
       totalSalary: {
         type: Sequelize.INTEGER
+      },
+      hash: {
+        type: Sequelize.STRING
+      },
+      agreementBlockchainId: {
+        type: Sequelize.STRING
+      },
+      userBlockchainId: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

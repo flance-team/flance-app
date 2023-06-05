@@ -24,7 +24,7 @@ const LoginForm = () => {
     console.log(response);
   };
   return (
-    <>
+    <React.Fragment>
       <div className="flex flex-row w-screen h-screen">
         <div className="flex-initial w-7/12 h-screen">
           <img
@@ -71,7 +71,7 @@ const LoginForm = () => {
           </form>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 export default LoginForm;

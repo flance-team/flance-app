@@ -5,8 +5,10 @@ const {
   Employer,
   User,
   Category,
+  SkillCategory,
   Type,
   Skill,
+  Job,
 } = require("../models/index");
 
 class AdminController {
@@ -15,6 +17,29 @@ class AdminController {
       const { email, password } = req.body;
       const newAdmin = await Admin.create({ email, password });
       res.status(201).json(newAdmin);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async dashboard(req, res, next) {
+    try {
+
+      const totalUsers = await User.count();
+      const totalEmployers = await Employer.count();
+      const totalJobs = await Job.count();
+      const totalCategories = await Category.count();
+      const totalTypes = await Type.count();
+      const totalSkills = await Skill.count();
+
+      res.status(200).json({
+        totalUsers,
+        totalEmployers,
+        totalJobs,
+        totalCategories,
+        totalTypes,
+        totalSkills
+      });
     } catch (err) {
       next(err);
     }
@@ -55,7 +80,7 @@ class AdminController {
 
   static async getCategory(req, res, next) {
     try {
-      const categories = await Category.findAndCountAll();
+      const categories = await Category.findAndCountAll({ include: { model: SkillCategory, include: Skill } });
       res.status(200).json(categories);
     } catch (err) {
       next(err);

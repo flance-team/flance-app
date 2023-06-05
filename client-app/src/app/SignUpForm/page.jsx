@@ -2,7 +2,6 @@
 //signup User
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
 import React, { useEffect, useState } from "react";
 const base_url_server = "http://localhost:3000";
 const SignUpForm = () => {
@@ -15,6 +14,7 @@ const SignUpForm = () => {
     address: "",
     phoneNumber: "",
     gender: "",
+    skills: "",
   });
   const inputForm = (el) => {
     setFormValue({
@@ -24,12 +24,18 @@ const SignUpForm = () => {
   };
   const formOnSubmit = async (el) => {
     el.preventDefault();
-    const response = await axios.post("http://localhost:3000/users", formValue);
+    const response = await axios.post(`${base_url_server}/users`, formValue);
     console.log(response);
   };
-
+  const [selectedValues, setSelectedValues] = useState([]);
+  const handleChange = (event) => {
+    const selectedValue = event.target.value;
+    if (!selectedValues.includes(selectedValue)) {
+      setSelectedValues([...selectedValues, selectedValue]);
+    }
+  };
   return (
-    <>
+    <React.Fragment>
       <div className="flex flex-row w-screen h-screen">
         <div className="flex-initial w-5/12 h-screen">
           <img
@@ -129,8 +135,33 @@ const SignUpForm = () => {
                 onChange={inputForm}
               ></textarea>
             </div>
+            <div className="form-control col-span-2">
+              <label htmlFor="selectInput" className="block text-gray-700">
+                Select an option:
+              </label>
+              <select
+                id="selectInput"
+                onChange={handleChange}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              >
+                <option value="">-- Select --</option>
+                <option value="option1">Option 1</option>
+                <option value="option2">Option 2</option>
+                <option value="option3">Option 3</option>
+              </select>
+              <div className="mt-2">
+                <p>Selected values:</p>
+                <ul>
+                  {selectedValues.map((value) => (
+                    <li key={value}>{value}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
             <div className="col-span-2">
-              <button className="btn btn-outline w-full">Sign Up</button>
+              <button className="btn btn-outline w-full" onClick={formOnSubmit}>
+                Sign Up
+              </button>
             </div>
           </form>
           <div className="flex items-center mt-5">
@@ -144,7 +175,7 @@ const SignUpForm = () => {
           </div>
         </div>
       </div>
-    </>
+    </React.Fragment>
   );
 };
 export default SignUpForm;

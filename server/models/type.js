@@ -15,7 +15,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Type.init({
-    name: DataTypes.STRING
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'Name Must be filled!',
+        },
+        notEmpty: {
+          msg: 'Name Must be filled!',
+        },
+      },
+    }
   }, {
     sequelize,
     modelName: 'Type',
