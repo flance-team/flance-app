@@ -85,7 +85,7 @@ class AdminController {
       const categories = await Category.findAndCountAll({ include: { model: SkillCategory, include: Skill } });
       res.status(200).json(categories);
     } catch (err) {
-      next(err);
+
     }
   }
 
@@ -167,7 +167,7 @@ class AdminController {
 
       res.status(201).json(newType);
     } catch (err) {
-      next(err);
+
     }
   }
 
@@ -218,7 +218,7 @@ class AdminController {
         res.status(200).json(skills);
       }
     } catch (err) {
-      next(err);
+
     }
   }
 

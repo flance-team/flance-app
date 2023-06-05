@@ -26,11 +26,19 @@ const SignUpForm = () => {
   };
   const formOnSubmit = async (el) => {
     el.preventDefault();
-    const response = await axios.post("http://localhost:3000/users", formValue);
+    console.log(formValue, "form value");
+    try {
+      const response = await axios.post(
+        `${base_url_server}/employers`,
+        formValue
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
   const dataCategory = async () => {
     try {
-      const response = await axios.get(`${base_url_server}/admins/category`);
+      const response = await axios.get(`${base_url_server}/admins/type`);
       const dataCat = response.data.rows;
       setDataCat(dataCat);
     } catch (err) {
@@ -160,7 +168,14 @@ const SignUpForm = () => {
               ></textarea>
             </div>
             <div className="col-span-2">
-              <button className="btn btn-outline w-full">Sign Up</button>
+              <button
+                className="btn btn-outline w-full"
+                onClick={() => {
+                  formOnSubmit;
+                }}
+              >
+                Sign Up
+              </button>
             </div>
           </form>
           <div className="flex items-center mt-5">

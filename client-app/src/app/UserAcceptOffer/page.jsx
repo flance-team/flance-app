@@ -10,48 +10,7 @@ const UserAcceptOffer = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const base_url_server = "http://localhost:3000";
-  const data = [
-    {
-      id: 1,
-      title: "Barista Semesta",
-      employer: 1,
-      location: "Bandung",
-      salary: 100000,
-      expireDate: "2023-09-12",
-      status: "Pending",
-      categoryId: 1,
-      totalHour: 20,
-      duration: 2,
-      Category: {
-        id: 1,
-        name: "Barista",
-      },
-      Employer: {
-        id: 1,
-        CompanyName: "Flance",
-      },
-    },
-    {
-      id: 2,
-      title: "Barista Lokal",
-      employer: 1,
-      location: "Bandung",
-      salary: 100000,
-      expireDate: "2023-09-12",
-      status: "Accepted",
-      categoryId: 1,
-      totalHour: 20,
-      duration: 2,
-      Category: {
-        id: 1,
-        name: "Barista",
-      },
-      Employer: {
-        id: 1,
-        CompanyName: "Flance",
-      },
-    },
-  ];
+  const [data, setData] = useState();
   const statusAccept = async (id) => {
     const headers = {
       access_token: localStorage.getItem("access_token"),
@@ -69,14 +28,23 @@ const UserAcceptOffer = () => {
       { headers }
     );
   };
-
+  const appliedJob = async () => {
+    const headers = {
+      access_token: localStorage.getItem("access_token"),
+    };
+    const response = await axios.get(`${base_url_server}/jobs/list-apply`, {
+      headers,
+    });
+    setData(response.data);
+    console.log(response);
+  };
   const buttonAction = (status, id) => {
-    if (status === "Pending") {
+    if (status === "pending") {
       return (
         <>
           <button
             type="button"
-            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-green-500 hover:bg-gray-50 mx-1"
             onClick={() => {
               statusAccept(id);
             }}
@@ -85,7 +53,7 @@ const UserAcceptOffer = () => {
           </button>
           <button
             type="button"
-            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-gray-50 mr-1"
             onClick={() => {
               statusDecline(id);
             }}
@@ -94,7 +62,7 @@ const UserAcceptOffer = () => {
           </button>
           <button
             type="button"
-            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-gray-50"
             onClick={() => {
               setOpen(true);
             }}
@@ -125,6 +93,9 @@ const UserAcceptOffer = () => {
   useEffect(() => {
     buttonAction();
   }, [statusAccept]);
+  useEffect(() => {
+    appliedJob();
+  }, []);
   return (
     <>
       <NavBarUser />
@@ -139,7 +110,7 @@ const UserAcceptOffer = () => {
             </div>
             <div className="flex justify-start my-2">
               <h1 className="text-1xl">
-                You have (amount) of jobs you applied:
+                You have {data?.length} of jobs you applied:
               </h1>
             </div>
 
@@ -150,7 +121,7 @@ const UserAcceptOffer = () => {
                 </h3>
               </div>
               <ul role="list" className="divide-y divide-gray-100">
-                {data.map((person) => (
+                {data?.map((person) => (
                   <li
                     key={person.id}
                     className="flex justify-between gap-x-6 py-5"
@@ -163,19 +134,20 @@ const UserAcceptOffer = () => {
                       />
                       <div className="min-w-0 flex-auto">
                         <p className="text-sm font-semibold leading-6 text-gray-900">
-                          {person.title}
+                          {person.Job.title}
                         </p>
                         <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                          {person.Employer.CompanyName}, {person.location}
+                          {person.Job.Employer.companyName},{""}
+                          {person.Job.location}
                         </p>
                       </div>
                     </div>
                     <div className="hidden sm:flex sm:flex-col sm:items-end">
                       <p className="text-sm leading-6 text-gray-900">
-                        {person.status}, until: {person.expireDate}
+                        {person.status}, until: {person.Job.expireDate}
                       </p>
                       <p className="mt-1 text-xs leading-5 text-gray-500 py-2 px-2">
-                        {buttonAction(person.status, person.id)}
+                        {buttonAction(person.status, person.Job.id)}
                       </p>
                     </div>
                   </li>
