@@ -61,7 +61,7 @@ class EmployerController {
       });
       res.status(200).json(employers);
     } catch (err) {
-      next(err);
+
     }
   }
 }

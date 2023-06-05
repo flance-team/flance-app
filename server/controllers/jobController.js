@@ -36,7 +36,7 @@ class jobController {
             });
             res.status(200).json(jobs);
         } catch (err) {
-            next(err);
+
         }
     }
 
