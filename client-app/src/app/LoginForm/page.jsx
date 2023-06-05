@@ -21,14 +21,12 @@ const LoginForm = () => {
   };
   const formOnSubmit = async (el) => {
     el.preventDefault();
-    // const response = JSON.stringify(formValue);
-    // console.log(response, "ini response");
-    console.log(formValue);
     try {
       const response = await axios.post(`${base_url_server}/login`, formValue);
       localStorage.setItem("access_token", response.data.access_token);
       if (response.data.role === "user") {
         router.push("/UserHome");
+        localStorage.setItem("nameUser", response.data.name);
       }
     } catch (err) {
       console.log(err);
