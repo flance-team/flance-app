@@ -1,81 +1,72 @@
 "use client";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./AddCategoryForm.css";
+import Layout from "../components/layout";
+import axios from "axios";
 
 const AddCategoryForm = () => {
+   const base_url_server = "http://localhost:3000";
+   const backgroundImage = "../assets/AddCategoryForm.jpg";
+
+   const [formValue, setFormValue] = useState({
+      name: "",
+   });
+   const inputForm = (el) => {
+      setFormValue({
+         ...formValue,
+         [el.target.name]: el.target.value,
+      });
+   };
+
+   const formOnSubmit = async (el) => {
+      el.preventDefault();
+      // const response = JSON.stringify(formValue);
+      const headers = {
+         Accept: "application/json, text/plain, */*",
+         "Content-Type": "application/json",
+         access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU3ODEwOTd9.gOZst1XQIdYcUJAEvjM-al_XJBW8GR9DGeSoXwGkTwk",
+      };
+      const response = await axios.post(`${base_url_server}/admins/addcategory`, formValue, {
+         headers,
+      });
+      console.log(response);
+   };
+
    return (
       <React.Fragment>
-         <div className="flex space-x-4">
-            <div className="flex-1 text-black ml-7 mt-4">
-               <img
-                  src="/Logo.png"
-                  alt="me"
-                  width="48"
-                  height="48"
-               />
-            </div>
-            <div className="flex-1 text-white flex justify-end items-center">
-               <div className="dropdown dropdown-end mt-4 mr-8">
-                  <label
-                     tabIndex="0"
-                     className="btn btn-ghost btn-circle avatar">
-                     <div className="w-10 rounded-full">
-                        <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                     </div>
-                  </label>
-                  <ul
-                     tabIndex="0"
-                     className="mt-4 p-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-                     <li>
-                        <a className="justify-between">Home</a>
-                     </li>
-                     <li>
-                        <a className="justify-between">Profile</a>
-                     </li>
-                     <li>
-                        <a>Settings</a>
-                     </li>
-                     <li>
-                        <a>Logout</a>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-         <hr className="mt-4"></hr>
-         <div
-            class="container"
-            className="flex flex-col justify-center items-center w-5/12">
-            <div className="text-center mb-5">
-               <h1 className="text-3xl font-bold text-gray-600 mb-4">Add New Category</h1>
-            </div>
-            <form className="flex flex-col">
-               <div className="form-control mb-4">
-                  <label
-                     htmlFor="category"
-                     className="label text-gray-600">
-                     Category:
-                  </label>
-                  <input
-                     type="text"
-                     id="category"
-                     placeholder="Type here"
-                     name="category"
-                     className="input input-bordered py-3 mb-2"
-                     // onChange={inputForm}
-                  />
-               </div>
-               <div className="justify-center items-center">
+         <Layout />
+         {/* <div
+        className="h-screen w-screen flex items-center justify-center bg-cover"
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      > */}
+         <div className="bg-white rounded-lg shadow-md m-2 p-2">
+            <h1 className="text-3xl w-auto">Create Category</h1>
+            <form className="w-auto">
+               <div className="md:w-1/4">
+                  <div className="form-control mb-4">
+                     <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-700">
+                        Name:
+                     </label>
+                     <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        placeholder="Enter name"
+                        className="border border-gray-300 p-2 rounded-md w-full"
+                        onChange={inputForm}
+                     />
+                  </div>
                   <button
-                     className="btn btn-outline bg-gray-600 justify-center items-center py-2 px-4"
-                     // onClick={formOnSubmit}>
-                  >
-                     Add
+                     type="submit"
+                     className="bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer w-full t-2"
+                     onClick={formOnSubmit}>
+                     SUBMIT
                   </button>
                </div>
             </form>
          </div>
+         {/* </div> */}
       </React.Fragment>
    );
 };

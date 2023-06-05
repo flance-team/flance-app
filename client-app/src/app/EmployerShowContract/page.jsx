@@ -8,10 +8,14 @@ const EmployerShowContract = () => {
 
    const [contracts, setContracts] = useState([]);
    const getContracts = async () => {
+      // const headers = {
+      //    access_token: localStorage.getItem("access_token"),
+      //  };
       const headers = {
-         access_token: localStorage.getItem("access_token"),
+         "Content-Type": "application/json",
+         access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU3ODEwOTd9.gOZst1XQIdYcUJAEvjM-al_XJBW8GR9DGeSoXwGkTwk",
       };
-      const { data: res } = await axios.get(`${base_url_server}/jobs/list-employee`);
+      const { data: res } = await axios.get(`${base_url_server}/jobs/list-employee`, { headers });
       setContracts(res);
    };
    useEffect(() => {
@@ -20,46 +24,7 @@ const EmployerShowContract = () => {
 
    return (
       <React.Fragment>
-         <div className="flex space-x-4">
-            <div className="flex-1 text-black ml-7 mt-4">
-               <img
-                  // src="/Logo.png"
-                  alt="Logo"
-                  width="48"
-                  height="48"
-               />
-            </div>
-            {JSON.stringify(contracts)}
-            <div className="flex-1 text-white flex justify-end items-center">
-               <div className="dropdown dropdown-end mt-4 mr-8">
-                  <label
-                     tabIndex="0"
-                     className="btn btn-ghost btn-circle avatar">
-                     <div className="w-10 rounded-full">
-                        <img
-                        // src="/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                        />
-                     </div>
-                  </label>
-                  <ul
-                     tabIndex="0"
-                     className="mt-4 p-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-                     <li>
-                        <a className="justify-between">Home</a>
-                     </li>
-                     <li>
-                        <a className="justify-between">Profile</a>
-                     </li>
-                     <li>
-                        <a>Settings</a>
-                     </li>
-                     <li>
-                        <a>Logout</a>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-         </div>
+         <Layout />
          <div className="p-5 h-screen bg-gray-100">
             <h1 className="text-3xl mb-6 mt-2 text-gray-600">Employer Show Contract</h1>
 
@@ -76,7 +41,7 @@ const EmployerShowContract = () => {
                         <th>Total Salary</th>
                      </tr>
                   </thead>
-                  <tbody className="text-3xl">
+                  <tbody className="text-2xl">
                      {contracts &&
                         contracts.map((contract) => {
                            return (
