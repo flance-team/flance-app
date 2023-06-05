@@ -72,7 +72,7 @@ const CreateJobForm = () => {
     expiredDate: "",
     categoryId: "",
     duration: 0,
-    day: 1,
+    day: 0,
     startHour: "",
     totalHour: 0,
   });
@@ -107,22 +107,22 @@ const CreateJobForm = () => {
       console.log(err);
     }
   };
-  const initializeMap = () => {
-    // Initialize the map and attach event listeners
-    const map = new window.google.maps.Map(document.getElementById("map"), {
-      center: { lat: 0, lng: 0 },
-      zoom: 2,
-    });
+  // const initializeMap = () => {
+  //   // Initialize the map and attach event listeners
+  //   const map = new window.google.maps.Map(document.getElementById("map"), {
+  //     center: { lat: 0, lng: 0 },
+  //     zoom: 2,
+  //   });
 
-    // Add a click event listener to get the selected location
-    map.addListener("click", (event) => {
-      const selectedLocation = {
-        lat: event.latLng.lat(),
-        lng: event.latLng.lng(),
-      };
-      setLocation(selectedLocation);
-    });
-  };
+  //   // Add a click event listener to get the selected location
+  //   map.addListener("click", (event) => {
+  //     const selectedLocation = {
+  //       lat: event.latLng.lat(),
+  //       lng: event.latLng.lng(),
+  //     };
+  //     setLocation(selectedLocation);
+  //   });
+  // };
 
   useEffect(() => {
     dataCategory();
@@ -176,7 +176,8 @@ const CreateJobForm = () => {
                 type="text"
                 id="location"
                 name="location"
-                placeholder="Selected Location"
+                placeholder="Enter Location"
+                className="border border-gray-300 p-2 rounded-md w-full"
                 // value={location ? `${location.lat}, ${location.lng}` : ""}
                 // readOnly
               />
@@ -265,8 +266,16 @@ const CreateJobForm = () => {
                 htmlFor="day"
                 className="block text-sm font-medium text-gray-700"
               >
-                Day: 1
+                Day:
               </label>
+              <input
+                type="text"
+                id="day"
+                name="day"
+                placeholder="Enter day"
+                className="border border-gray-300 p-2 rounded-md w-full"
+                onChange={inputForm}
+              />
             </div>
             <div className="w-1/2">
               <label

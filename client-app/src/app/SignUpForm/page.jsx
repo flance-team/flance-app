@@ -6,6 +6,29 @@ import React, { useEffect, useState } from "react";
 const base_url_server = "http://localhost:3000";
 const SignUpForm = () => {
   const router = useRouter();
+  const [dataSkill, setDataSkill] = useState();
+  const dataSkills = async () => {
+    try {
+      const response = await axios.get(`${base_url_server}/admins/skill`);
+      const data = response.data.rows;
+      setDataSkill(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const [selectedValues, setSelectedValues] = useState([]);
+  const [skill, setSkill] = useState([]);
+  console.log(selectedValues, "Here");
+  // for (let i = 0; i < selectedValues.length; i++) {
+  //   for (let j = 0; j < dataSkill.length; j++) {
+  //     if (selectedValues[i] === dataSkill[j]) {
+  //       console.log(selectedValues[0], dataSkill[0], "ini");
+  //       setSkill(dataSkill[i]);
+  //     }
+  //   }
+  // }
+  console.log(skill, "list skill");
   const [formValue, setFormValue] = useState({
     email: "",
     password: "",
@@ -14,7 +37,6 @@ const SignUpForm = () => {
     address: "",
     phoneNumber: "",
     gender: "",
-    skills: "",
   });
   const inputForm = (el) => {
     setFormValue({
@@ -25,15 +47,29 @@ const SignUpForm = () => {
   const formOnSubmit = async (el) => {
     el.preventDefault();
     const response = await axios.post(`${base_url_server}/users`, formValue);
-    console.log(response);
+    const inputSkills = await axios.post(`${base_url_server}/users/addSkills`, {
+      skills: selectedValues,
+    });
   };
-  const [selectedValues, setSelectedValues] = useState([]);
+
   const handleChange = (event) => {
     const selectedValue = event.target.value;
     if (!selectedValues.includes(selectedValue)) {
       setSelectedValues([...selectedValues, selectedValue]);
     }
+    // for (let i = 0; i < selectedValues.length; i++) {
+    //   for (let j = 0; j < dataSkill.length; j++) {
+    //     if (selectedValues[i] === dataSkill[j]) {
+    //       console.log(selectedValues[0], dataSkill[0], "ini");
+    //       setSkill(dataSkill[i]);
+    //     }
+    //   }
+    // }
   };
+
+  useEffect(() => {
+    dataSkills();
+  }, []);
   return (
     <React.Fragment>
       <div className="flex flex-row w-screen h-screen">
@@ -142,12 +178,17 @@ const SignUpForm = () => {
               <select
                 id="selectInput"
                 onChange={handleChange}
+                name="skills"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               >
                 <option value="">-- Select --</option>
-                <option value="option1">Option 1</option>
-                <option value="option2">Option 2</option>
-                <option value="option3">Option 3</option>
+                {dataSkill?.map((el) => {
+                  return (
+                    <option key={el.id} value={el.id}>
+                      {el.name}
+                    </option>
+                  );
+                })}
               </select>
               <div className="mt-2">
                 <p>Selected values:</p>

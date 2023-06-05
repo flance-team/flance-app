@@ -10,6 +10,8 @@ const {
   Skill,
   Job,
 } = require("../models/index");
+const { Op } = require("sequelize");
+
 
 class AdminController {
   static async registerAdmin(req, res, next) {
@@ -89,8 +91,27 @@ class AdminController {
 
   static async createCategory(req, res, next) {
     try {
-      const { name } = req.body;
+      const { name, skills } = req.body;
       const newCategory = await Category.create({ name });
+
+      let arrSkill = [];
+
+      for (let i = 0; i < skills.length; i++) {
+        const [skill, created] = await Skill.findOrCreate({
+          where: {
+            name: skills[i],
+          },
+          defaults: {
+            name: skills[i],
+          },
+        });
+
+        arrSkill.push({ skillId: skill.id, categoryId: newCategory.id });
+
+      }
+
+      await SkillCategory.bulkCreate(arrSkill);
+
       res.status(201).json(newCategory);
     } catch (err) {
       next(err);
@@ -143,6 +164,7 @@ class AdminController {
     try {
       const { name } = req.body;
       const newType = await Type.create({ name });
+
       res.status(201).json(newType);
     } catch (err) {
       next(err);
@@ -183,8 +205,18 @@ class AdminController {
 
   static async getSkill(req, res, next) {
     try {
-      const skills = await Skill.findAndCountAll();
-      res.status(200).json(skills);
+      if (Object.keys(req.query).length === 0) {
+        const skills = await Skill.findAndCountAll();
+        res.status(200).json(skills);
+      }
+      else {
+        const skills = await Skill.findAll({
+          where: {
+            name: { [Op.iLike]: `%${req.query.s}%` },
+          },
+        });
+        res.status(200).json(skills);
+      }
     } catch (err) {
       next(err);
     }
@@ -225,6 +257,30 @@ class AdminController {
       res.status(200).json({
         message: "Skill has been deleted",
       });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
+  static async getEmployerById(req, res, next) {
+    try {
+      const id = +req.params.id;
+      const employer = await Employer.findOne({
+        where: {
+          id,
+        },
+        attributes: {
+          exclude: ["password"],
+        }
+      });
+
+      if (!employer) {
+        throw ({ name: "Not Found", message: "Employer not found", code: 404 })
+      }
+
+      res.status(200).json(employer);
+
     } catch (err) {
       next(err);
     }

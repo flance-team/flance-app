@@ -81,38 +81,38 @@ describe("Employer success crud job", () => {
   it("POST /jobs, should return a new job", async () => {
     token = await getAccessToken();
 
-    // const res = await request(app)
-    //   .post("/jobs")
-    //   .set("access_token", token)
-    //   .send({
-    //     title: "kasir kopi kenangan",
-    //     location: "BSD",
-    //     salary: 30000,
-    //     expireDate: "2023-08-08",
-    //     categoryId: 1,
-    //     duration: 30,
-    //     schedules: [
-    //       {
-    //         day: 1,
-    //         startHour: "10:00:00",
-    //         totalHour: 4,
-    //       },
-    //       {
-    //         day: 2,
-    //         startHour: "10:00:00",
-    //         totalHour: 4,
-    //       },
-    //       {
-    //         day: 5,
-    //         startHour: "10:00:00",
-    //         totalHour: 4,
-    //       },
-    //     ],
-    //   })
-    //   .expect(201);
+    const res = await request(app)
+      .post("/jobs")
+      .set("access_token", token)
+      .send({
+        title: "kasir kopi kenangan",
+        location: "BSD",
+        salary: 30000,
+        expireDate: "2023-08-08",
+        categoryId: 1,
+        duration: 30,
+        schedules: [
+          {
+            day: 1,
+            startHour: "10:00:00",
+            totalHour: 4,
+          },
+          {
+            day: 2,
+            startHour: "10:00:00",
+            totalHour: 4,
+          },
+          {
+            day: 5,
+            startHour: "10:00:00",
+            totalHour: 4,
+          },
+        ],
+      })
+      .expect(201);
 
-    // expect(typeof res.body).toBe("object");
-    // expect(res.body).toHaveProperty("id");
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("id");
   });
 
   it("GET /list, should return all jobs based on employer id", async () => {
@@ -182,7 +182,7 @@ describe("User success crud job", () => {
   const getAccessToken = async () => {
     const res = await request(app)
       .post("/login")
-      .send({ email: "test2@user.com", password: "123456" })
+      .send({ email: "test3@user.com", password: "123456" })
       .expect(200);
 
     return res.body.access_token;
@@ -198,5 +198,56 @@ describe("User success crud job", () => {
 
     expect(typeof res.body).toBe("object");
     expect(res.body[0]).toHaveProperty("title");
+  });
+
+  it("GET /list-apply, should return all jobs list based on user apply", async () => {
+    const res = await request(app)
+      .get("/jobs/list-apply")
+      .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body[0]).toHaveProperty("Job");
+  });
+
+  it("POST /apply/:id, should return all jobs applied", async () => {
+    const res = await request(app)
+      .post("/jobs/apply/4")
+      .set("access_token", token)
+      .expect(201);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("status");
+  });
+
+  it("PATCH /accept/:id, should return create job contract", async () => {
+    const res = await request(app)
+      .patch("/jobs/accept/3")
+      .set("access_token", token)
+      .expect(201);
+
+    console.log(res.body);
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("agreementBlockchainId");
+  });
+
+  it("PATCH /reject-user/:id, should return create job contract", async () => {
+    const res = await request(app)
+      .patch("/jobs/reject-user/4")
+      .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("status");
+  });
+
+  it("GET /schedules/:id, should return schedules based on job id", async () => {
+    const res = await request(app)
+      .get("/jobs/schedules/1")
+      .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("Schedules");
   });
 });

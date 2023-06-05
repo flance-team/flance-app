@@ -1,10 +1,10 @@
 import React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
 const Navbar = () => {
   const pathname = usePathname();
-
+  const router = useRouter();
   const isActive = (href) => {
     return pathname === href ? "bg-gray-800" : "";
   };
@@ -70,6 +70,19 @@ const Navbar = () => {
                 Skills
               </a>
             </Link>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="block px-4 py-2 text-gray-200 hover:bg-gray-800"
+              onClick={(e) => {
+                e.preventDefault();
+                localStorage.removeItem("access_token");
+                router.push("/login");
+              }}
+            >
+              Logout
+            </a>
           </li>
         </ul>
       </nav>

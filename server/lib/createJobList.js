@@ -11,6 +11,16 @@ const JOB_LIST = [
     jobId: 1,
     status: "applied",
   },
+  {
+    userId: 2,
+    jobId: 2,
+    status: "pending",
+  },
+  {
+    userId: 2,
+    jobId: 3,
+    status: "pending",
+  },
 ];
 
 const createJobList = async () => {

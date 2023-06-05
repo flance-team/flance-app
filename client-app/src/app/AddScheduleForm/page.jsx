@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import "./AddScheduleForm.css";
 
 const AddScheduleForm = () => {
 <<<<<<< HEAD

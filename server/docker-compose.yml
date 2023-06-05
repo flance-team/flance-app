@@ -1,0 +1,10 @@
+version: "1.0"
+
+services:
+  flance-app:
+    build: ./
+    container_name: flance-app
+    ports:
+      - "80:3000"
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
