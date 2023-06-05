@@ -76,7 +76,7 @@ const UserAcceptOffer = () => {
         <>
           <button
             type="button"
-            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-green-500 hover:bg-gray-50 mx-1"
             onClick={() => {
               statusAccept(id);
             }}
@@ -85,7 +85,7 @@ const UserAcceptOffer = () => {
           </button>
           <button
             type="button"
-            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-gray-50 mr-1"
             onClick={() => {
               statusDecline(id);
             }}
@@ -94,7 +94,7 @@ const UserAcceptOffer = () => {
           </button>
           <button
             type="button"
-            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-gray-50"
             onClick={() => {
               setOpen(true);
             }}

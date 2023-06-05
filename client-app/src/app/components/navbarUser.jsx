@@ -1,6 +1,6 @@
 "use Client";
 
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
@@ -10,11 +10,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const NavBarUser = () => {
   const router = useRouter();
 
-  const base_url_server = "http://localhost:3001";
+  const base_url_server = "http://localhost:3000";
+  const [balance, setBalance] = useState();
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
@@ -22,6 +24,27 @@ const NavBarUser = () => {
   function isActive(path) {
     return router.pathname === path;
   }
+  const balanceRender = async () => {
+    try {
+      const headers = {
+        access_token: localStorage.getItem("access_token"),
+      };
+      const response = await axios.get(
+        `${base_url_server}/transactions/user/balance`,
+        { headers }
+      );
+      const formattedAmount = response.data.balance.toLocaleString("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      });
+      setBalance(formattedAmount);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    balanceRender();
+  });
 
   return (
     <>
@@ -137,10 +160,15 @@ const NavBarUser = () => {
                                         your pocket!
                                       </h2> */}
                                       <p className="text-gray-600">
-                                        You have (amount)
+                                        You have {balance}
                                       </p>
                                       <div className="mt-4 flex justify-end">
-                                        <button className="btn btn-primary mr-2">
+                                        <button
+                                          className="btn btn-primary mr-2"
+                                          onClick={() => {
+                                            router.push("/UserDeposit");
+                                          }}
+                                        >
                                           Withdraw
                                         </button>
                                       </div>

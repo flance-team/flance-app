@@ -24,13 +24,28 @@ const UserHome = () => {
   };
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
-  const [dataJob, setDataJob] = useState();
+  const [dataJob, setDataJob] = useState([]);
+
+  const [detailJob, setDetailJob] = useState();
   const jobs = async () => {
     const data = await axios.get(`${base_url_server}/jobs`);
-    console.log(data);
-    setDataJob(data);
+    console.log(data.data);
+    setDataJob(data.data);
   };
-  useEffect(() => {});
+  const jobDetail = async (id) => {
+    const headers = {
+      access_token: localStorage.getItem("access_token"),
+    };
+    const data = await axios.get(`${base_url_server}//schedules/${id}`, {
+      headers,
+    });
+
+    setDetailJob(data);
+  };
+  console.log(dataJob, "disini");
+  useEffect(() => {
+    jobs();
+  }, []);
 
   return (
     <>
@@ -40,8 +55,8 @@ const UserHome = () => {
         <div className="flex flex-grow">
           <aside className="bg-white w-64">
             {/* Sidebar content */}
-            <div className="card w-56 bg-base-100 shadow-xl">
-              <div className="w-32 h-32 flex items-center justify-center rounded-full overflow-hidden">
+            <div className="card w-56 bg-base-100 shadow-xl items-center">
+              <div className="w-32 h-32 flex  justify-center rounded-full overflow-hidden">
                 <img src="./userprofile.png" alt="Profile Image" className="" />
               </div>
               <div className="card-body text-center items-center">
@@ -113,76 +128,31 @@ const UserHome = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="card w-11/12 bg-base-100 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title">Company Name here</h2>
-                  <p>Job Required here (fullstack developer)</p>
-                  <div className="card-actions justify-end">
-                    <button
-                      className="btn btn-primary"
-                      onClick={() => {
-                        setOpen(true);
-                      }}
-                    >
-                      Details
-                    </button>
+              {dataJob.map((el) => {
+                <div className="card w-11/12 bg-base-100 shadow-xl">
+                  <div className="card-body">
+                    <h2 className="card-title">Company Name here</h2>
+                    <p>Job Required here (fullstack developer)</p>
+                    <div className="card-actions justify-end">
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => {
+                          setOpen(true), jobDetail(id);
+                        }}
+                      >
+                        Details
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </div>
-
-              <div className="card w-fit bg-base-100 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>If a dog chews shoes, whose shoes does he choose?</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
-                  </div>
-                </div>
-              </div>
-              <div className="card w-fit bg-base-100 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>If a dog chews shoes, whose shoes does he choose?</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
-                  </div>
-                </div>
-              </div>
-              <div className="card w-fit bg-base-100 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>If a dog chews shoes, whose shoes does he choose?</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
-                  </div>
-                </div>
-              </div>
-              <div className="card w-fit bg-base-100 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>If a dog chews shoes, whose shoes does he choose?</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
-                  </div>
-                </div>
-              </div>
-              <div className="card w-fit bg-base-100 shadow-xl">
-                <div className="card-body">
-                  <h2 className="card-title">Card title!</h2>
-                  <p>If a dog chews shoes, whose shoes does he choose?</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
-                  </div>
-                </div>
-              </div>
+                </div>;
+              })}
             </div>
           </main>
 
           <aside className="bg-white w-64 my-2">
             {/* Sidebar content */}
             <div className="card w-56 bg-base-100 shadow-xl">
-              <div class="w-24 mask mask-squircle">
+              <div className="w-24 mask mask-squircle">
                 <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
               </div>
               <h2 className="card-title text-sm my-2 mx-2">Sponsors:</h2>
@@ -251,7 +221,7 @@ const UserHome = () => {
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900"
                       >
-                        Payment successful
+                        Job details
                       </Dialog.Title>
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
