@@ -174,6 +174,16 @@ describe("Employer success crud job", () => {
     expect(typeof res.body).toBe("object");
     expect(res.body).toHaveProperty("Schedules");
   });
+
+  it("PATCH /terminate-job/:id, should return job status became inactive based on job id", async () => {
+    const res = await request(app)
+      .patch("/jobs/terminate-job/1")
+      .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("status");
+  });
 });
 
 describe("User success crud job", () => {
