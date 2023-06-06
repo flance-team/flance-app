@@ -145,7 +145,7 @@ const Navbar = () => {
                   </div>
                </li>
                <li>
-                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ml-1 ${isActive("/skills")}`}>
+                  <div className="flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ml-1">
                      <svg
                         class="h-7 w-7 text-gray-200"
                         fill="none"
