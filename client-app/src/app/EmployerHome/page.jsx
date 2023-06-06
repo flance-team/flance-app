@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import ApplicantModal from "../components/ModalApplicant";
 import CreateJobForm from "../components/CreateJobForm";
 import Loading from "../components/Loading";
-
+import { useRouter } from "next/navigation";
 const base_url_server = "http://localhost:3000";
 
 const EmployerHome = () => {
@@ -16,6 +16,15 @@ const EmployerHome = () => {
   const [showApplicantsModal, setShowApplicantsModal] = useState(false);
   const [showCreateJobForm, setShowCreateJobForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  if (!localStorage.getItem("access_token")) {
+    router.push("/");
+  }
+
+  if (localStorage.getItem("role") === "user") {
+    router.push("/UserHome");
+  }
 
   useEffect(() => {
     getJobs();

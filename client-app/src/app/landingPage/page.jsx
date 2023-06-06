@@ -8,8 +8,17 @@ import { CallToAction } from "../components/CallToAction";
 import { Testimonials } from "../components/Testimonials";
 import { Faqs } from "../components/Faqs";
 import { Footer } from "../components/Footer";
+import { useRouter } from "next/navigation";
 
 const LandingPage = () => {
+  const router = useRouter();
+  if (localStorage.getItem("role") === "employer") {
+    router.push("/EmployerHome");
+  }
+  if (localStorage.getItem("role") === "user") {
+    router.push("/UserHome");
+  }
+
   return (
     <>
       <Head>

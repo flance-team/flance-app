@@ -11,19 +11,16 @@ const base_url_server = "http://localhost:3000";
 const SignUpForm = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [dataSkill, setDataSkill] = useState();
-  const dataSkills = async () => {
-    try {
-      const response = await axios.get(`${base_url_server}/admins/skill`);
-      const data = response.data.rows;
-      setDataSkill(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
+  if (localStorage.getItem("role") === "employer") {
+    router.push("/EmployerHome");
+  }
+  if (localStorage.getItem("role") === "user") {
+    router.push("/UserHome");
+  }
 
   const [selectedValues, setSelectedValues] = useState([]);
-  const [skill, setSkill] = useState([]);
+
   const [parentBadges, setParentBadges] = useState([]);
 
   const handleBadgesChange = (badges) => {
@@ -78,13 +75,6 @@ const SignUpForm = () => {
   if (loading) {
     return <Loading />;
   }
-
-  const handleChange = (event) => {
-    const selectedValue = event.target.value;
-    if (!selectedValues.includes(selectedValue)) {
-      setSelectedValues([...selectedValues, selectedValue]);
-    }
-  };
 
   return (
     <React.Fragment>
