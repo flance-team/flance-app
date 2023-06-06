@@ -1,11 +1,13 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState, Fragment, useRef } from "react";
-import authMiddleware from "../../middleware";
+
 import { Dialog, Transition } from "@headlessui/react";
 import CurrencyInput from "react-currency-input-field";
 import NavbarEmployer from "../components/NavbarEmployer";
 import { useRouter } from "next/navigation";
+
+import Swal from "sweetalert2";
 
 const baseUrl = `http://localhost:3000`;
 
@@ -33,9 +35,20 @@ const EmployerDeposit = () => {
     console.log(res);
 
     if (res > balance) {
-      return console.log("under budget");
+      Swal.fire({
+        icon: "error",
+        title: "Balance is not enough",
+      });
     } else if (res < 0) {
-      return console.log("Value cant be negative");
+      Swal.fire({
+        icon: "error",
+        title: "Input Can't be negative",
+      });
+    } else if (res == null || res == undefined || res == "" || res == 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Please Input First",
+      });
     } else {
       const response = await axios.post(
         `${baseUrl}/transactions/employer/withdraw`,
@@ -49,7 +62,11 @@ const EmployerDeposit = () => {
         }
       );
       setBalance(response.data.updatedBalance);
-      amountToWithdraw.current.value = "";
+      Swal.fire({
+        icon: "success",
+
+        title: "Withdrawal success",
+      });
     }
   };
 
@@ -60,7 +77,7 @@ const EmployerDeposit = () => {
     const res = currentValue.replace(/\D/g, "");
     console.log(res);
 
-    if (res < 0) {
+    if (res <= 0) {
       return console.log("Value cant be negative");
     } else {
       const response = await axios.post(
@@ -74,7 +91,7 @@ const EmployerDeposit = () => {
       );
       console.log(response.data);
 
-      window.snap.pay(response.data, {
+      window?.snap?.pay(response.data, {
         onSuccess: async (result) => {
           console.log("success");
           //   console.log(result);
@@ -87,6 +104,7 @@ const EmployerDeposit = () => {
               headers: { access_token: localStorage.getItem("access_token") },
             }
           );
+
           await getBalance();
         },
       });
@@ -114,13 +132,14 @@ const EmployerDeposit = () => {
     //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtcEBtYWlsLmNvbSIsInJvbGUiOiJlbXBsb3llciIsImlkIjoxLCJpYXQiOjE2ODU4NjQ0NzB9.SJOzBp4WOuQJ9zZyPE8DQe0efUp2KDODEH2RwzFg0T8"
     // );
     getBalance();
+    amountToWithdraw.current.value = 0;
   }, []);
 
   console.log(balance);
 
   return (
     <>
-      {/* <NavbarEmployer /> */}
+      <NavbarEmployer />
       <div className="min-w-screen">
         <div className="hero min-h-screen bg-base-200">
           <div className="hero-content flex-col lg:flex-row-reverse">
@@ -317,4 +336,4 @@ const EmployerDeposit = () => {
   );
 };
 
-export default authMiddleware(EmployerDeposit);
+export default EmployerDeposit;
