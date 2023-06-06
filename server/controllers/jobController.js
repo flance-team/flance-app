@@ -197,7 +197,7 @@ class jobController {
                 where: { id: employerId }
             });
 
-            const dataBlockchain = await axios.post("https://flance-agreement-api.tianweb.dev/jobs",
+            const dataBlockchain = await axios.post(`${process.env.BLOCKCHAIN_URL}/jobs`,
                 {
                     jobTitle: title,
                     companyName: employer.companyName,
@@ -376,7 +376,7 @@ class jobController {
 
 
             const user = await User.findOne({ include: { model: Signer }, where: { id: userId } });
-            const dataBlockchain = await axios.post("https://flance-agreement-api.tianweb.dev/agreements",
+            const dataBlockchain = await axios.post(`${process.env.BLOCKCHAIN_URL}/agreements`,
                 {
                     jobBlockchainId: jobList.Job.jobBlockchainId,
                     userName: user.name,

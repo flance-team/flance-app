@@ -49,7 +49,7 @@ class EmployerController {
       });
 
       const newDepositEmployer = await DepositEmployer.create({ employerId: newEmployer.id, signer: newSigner.id, balance: 0 })
-      const dataSigner = await axios.get("https://flance-agreement-api.tianweb.dev/wallets")
+      const dataSigner = await axios.get(`${process.env.BLOCKCHAIN_URL}/wallets`)
 
       await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic })
 
