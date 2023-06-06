@@ -14,6 +14,7 @@ class EmployerController {
         phoneNumber,
         PIC,
         typeId,
+        status
       } = req.body;
 
       // checking if email is already registered on User
@@ -42,6 +43,7 @@ class EmployerController {
         PIC,
         typeId,
         signer: newSigner.id,
+        status: status || "pending",
       });
 
       const newDepositEmployer = await DepositEmployer.create({ employerId: newEmployer.id, signer: newSigner.id, balance: 0 })
