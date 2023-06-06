@@ -4,6 +4,7 @@ import axios from "axios";
 import NavbarEmployer from "../components/NavbarEmployer";
 import Swal from "sweetalert2";
 import Loading from "../components/Loading";
+import authMiddleware from "../middleware";
 
 const base_url_server = "http://localhost:3000";
 
@@ -118,4 +119,4 @@ const EmployerListEmployee = () => {
   );
 };
 
-export default EmployerListEmployee;
+export default authMiddleware(EmployerListEmployee);

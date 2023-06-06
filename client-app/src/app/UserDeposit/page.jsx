@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import NavBarUser from "../components/navbarUser";
+import authMiddleware from "../middleware";
 
 const baseUrl = `http://localhost:3000`;
 
@@ -298,4 +299,4 @@ const UserDeposit = () => {
   );
 };
 
-export default UserDeposit;
+export default authMiddleware(UserDeposit);

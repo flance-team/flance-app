@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import ApplicantModal from "../components/ModalApplicant";
 import CreateJobForm from "../components/CreateJobForm";
 import Loading from "../components/Loading";
+import authMiddleware from "../middleware";
 
 const base_url_server = "http://localhost:3000";
 
@@ -214,6 +215,12 @@ const EmployerHome = () => {
                           >
                             List Applicant
                           </button>
+                          <button
+                            className="btn btn-warning m-2"
+                            onClick={() => handleDetailsClick(el.id)}
+                          >
+                            Details
+                          </button>
                         </td>
                       </tr>
                     );
@@ -237,4 +244,4 @@ const EmployerHome = () => {
   );
 };
 
-export default EmployerHome;
+export default authMiddleware(EmployerHome);

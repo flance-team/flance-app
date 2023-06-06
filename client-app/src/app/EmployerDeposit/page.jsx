@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import authMiddleware from "../middleware";
 
 const baseUrl = `http://localhost:3000`;
 
@@ -84,4 +85,4 @@ const EmployerDeposit = () => {
   );
 };
 
-export default EmployerDeposit;
+export default authMiddleware(EmployerDeposit);

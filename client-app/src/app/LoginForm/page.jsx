@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import Loading from "../components/Loading";
+import authMiddleware from "../middleware";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -118,4 +119,4 @@ const LoginForm = () => {
     </React.Fragment>
   );
 };
-export default LoginForm;
+export default authMiddleware(LoginForm);

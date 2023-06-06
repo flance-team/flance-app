@@ -6,6 +6,7 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import NavBarUser from "../components/navbarUser";
 import Swal from "sweetalert2";
+import authMiddleware from "../middleware";
 
 const UserHome = () => {
   const base_url_server = "http://localhost:3000";
@@ -335,4 +336,4 @@ const UserHome = () => {
   );
 };
 
-export default UserHome;
+export default authMiddleware(UserHome);

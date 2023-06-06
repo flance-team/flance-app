@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import Loading from "../components/Loading";
+import authMiddleware from "../middleware";
 const base_url_server = "http://localhost:3000";
 const SignUpForm = () => {
   const router = useRouter();
@@ -217,4 +218,4 @@ const SignUpForm = () => {
     </>
   );
 };
-export default SignUpForm;
+export default authMiddleware(SignUpForm);
