@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import Loading from "../components/Loading";
 import { Dialog, Transition } from "@headlessui/react";
 import CurrencyInput from "react-currency-input-field";
+import { useRouter } from "next/navigation";
 
 const base_url_server = "http://localhost:3000";
 
@@ -15,6 +16,15 @@ const EmployerListEmployee = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [chosenUser, setChosenUser] = useState({});
   const wage = useRef(0);
+  const router = useRouter();
+
+  if (!localStorage.getItem("access_token")) {
+    router.push("/");
+  }
+
+  if (localStorage.getItem("role") === "employer") {
+    router.push("/EmployerHome");
+  }
 
   function closeModal() {
     setIsOpen(false);
