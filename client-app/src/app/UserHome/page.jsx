@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import NavBarUser from "../components/navbarUser";
+import Swal from "sweetalert2";
 
 const UserHome = () => {
   const base_url_server = "http://localhost:3000";
@@ -16,10 +17,40 @@ const UserHome = () => {
   const handleLocationQueryChange = (event) => {
     setLocationQuery(event.target.value);
   };
-  const handleSearchSubmit = () => {
-    // Perform search functionality here
+  const handleSearchSubmit = async () => {
     console.log("Search query:", searchQuery);
     console.log("Location query:", locationQuery);
+
+    let option = "";
+    if (searchQuery !== "") {
+      option += "?tit=" + searchQuery;
+    }
+    if (locationQuery !== "") {
+      searchQuery === ""
+        ? (option += "?loc=" + locationQuery)
+        : (option += "&loc=" + locationQuery);
+    }
+
+    try {
+      const { data } = await axios.get(
+        `${base_url_server}/jobs/home${option}`,
+        {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        }
+      );
+      setDataJob(data);
+    } catch (err) {
+      console.log(err);
+      const error = err.response.data.message;
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    }
   };
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -27,9 +58,14 @@ const UserHome = () => {
   const [detailJob, setDetailJob] = useState();
 
   const jobs = async () => {
-    const data = await axios.get(`${base_url_server}/jobs`);
+    const data = await axios.get(`${base_url_server}/jobs/home`, {
+      headers: {
+        access_token: localStorage.getItem("access_token"),
+      },
+    });
     setDataJob(data.data);
   };
+
   const jobDetail = async (id) => {
     const headers = {
       access_token: localStorage.getItem("access_token"),
@@ -39,6 +75,7 @@ const UserHome = () => {
     });
     setDetailJob(data.data);
   };
+
   const clickAccept = async () => {
     setOpen(false);
     const headers = {

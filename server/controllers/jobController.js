@@ -44,6 +44,21 @@ class jobController {
     static async getAllJobsUser(req, res, next) {
         try {
             const id = req.identity.id;
+
+            const { loc, tit } = req.query;
+            let options = {
+                status: 'active',
+                expireDate: { [Op.gte]: new Date(), }
+            }
+
+            if (loc) {
+                options.location = { [Op.iLike]: `%${loc}%` };
+            }
+
+            if (tit) {
+                options.title = { [Op.iLike]: `%${tit}%` };
+            }
+
             const user = await User.findOne({
                 include: [
                     {
@@ -80,15 +95,11 @@ class jobController {
                         model: Schedule,
                     },
                 ],
-                where: {
-                    status: 'active',
-                    location: user.address, // Filter jobs based on user's location
-                },
+                where: options,
             });
 
-            console.log(jobs)
+            // console.log(jobs)
 
-            // Sort the jobs based on relevance, where recommended jobs and jobs in the user's location come first
             const sortedJobs = jobs.sort((jobA, jobB) => {
                 const jobASkills = jobA.Category.SkillCategories.map((skill) => skill.Skill.name);
                 const jobBSkills = jobB.Category.SkillCategories.map((skill) => skill.Skill.name);
@@ -153,7 +164,7 @@ class jobController {
             let totalHours = 0;
 
             for (let i = 0; i < schedules.length; i++) {
-                totalHours += schedules[i].totalHour;
+                totalHours += +schedules[i].totalHour;
             };
 
             const job = await Job.create({
@@ -305,7 +316,7 @@ class jobController {
         try {
             const employerId = +req.identity.id;
 
-            const jobsContract = await JobContract.findAll({ include: [{ model: User }, { model: Job }], where: { employerId, endDate: { [Op.gte]: new Date() } } });
+            const jobsContract = await JobContract.findAll({ include: [{ model: User, attributes: { exclude: ["password"] } }, { model: Job }], where: { employerId, endDate: { [Op.gte]: new Date() } } });
 
             res.status(200).json(jobsContract);
         } catch (err) {

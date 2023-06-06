@@ -17,7 +17,7 @@ class LoginController {
       if (!findUser && !findEmployer) {
         throw { name: "Not Found", message: "Not Registered", code: 404 };
       }
-      
+
       if (findUser) {
         if (!passValidator(password, findUser.password)) {
           throw {
@@ -27,7 +27,7 @@ class LoginController {
           };
         }
       }
-      
+
       if (findEmployer) {
         if (!passValidator(password, findEmployer.password)) {
           throw {
@@ -36,8 +36,16 @@ class LoginController {
             code: 403,
           };
         }
+        if (findEmployer.status !== "verified") {
+          throw {
+            name: "Forbidden",
+            message: "you are not verified yet",
+            code: 403,
+          }
+        }
       }
-      
+
+
       const access_token = signToken({
         email: findUser?.email ? findUser.email : findEmployer.email,
         role: findUser ? "user" : "employer",
