@@ -1,3 +1,4 @@
+const approvedEmail = require("../helpers/approvedEmail");
 const { passValidator } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const {
@@ -295,6 +296,16 @@ class AdminController {
         },
         { where: { id } }
       );
+
+      const sendEmailPayload = {
+        sendTo: email,
+        subjectEmail: "Verify Your Account",
+        bodyEmail: approvedEmail(
+          process.env.FRONTEND_URL,
+        ),
+      };
+
+      sendEmail(sendEmailPayload);
       res.status(200).json({
         message: `employer status changed to ${status}`,
       });
