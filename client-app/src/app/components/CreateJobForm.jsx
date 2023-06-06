@@ -12,7 +12,7 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
     expireDate: "",
     categoryId: 1,
     duration: 7,
-    schedules: [{ day: "", startHour: "", totalHour: "" }],
+    schedules: [{ day: "", startHour: "", totalHour: 0 }],
   };
   const [createJobForm, setCreateJobForm] = useState(initialFormState);
   const [dataCategory, setDataCategory] = useState([]);
