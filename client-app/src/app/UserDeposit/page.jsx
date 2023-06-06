@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import NavBarUser from "../components/navbarUser";
 
 import CurrencyInput from "react-currency-input-field";
+import Swal from "sweetalert2";
 
 const baseUrl = `http://localhost:3000`;
 
@@ -41,9 +42,20 @@ const UserDeposit = () => {
     const res = currentValue.replace(/\D/g, "");
 
     if (res > balance) {
-      return console.log("under budget");
+      Swal.fire({
+        icon: "error",
+        title: "Balance is not enough",
+      });
     } else if (res < 0) {
-      return console.log("Value cant be negative");
+      Swal.fire({
+        icon: "error",
+        title: "Input Can't be negative",
+      });
+    } else if (res == null || res == undefined || res == "" || res == 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Please Input First",
+      });
     } else {
       try {
         const response = await axios.post(
@@ -59,7 +71,12 @@ const UserDeposit = () => {
         );
         setBalance(response.data.updatedBalance);
         amountToWithdraw.current.value = "";
-        openModal();
+        Swal.fire({
+          icon: "success",
+
+          title: "Withdrawal success",
+        });
+        // openModal();
       } catch (err) {
         console.log(err);
       }
@@ -135,6 +152,7 @@ const UserDeposit = () => {
                     ref={amountToWithdraw}
                     decimalsLimit={2}
                     min={0}
+                    allowNegativeValue={false}
                   />
                 </div>
 

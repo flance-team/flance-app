@@ -6,7 +6,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import CurrencyInput from "react-currency-input-field";
 import NavbarEmployer from "../components/NavbarEmployer";
 
-import authMiddleware from "../middleware";
 import Swal from "sweetalert2";
 
 const baseUrl = `http://localhost:3000`;
@@ -26,9 +25,20 @@ const EmployerDeposit = () => {
     console.log(res);
 
     if (res > balance) {
-      return console.log("under budget");
+      Swal.fire({
+        icon: "error",
+        title: "Balance is not enough",
+      });
     } else if (res < 0) {
-      return console.log("Value cant be negative");
+      Swal.fire({
+        icon: "error",
+        title: "Input Can't be negative",
+      });
+    } else if (res == null || res == undefined || res == "" || res == 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Please Input First",
+      });
     } else {
       const response = await axios.post(
         `${baseUrl}/transactions/employer/withdraw`,
