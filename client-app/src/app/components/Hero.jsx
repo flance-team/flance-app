@@ -1,13 +1,14 @@
 import Image from "next/image";
 
 import { Button } from "./Button";
-// import { Container } from '@/components/Container'
-import logoLaravel from "../images/logos/laravel.svg";
-import logoMirage from "../images/logos/mirage.svg";
-import logoStatamic from "../images/logos/statamic.svg";
-import logoStaticKit from "../images/logos/statickit.svg";
-import logoTransistor from "../images/logos/transistor.svg";
-import logoTuple from "../images/logos/tuple.svg";
+import nextjs from "../images/logos/nextjs.svg";
+import firebase from "../images/logos/firebase.svg";
+import tailwind from "../images/logos/tailwindcss.svg";
+import supabase from "../images/logos/supabase.svg";
+import solidity from "../images/logos/solidity.svg";
+import jest from "../images/logos/jest.svg";
+import aws from "../images/logos/aws.svg";
+import nestjs from "../images/logos/nestjs.svg";
 import { Container } from "./Container";
 
 export function Hero() {
@@ -49,7 +50,7 @@ export function Hero() {
       </div>
       <div className="mt-36 lg:mt-44">
         <p className="font-display text-base text-slate-900">
-          Trusted by these six companies so far
+          Stacks we use so far
         </p>
         <ul
           role="list"
@@ -57,14 +58,16 @@ export function Hero() {
         >
           {[
             [
-              { name: "Transistor", logo: logoTransistor },
-              { name: "Tuple", logo: logoTuple },
-              { name: "StaticKit", logo: logoStaticKit },
+              { name: "next.js", logo: nextjs },
+              { name: "firebase", logo: firebase },
+              { name: "tailwind", logo: tailwind },
+              { name: "aws", logo: aws },
             ],
             [
-              { name: "Mirage", logo: logoMirage },
-              { name: "Laravel", logo: logoLaravel },
-              { name: "Statamic", logo: logoStatamic },
+              { name: "supabase", logo: supabase },
+              { name: "solidity", logo: solidity },
+              { name: "jest", logo: jest },
+              { name: "nestjs", logo: nestjs },
             ],
           ].map((group, groupIndex) => (
             <li key={groupIndex}>
