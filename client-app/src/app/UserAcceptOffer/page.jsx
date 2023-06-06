@@ -27,6 +27,44 @@ const UserAcceptOffer = () => {
           headers,
         }
       );
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `You just accept this job`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (err) {
+      const error = err.response.data.message;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+        timer: 1500,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  const statusDecline = async (id) => {
+    setLoading(true);
+
+    try {
+      const headers = {
+        access_token: localStorage.getItem("access_token"),
+      };
+      const response = await axios.patch(
+        `${base_url_server}/jobs/reject-user/${id}`,
+        null,
+        { headers }
+      );
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `You just decline this job`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (err) {
       const error = err.response.data.message;
       Swal.fire({
@@ -37,18 +75,6 @@ const UserAcceptOffer = () => {
     } finally {
       setLoading(false);
     }
-  };
-  const statusDecline = async (id) => {
-    setLoading(true);
-    const headers = {
-      access_token: localStorage.getItem("access_token"),
-    };
-    const response = await axios.patch(
-      `${base_url_server}/jobs/reject-user/${id}`,
-      null,
-      { headers }
-    );
-    setLoading(false);
   };
   const appliedJob = async () => {
     setLoading(true);
@@ -61,7 +87,6 @@ const UserAcceptOffer = () => {
     setLoading(false);
     setData(response.data);
   };
-
   const jobDetail = async (id) => {
     setDetailJob("");
     setLoading(true);
@@ -183,7 +208,7 @@ const UserAcceptOffer = () => {
                     </div>
                     <div className="hidden sm:flex sm:flex-col sm:items-end">
                       <p className="text-sm leading-6 text-gray-900">
-                        {person.status}, until: {person.Job.expireDate}
+                        Status: {person.status}
                       </p>
                       <p className="mt-1 text-xs leading-5 text-gray-500 py-2 px-2">
                         {buttonAction(person.status, person.Job.id)}
