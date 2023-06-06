@@ -81,7 +81,7 @@ const EmployerDeposit = () => {
       );
       console.log(response.data);
 
-      window.snap.pay(response.data, {
+      window?.snap?.pay(response.data, {
         onSuccess: async (result) => {
           console.log("success");
           //   console.log(result);

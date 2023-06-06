@@ -1,10 +1,11 @@
 "use client";
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, useRef } from "react";
 import axios from "axios";
 import NavbarEmployer from "../components/NavbarEmployer";
 import Swal from "sweetalert2";
 import Loading from "../components/Loading";
 import { Dialog, Transition } from "@headlessui/react";
+import CurrencyInput from "react-currency-input-field";
 
 const base_url_server = "http://localhost:3000";
 
@@ -13,6 +14,7 @@ const EmployerListEmployee = () => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [chosenUser, setChosenUser] = useState({});
+  const wage = useRef(0);
 
   function closeModal() {
     setIsOpen(false);
@@ -50,6 +52,29 @@ const EmployerListEmployee = () => {
     console.log(employee);
     setChosenUser(employee);
     openModal();
+  };
+
+  const payWage = async (currentValue, userId) => {
+    try {
+      const amount = currentValue.replace(/\D/g, "");
+      console.log(amount);
+      const response = await axios.post(
+        `${base_url_server}/transactions/employer/salary`,
+        {
+          amount,
+          userId,
+        },
+        {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        }
+      );
+      console.log(response);
+      closeModal();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   if (loading) {
@@ -172,35 +197,118 @@ const EmployerListEmployee = () => {
                         Employee Info
                       </p>
                       <p className="text-sm text-gray-500">
-                        Name: {chosenUser.User.name}
+                        Name: {chosenUser?.User?.name}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Address: {chosenUser.User.address}
+                        Address: {chosenUser?.User?.address}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Gender: {chosenUser.User.gender}
+                        Gender: {chosenUser?.User?.gender}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Phone Number: {chosenUser.User.phoneNumber}
+                        Phone Number: {chosenUser?.User?.phoneNumber}
                       </p>
                       <p className="text-sm text-gray-500">
-                        Email: {chosenUser.User.email}
+                        Email: {chosenUser?.User?.email}
                       </p>
                     </div>
                     <div className="divider divider-horizontal"></div>
-                    <div>
-                      <h2>Rate Per Hour Fee: {chosenUser.Job.salary}</h2>
+                    <div className=" w-full">
+                      <div className="bg-base-200 rounded-md flex justify-center">
+                        <h2 className="text-lg font-medium ml-2">
+                          Job Contract Info
+                        </h2>
+                      </div>
+                      <div className="flex">
+                        <h2 className="text-lg font-medium ml-2">
+                          Rate Per Hour Fee:
+                        </h2>
+                        <p className="self-center ml-2">
+                          {chosenUser?.Job?.salary.toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                          })}
+                        </p>
+                      </div>
+                      <div className="flex">
+                        <h2 className="text-lg font-medium ml-2">
+                          Total Hours:
+                        </h2>
+                        <p className="self-center ml-2">
+                          {chosenUser?.totalHours +
+                            " hour" +
+                            (chosenUser?.totalHours > 1 ? "s" : "")}
+                        </p>
+                      </div>
+                      <div className="flex">
+                        <h2 className="text-lg font-medium ml-2">
+                          Contract Expire Date:
+                        </h2>
+                        <p className="self-center ml-2">
+                          {chosenUser?.endDate?.slice(0, 10)}
+                        </p>
+                      </div>
+                      <div className="flex">
+                        <h2 className="text-lg font-medium ml-2">
+                          Contract BlockChain ID:
+                        </h2>
+                        <p className="self-center ml-2">
+                          {chosenUser?.agreementBlockchainId}
+                        </p>
+                      </div>
+                      <div className="flex">
+                        <h2 className="text-lg font-medium ml-2">
+                          Employee BlockChain ID:
+                        </h2>
+                        <p className="self-center ml-2">
+                          {chosenUser?.userBlockchainId}
+                        </p>
+                      </div>
+                      <div>
+                        <h5 className="ml-2 font-bold mt-2">
+                          Total Wages to be paid
+                        </h5>
+                      </div>
+                      <div>
+                        <CurrencyInput
+                          className="input input-bordered"
+                          prefix="Rp."
+                          value={
+                            chosenUser?.totalHours * chosenUser?.totalSalary
+                          }
+                          disabled={true}
+                          name="wage"
+                          ref={wage}
+                        />
+                        <button
+                          className="btn"
+                          onClick={(e) => {
+                            wage.current.disabled = false;
+                          }}
+                        >
+                          Edit
+                        </button>
+                      </div>
                     </div>
                     {/* <p>{JSON.stringify(chosenUser)}</p> */}
                   </div>
 
-                  <div className="mt-4">
+                  <div className="mt-4 flex justify-between">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      onClick={closeModal}
+                    >
+                      Back
+                    </button>
                     <button
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={closeModal}
+                      onClick={() => {
+                        payWage(wage.current.value, chosenUser.User.id);
+                      }}
                     >
-                      Got it, thanks!
+                      Pay Wage
                     </button>
                   </div>
                 </Dialog.Panel>
