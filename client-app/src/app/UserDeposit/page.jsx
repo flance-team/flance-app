@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useEffect, useRef, useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import NavBarUser from "../components/navbarUser";
 
 import CurrencyInput from "react-currency-input-field";
 
@@ -39,9 +40,9 @@ const UserDeposit = () => {
 
     const res = currentValue.replace(/\D/g, "");
 
-    if (currentValue > balance) {
+    if (res > balance) {
       return console.log("under budget");
-    } else if (currentValue < 0) {
+    } else if (res < 0) {
       return console.log("Value cant be negative");
     } else {
       try {
@@ -78,14 +79,15 @@ const UserDeposit = () => {
   return (
     <>
       <div className="min-w-screen">
+        <NavBarUser />
         <div className="hero min-h-screen bg-base-200">
           <div className="hero-content flex-col lg:flex-row-reverse">
             <div className="text-center lg:text-left">
-              <h1 className="text-5xl font-bold">Your Wallet</h1>
+              <h1 className="text-5xl font-bold">Your Deposit</h1>
               <p className="py-6">
                 You can easily view your pay off balance by logging into your
                 online account. The pay off balance can be accessed and checked
-                at any time through the dedicated mobile app..
+                at any time.
               </p>
             </div>
             <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
@@ -245,44 +247,48 @@ const UserDeposit = () => {
                     </p>
                     <p>{}</p>
                     <div className="divider divider-horizontal"></div>
-                    <table className="table overflow-x-auto">
-                      <thead>
-                        <tr>
-                          <th>#</th>
-                          <th>History</th>
-                          <th>Transaction Date</th>
-                          <th>Changed Amount</th>
-                          <th>Updated Balance</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {historyB?.map((e, i) => {
-                          return (
-                            <tr key={i}>
-                              <td>{i}</td>
-                              <td>{e.ref}</td>
-                              <td>{e.transactionDate}</td>
-                              <td
-                                style={{
-                                  color: e.amount > 0 ? "#90EE90" : "red",
-                                }}
-                              >
-                                {e.amount.toLocaleString("id-ID", {
-                                  style: "currency",
-                                  currency: "IDR",
-                                })}
-                              </td>
-                              <td>
-                                {e.updatedBalance.toLocaleString("id-ID", {
-                                  style: "currency",
-                                  currency: "IDR",
-                                })}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                    {historyB.length > 0 ? (
+                      <table className="table overflow-x-auto">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>History</th>
+                            <th>Transaction Date</th>
+                            <th>Changed Amount</th>
+                            <th>Updated Balance</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {historyB?.map((e, i) => {
+                            return (
+                              <tr key={i}>
+                                <td>{i}</td>
+                                <td>{e.ref}</td>
+                                <td>{e.transactionDate}</td>
+                                <td
+                                  style={{
+                                    color: e.amount > 0 ? "#90EE90" : "red",
+                                  }}
+                                >
+                                  {e.amount.toLocaleString("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                  })}
+                                </td>
+                                <td>
+                                  {e.updatedBalance.toLocaleString("id-ID", {
+                                    style: "currency",
+                                    currency: "IDR",
+                                  })}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    ) : (
+                      <div>Theres no changes at your Balance yet.</div>
+                    )}
                   </div>
 
                   <div className="mt-4 flex justify-end">

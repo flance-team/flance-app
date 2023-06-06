@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const pages = () => {
+const LoginPage = () => {
   const baseUrl = "http://localhost:3000";
   const router = useRouter();
   const input = {
@@ -17,8 +17,6 @@ const pages = () => {
   const handleLogin = async (e) => {
     try {
       e.preventDefault();
-      console.log(input.email.current.value);
-      console.log(input.password.current.value);
 
       const { data } = await axios.post(`${baseUrl}/admins/login`, {
         email: input.email.current.value,
@@ -106,4 +104,4 @@ const pages = () => {
   );
 };
 
-export default pages;
+export default LoginPage;

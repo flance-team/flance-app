@@ -11,8 +11,9 @@ import {
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Link from "next/link";
 
-const NavBarUser = () => {
+const NavbarEmployer = () => {
   const router = useRouter();
 
   const base_url_server = "http://localhost:3000";
@@ -77,30 +78,34 @@ const NavBarUser = () => {
                   </div>
                   <div className="flex flex-shrink-0 items-center">
                     <img
-                      className="block h-20 w-auto lg:hidden"
-                      src="./Logo - Team 1.png"
+                      className="block h-8 w-auto lg:hidden"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                       alt="Your Company"
                     />
                     <img
-                      className="hidden h-20 w-auto lg:block"
-                      src="./Logo - Team 1.png"
+                      className="hidden h-8 w-auto lg:block"
+                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                       alt="Your Company"
                     />
                   </div>
                   <div className="hidden md:ml-6 md:flex md:space-x-8">
                     {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                    <a
-                      onClick={() => router.push("/UserHome")}
-                      className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                      Home
-                    </a>
-                    <a
-                      onClick={() => router.push("/UserAcceptOffer")}
-                      className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                      Applied Jobs
-                    </a>
+                    <Link legacyBehavior href="/EmployerHome">
+                      <a
+                        onClick={() => router.push("/EmployerHome")}
+                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                      >
+                        Home
+                      </a>
+                    </Link>
+                    <Link legacyBehavior href="/EmployerListEmployee">
+                      <a
+                        onClick={() => router.push("/EmployerListEmployee")}
+                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                      >
+                        List Employee
+                      </a>
+                    </Link>
                     {/* <a className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                       Projects
                     </a>
@@ -342,4 +347,4 @@ const NavBarUser = () => {
   );
 };
 
-export default NavBarUser;
+export default NavbarEmployer;

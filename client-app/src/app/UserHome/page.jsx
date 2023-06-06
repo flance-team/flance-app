@@ -79,9 +79,6 @@ const UserHome = () => {
                 <p className="text-sm text-gray-500 text-xs">
                   Full-stack developer
                 </p>
-                {/* <div className="flex justify-center mt-4">
-                  <button className="btn btn-primary">View Details</button>
-                </div> */}
               </div>
             </div>
           </aside>
@@ -106,6 +103,7 @@ const UserHome = () => {
                       <input
                         id="input1"
                         type="text"
+                        placeholder="job title, keyword, company name"
                         className="input input-bordered"
                         value={searchQuery}
                         onChange={handleSearchQueryChange}
@@ -238,31 +236,37 @@ const UserHome = () => {
                         aria-hidden="true"
                       />
                     </div>
-                    <div className="mt-3 text-center sm:mt-5">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
-                      >
-                        JOB DETAILS
-                      </Dialog.Title>
+                    <div className="mt-3 sm:mt-5">
+                      <div className="text-center">
+                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
+                          JOB DETAILS
+                        </Dialog.Title>
+                      </div>
                       <div className="mt-2">
-                        <p className="text-base font-medium">
+                        <p className="text-lg font-semibold">
                           {detailJob?.title}
                         </p>
-                        <div className="mt-1 text-xs">
-                          <h3>Hours needed: {detailJob?.totalHours}</h3>
-                          <h3>Hash: {detailJob?.hash}</h3>
-                          <h3>Salary: {detailJob?.salary}</h3>
-                          <h3>Company: {detailJob?.Employer.companyName}</h3>
-                          {detailJob?.Schedules.map((el) => {
-                            return (
-                              <>
-                                <h3>Day: {el.day}</h3>
-                                <h3>Start: {el.startHour}</h3>
-                                <h3>Total Hour: {el.totalHour}</h3>
-                              </>
-                            );
-                          })}
+                        <div className="mt-1 text-sm mr-1">
+                          <h3 className="mb-1">
+                            HOURS REQUIRED: {detailJob?.totalHours} hours
+                          </h3>
+                          <h3 className="mb-2 flex-wrap break-all">
+                            Hash: {detailJob?.hash}
+                          </h3>
+                          <h3 className="mb-2">
+                            Salary: Rp. {detailJob?.salary}
+                          </h3>
+                          <h3 className="mb-2">
+                            Company: {detailJob?.Employer.companyName}
+                          </h3>
+                          {detailJob?.Schedules.map((el) => (
+                            <div key={el.id} className="space-y-1">
+                              <h3 className="mb-1">
+                                Day: {el.day}, Start: {el.startHour}, Total
+                                Hour: {el.totalHour}
+                              </h3>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>

@@ -2,42 +2,85 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
-
+import Loading from "../components/Loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import NavBarUser from "../components/navbarUser";
+import Swal from "sweetalert2";
 const UserAcceptOffer = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const base_url_server = "http://localhost:3000";
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
+  const [detailJob, setDetailJob] = useState();
   const statusAccept = async (id) => {
-    const headers = {
-      access_token: localStorage.getItem("access_token"),
-    };
-    const response = await axios.patch(`${base_url_server}/jobs/accept/${id}`, {
-      headers,
-    });
+    setLoading(true);
+    try {
+      const headers = {
+        access_token: localStorage.getItem("access_token"),
+      };
+      const response = await axios.patch(
+        `${base_url_server}/jobs/accept/${id}`,
+        null,
+        {
+          headers,
+        }
+      );
+    } catch (err) {
+      const error = err.response.data.message;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    } finally {
+      setLoading(false);
+    }
   };
   const statusDecline = async (id) => {
+    setLoading(true);
     const headers = {
       access_token: localStorage.getItem("access_token"),
     };
     const response = await axios.patch(
       `${base_url_server}/jobs/reject-user/${id}`,
+      null,
       { headers }
     );
+    setLoading(false);
   };
   const appliedJob = async () => {
+    setLoading(true);
     const headers = {
       access_token: localStorage.getItem("access_token"),
     };
     const response = await axios.get(`${base_url_server}/jobs/list-apply`, {
       headers,
     });
+    setLoading(false);
     setData(response.data);
-    console.log(response);
   };
+
+  const jobDetail = async (id) => {
+    setDetailJob("");
+    setLoading(true);
+    try {
+      const headers = {
+        access_token: localStorage.getItem("access_token"),
+      };
+      const data = await axios.get(`${base_url_server}/jobs/schedules/${id}`, {
+        headers,
+      });
+      setOpen(true);
+      setDetailJob(data.data);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+  console.log(detailJob);
   const buttonAction = (status, id) => {
     if (status === "pending") {
       return (
@@ -64,7 +107,7 @@ const UserAcceptOffer = () => {
             type="button"
             className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-blue-300 hover:bg-gray-50"
             onClick={() => {
-              setOpen(true);
+              jobDetail(id);
             }}
           >
             Contract
@@ -72,15 +115,17 @@ const UserAcceptOffer = () => {
         </>
       );
     } else {
-      <button
-        type="button"
-        className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        Contract
-      </button>;
+      return (
+        <button
+          type="button"
+          className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
+          Contract
+        </button>
+      );
     }
   };
 
@@ -93,6 +138,7 @@ const UserAcceptOffer = () => {
   useEffect(() => {
     buttonAction();
   }, [statusAccept]);
+
   useEffect(() => {
     appliedJob();
   }, []);
@@ -106,11 +152,13 @@ const UserAcceptOffer = () => {
           <main className="flex-wrap bg-white py-1 justify-center static">
             {/* Main content */}
             <div className="flex justify-start my-2">
-              <h1 className="text-3xl">Hello, User</h1>
+              <h1 className="text-3xl">
+                Hello, {localStorage.getItem("nameUser")}
+              </h1>
             </div>
             <div className="flex justify-start my-2">
               <h1 className="text-1xl">
-                You have {data?.length} of jobs you applied:
+                You have {data?.length} of jobs you applied.
               </h1>
             </div>
 
@@ -155,33 +203,7 @@ const UserAcceptOffer = () => {
               </ul>
             </div>
           </main>
-          <aside className="bg-white w-64 my-2">
-            {/* Sidebar content */}
-            {/* <div className="card w-56 bg-base-100 shadow-xl">
-              <div class="w-24 mask mask-squircle">
-                <img src="/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-              </div>
-              <h2 className="card-title text-sm my-2 mx-2">Sponsors:</h2>
-              <div className="card-body items-center text-center">
-                <h3 className="container bg-gray-200">YOUR LOGO HERE</h3>
-                <p>Support flance by becoming a sponsor</p>
-                <div className="card-actions">
-                  <button className="btn btn-primary">Buy Now</button>
-                </div>
-              </div>
-            </div> */}
-
-            {/* <div className="flex flex-col text-xs mt-4">
-              <div className="flex flex-wrap flex-row space-x-3">
-                <a>About</a>
-                <a>Accessbility</a>
-              </div>
-              <div className="flex flex-wrap flex-row space-x-3 mt-2">
-                <a>Help Center</a>
-                <a>Get Flance App</a>
-              </div>
-            </div> */}
-          </aside>
+          <aside className="bg-white w-64 my-2">{/* Sidebar content */}</aside>
         </div>
         <footer className="bg-white shadow">{/* Footer content */}</footer>
       </div>
@@ -233,12 +255,9 @@ const UserAcceptOffer = () => {
                         This is your contract integrated with blockchain
                       </Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Eius aliquam laudantium explicabo pariatur iste
-                          dolorem animi vitae error totam. At sapiente aliquam
-                          accusamus facere veritatis.
-                        </p>
+                        <div className="flex flex-wrap break-all">
+                          {detailJob?.hash}
+                        </div>
                       </div>
                     </div>
                   </div>
