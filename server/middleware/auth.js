@@ -25,7 +25,6 @@ async function authUser(req, res, next) {
 async function authEmployer(req, res, next) {
    try {
       const { access_token } = req.headers;
-      console.log(access_token);
       if (!access_token) {
          throw { name: "token_error", message: "Invalid token", code: 401 };
       }

@@ -10,12 +10,6 @@ const errorHandler = require("../middleware/errorHandler");
 
 router.use("/users", userRoute);
 router.use("/jobs", jobRoute);
-
-// router.use((req, res, next) => {
-//   console.log("CEKURL:", req.url);
-//   next();
-// });
-
 router.use("/transactions", transactionRoute);
 router.use("/employers", employerRoute);
 router.use("/admins", adminRoute);
