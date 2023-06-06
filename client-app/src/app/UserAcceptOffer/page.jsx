@@ -80,7 +80,6 @@ const UserAcceptOffer = () => {
       setLoading(false);
     }
   };
-  console.log(detailJob);
   const buttonAction = (status, id) => {
     if (status === "pending") {
       return (
@@ -128,17 +127,9 @@ const UserAcceptOffer = () => {
       );
     }
   };
-
-  const ShowContract = async () => {
-    try {
-      const response = await axios.get(`${base_url_server}`);
-    } catch (err) {}
-  };
-
   useEffect(() => {
     buttonAction();
   }, [statusAccept]);
-
   useEffect(() => {
     appliedJob();
   }, []);
@@ -158,7 +149,7 @@ const UserAcceptOffer = () => {
             </div>
             <div className="flex justify-start my-2">
               <h1 className="text-1xl">
-                You have {data?.length} of jobs you applied.
+                You have {data?.length} of jobs you applied
               </h1>
             </div>
 

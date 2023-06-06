@@ -11,6 +11,7 @@ import {
 import { PlusIcon } from "@heroicons/react/20/solid";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Link from "next/link";
 
 const NavBarUser = () => {
   const router = useRouter();
@@ -88,28 +89,22 @@ const NavBarUser = () => {
                     />
                   </div>
                   <div className="hidden md:ml-6 md:flex md:space-x-8">
-                    {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                    <a
-                      onClick={() => router.push("/UserHome")}
-                      className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                      Home
-                    </a>
-                    <a
-                      onClick={() => router.push("/UserAcceptOffer")}
-                      className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                      Applied Jobs
-                    </a>
-                    {/* <a className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-                      Projects
-                    </a>
-                    <a
-                      href="#"
-                      className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                      Calendar
-                    </a> */}
+                    <Link legacyBehavior href="/UserHome">
+                      <a
+                        onClick={() => router.push("/UserHome")}
+                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                      >
+                        Home
+                      </a>
+                    </Link>
+                    <Link legacyBehavior href="/UserAcceptOffer">
+                      <a
+                        onClick={() => router.push("/UserAcceptOffer")}
+                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                      >
+                        Applied Jobs
+                      </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -204,32 +199,6 @@ const NavBarUser = () => {
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Your Profile
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Settings
-                              </a>
-                            )}
-                          </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
                               <a

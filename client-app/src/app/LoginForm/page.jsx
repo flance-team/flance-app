@@ -23,10 +23,17 @@ const LoginForm = () => {
 
   const formOnSubmit = async (el) => {
     el.preventDefault();
+    if (formValue.email.trim() === "" || formValue.password.trim() === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Please input your credentials`,
+      });
+      return;
+    }
     setLoading(true);
     try {
       const response = await axios.post(`${base_url_server}/login`, formValue);
-
       Swal.fire({
         width: 200,
         icon: "success",
