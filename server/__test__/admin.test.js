@@ -484,8 +484,6 @@ describe("Admin success verify employer", () => {
   });
 
   it("PATCH /admins/verifyemployer/:id, should return verify Employer status", async () => {
-    token = await getAccessToken();
-
     const res = await request(app)
       .patch("/admins/verifyemployer/1")
       .set("access_token", token)
@@ -522,8 +520,6 @@ describe("Admin failed verify employer", () => {
   });
 
   it("PATCH /admins/verifyemployer/:id, should return error", async () => {
-    token = await getAccessToken();
-
     const res = await request(app)
       .patch("/admins/verifyemployer/100")
       .set("access_token", token)
