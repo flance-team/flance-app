@@ -124,19 +124,18 @@ const UserHome = () => {
             <div className="flex bg-white rounded-lg flex-col items-center space-y-2">
               <div className="card w-fit bg-base-100 shadow-xl">
                 <div className="card-body">
-                  <h2 className="card-title">
-                    Search anything, anywhere here...
-                  </h2>
-
+                  <div className="flex justify-items-center">
+                    <h2 className="card-title">Search anything here</h2>
+                  </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col">
                       <h2 className="text-lg">What...</h2>
-                      <label
+                      {/* <label
                         htmlFor="input1"
                         className="input-label text-xs my-1"
                       >
                         job title, keyword, company name
-                      </label>
+                      </label> */}
                       <input
                         id="input1"
                         type="text"
@@ -148,16 +147,17 @@ const UserHome = () => {
                     </div>
                     <div className="flex flex-col">
                       <h2 className="text-lg">Where...</h2>
-                      <label
+                      {/* <label
                         htmlFor="input2"
                         className="input-label text-xs my-1"
                       >
                         city or state
-                      </label>
+                      </label> */}
                       <input
                         id="input2"
                         type="text"
                         className="input input-bordered"
+                        placeholder="city or state"
                         value={locationQuery}
                         onChange={handleLocationQueryChange}
                       />

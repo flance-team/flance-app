@@ -63,7 +63,7 @@ const EmployerListEmployee = () => {
               </div>
               <div className="card-body text-center items-center">
                 <h2 className="card-title text-xl font-semibold place-items-center">
-                  NAMA PERUSAHAAN
+                  {localStorage.getItem("nameUser")}
                 </h2>
               </div>
             </div>
