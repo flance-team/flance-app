@@ -9,7 +9,6 @@ import { Testimonials } from "../components/Testimonials";
 import { Pricing } from "../components/Pricing";
 import { Faqs } from "../components/Faqs";
 import { Footer } from "../components/Footer";
-import authMiddleware from "../middleware";
 
 const LandingPage = () => {
   return (
@@ -35,4 +34,4 @@ const LandingPage = () => {
     </>
   );
 };
-export default authMiddleware(LandingPage);
+export default LandingPage;

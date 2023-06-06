@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NavBarUser from "../components/navbarUser";
 import Swal from "sweetalert2";
-import authMiddleware from "../middleware";
 const UserAcceptOffer = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -305,4 +304,4 @@ const UserAcceptOffer = () => {
   );
 };
 
-export default authMiddleware(UserAcceptOffer);
+export default UserAcceptOffer;
