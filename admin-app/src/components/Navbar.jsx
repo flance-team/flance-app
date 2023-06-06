@@ -17,7 +17,7 @@ const Navbar = () => {
          <nav className="px-4 py-2">
             <ul className="space-y-2">
                <li>
-                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ml-1 ${isActive("/home")}`}>
+                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ${isActive("/home")}`}>
                      <svg
                         class="h-7 w-7 text-gray-200"
                         fill="none"
@@ -38,7 +38,7 @@ const Navbar = () => {
                   </div>
                </li>
                <li>
-                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ml-1 ${isActive("/employers")}`}>
+                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ${isActive("/employers")}`}>
                      <svg
                         className="h-7 w-7 text-gray-200"
                         viewBox="0 0 24 24"
@@ -64,7 +64,7 @@ const Navbar = () => {
                   </div>
                </li>
                <li>
-                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ml-1 ${isActive("/categories")}`}>
+                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ${isActive("/categories")}`}>
                      <svg
                         className="h-7 w-7 text-gray-200"
                         viewBox="0 0 24 24"
@@ -84,7 +84,7 @@ const Navbar = () => {
                   </div>
                </li>
                <li>
-                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ml-1 ${isActive("/types")}`}>
+                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ${isActive("/types")}`}>
                      <svg
                         className="h-7 w-7 text-gray-200"
                         fill="none"
@@ -105,7 +105,7 @@ const Navbar = () => {
                   </div>
                </li>
                <li>
-                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ml-1 ${isActive("/skills")}`}>
+                  <div className={`flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ${isActive("/skills")}`}>
                      <svg
                         className="h-7 w-7 text-gray-200"
                         width="24"
@@ -145,7 +145,7 @@ const Navbar = () => {
                   </div>
                </li>
                <li>
-                  <div className="flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800 ml-1">
+                  <div className="flex items-center block px-4 py-2 text-gray-200 hover:bg-gray-800">
                      <svg
                         class="h-7 w-7 text-gray-200"
                         fill="none"
