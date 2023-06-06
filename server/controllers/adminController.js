@@ -12,7 +12,6 @@ const {
 } = require("../models/index");
 const { Op } = require("sequelize");
 
-
 class AdminController {
   static async registerAdmin(req, res, next) {
     try {
@@ -38,7 +37,7 @@ class AdminController {
       totalJobs,
       totalCategories,
       totalTypes,
-      totalSkills
+      totalSkills,
     });
   }
 
@@ -76,7 +75,9 @@ class AdminController {
   }
 
   static async getCategory(req, res, next) {
-    const categories = await Category.findAndCountAll({ include: { model: SkillCategory, include: Skill } });
+    const categories = await Category.findAndCountAll({
+      include: { model: SkillCategory, include: Skill },
+    });
     res.status(200).json(categories);
   }
 
@@ -98,7 +99,6 @@ class AdminController {
         });
 
         arrSkill.push({ skillId: skill.id, categoryId: newCategory.id });
-
       }
 
       await SkillCategory.bulkCreate(arrSkill);
@@ -134,7 +134,7 @@ class AdminController {
       const findCategory = await Category.findOne({
         where: { id },
       });
-      if(!findCategory) {
+      if (!findCategory) {
         throw { name: "Not Found" };
       }
       const destroyCategory = await Category.destroy({
@@ -149,8 +149,8 @@ class AdminController {
   }
 
   static async getType(req, res, next) {
-      const types = await Type.findAndCountAll();
-      res.status(200).json(types);
+    const types = await Type.findAndCountAll();
+    res.status(200).json(types);
   }
 
   static async createType(req, res, next) {
@@ -188,7 +188,7 @@ class AdminController {
       const findType = await Type.findOne({
         where: { id },
       });
-      if(!findType) {
+      if (!findType) {
         throw { name: "Not Found" };
       }
       const destroyType = await Type.destroy({
@@ -206,8 +206,7 @@ class AdminController {
     if (Object.keys(req.query).length === 0) {
       const skills = await Skill.findAndCountAll();
       res.status(200).json(skills);
-    }
-    else {
+    } else {
       const skills = await Skill.findAll({
         where: {
           name: { [Op.iLike]: `%${req.query.s}%` },
@@ -251,7 +250,7 @@ class AdminController {
       const findSkill = await Skill.findOne({
         where: { id },
       });
-      if(!findSkill) {
+      if (!findSkill) {
         throw { name: "Not Found" };
       }
       const destroySkill = await Skill.destroy({ where: { id } });
@@ -263,7 +262,6 @@ class AdminController {
     }
   }
 
-
   static async getEmployerById(req, res, next) {
     try {
       const id = +req.params.id;
@@ -273,15 +271,14 @@ class AdminController {
         },
         attributes: {
           exclude: ["password"],
-        }
+        },
       });
 
       if (!employer) {
-        throw ({ name: "Not Found", message: "Employer not found", code: 404 })
+        throw { name: "Not Found", message: "Employer not found", code: 404 };
       }
 
       res.status(200).json(employer);
-
     } catch (err) {
       next(err);
     }
