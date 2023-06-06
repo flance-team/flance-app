@@ -106,6 +106,14 @@ const NavbarEmployer = () => {
                         List Employee
                       </a>
                     </Link>
+                    <Link legacyBehavior href="/EmployerListEmployee">
+                      <a
+                        onClick={() => router.push("/EmployerListEmployee")}
+                        className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                      >
+                        Salary Control
+                      </a>
+                    </Link>
                     {/* <a className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
                       Projects
                     </a>
@@ -172,7 +180,7 @@ const NavbarEmployer = () => {
                                         <button
                                           className="btn btn-primary mr-2"
                                           onClick={() => {
-                                            router.push("/UserDeposit");
+                                            router.push("/EmployerDeposit");
                                           }}
                                         >
                                           Withdraw
