@@ -90,7 +90,7 @@ const EmployerListEmployee = () => {
                     <th className="border">Name</th>
                     <th className="border">Job Title</th>
                     <th className="border">Total Hours</th>
-                    <th className="border">Salary</th>
+                    <th className="border">Rate Per Hour</th>
                     <th className="border">Action</th>
                   </tr>
                 </thead>

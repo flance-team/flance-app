@@ -78,12 +78,12 @@ const NavbarEmployer = () => {
                   </div>
                   <div className="flex flex-shrink-0 items-center">
                     <img
-                      className="block h-20 w-auto lg:hidden"
+                      className="block h-9 w-auto lg:hidden "
                       src="./Logo - Team 1.png"
                       alt="Your Company"
                     />
                     <img
-                      className="hidden h-20 w-auto lg:block"
+                      className="hidden h-9 w-auto lg:block"
                       src="./Logo - Team 1.png"
                       alt="Your Company"
                     />

@@ -12,9 +12,10 @@ import screenshotBlockchain from "../images/screenshots/Blockchain SC.png";
 const features = [
   {
     name: "Payroll Management",
-    summary: "Stay on top of things with always up-to-date reporting features.",
+    summary:
+      "Stay on top of things with always up-to-date with employee contract.",
     description:
-      "We talked about reporting in the section above but we needed three items here, so mentioning it one more time for posterity.",
+      "Effortlessly manage and track wage payments with the help of this application, ensuring accurate and timely compensation for employees.",
     image: screenshotProfitLoss,
     icon: function ReportingIcon() {
       let id = useId();
@@ -46,8 +47,7 @@ const features = [
   },
   {
     name: "Secure with blockchain for contract",
-    summary:
-      "Never lose track of what’s in stock with accurate inventory tracking.",
+    summary: "Always secure with blockchain environment",
     description:
       "Immutability: Once a contract or a transaction is recorded on a blockchain, it becomes nearly impossible to alter or delete. The data is stored across multiple nodes in the network, and each new transaction is linked to previous ones through cryptographic hashes.",
     image: screenshotBlockchain,

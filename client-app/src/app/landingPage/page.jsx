@@ -6,7 +6,6 @@ import { PrimaryFeatures } from "../components/PrimaryFeatures";
 import { SecondaryFeatures } from "../components/SecondaryFeatures";
 import { CallToAction } from "../components/CallToAction";
 import { Testimonials } from "../components/Testimonials";
-import { Pricing } from "../components/Pricing";
 import { Faqs } from "../components/Faqs";
 import { Footer } from "../components/Footer";
 
@@ -27,7 +26,6 @@ const LandingPage = () => {
         <SecondaryFeatures />
         <CallToAction />
         <Testimonials />
-        {/* <Pricing /> */}
         <Faqs />
       </main>
       <Footer />
