@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import BadgeInput from "../components/BadgeInput";
 import Loading from "../components/Loading";
-import authMiddleware from "../middleware";
 const base_url_server = "http://localhost:3000";
 
 const SignUpForm = () => {
@@ -227,4 +226,4 @@ const SignUpForm = () => {
     </React.Fragment>
   );
 };
-export default authMiddleware(SignUpForm);
+export default SignUpForm;

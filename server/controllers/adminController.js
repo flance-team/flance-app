@@ -1,6 +1,7 @@
 const approvedEmail = require("../helpers/approvedEmail");
 const { passValidator } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
+const sendEmail = require("../helpers/sendEmail");
 const {
   Admin,
   Employer,
@@ -290,6 +291,8 @@ class AdminController {
       const { id } = req.params;
       const { status } = req.body;
 
+      const findEmployer = await Employer.findOne({where: { id }})
+
       const patchEmployer = await Employer.update(
         {
           status,
@@ -298,14 +301,15 @@ class AdminController {
       );
 
       const sendEmailPayload = {
-        sendTo: email,
-        subjectEmail: "Verify Your Account",
+        sendTo: findEmployer.email,
+        subjectEmail: "Your Account Has Been Approved",
         bodyEmail: approvedEmail(
           process.env.FRONTEND_URL,
         ),
       };
 
-      sendEmail(sendEmailPayload);
+      await sendEmail(sendEmailPayload)
+
       res.status(200).json({
         message: `employer status changed to ${status}`,
       });

@@ -66,6 +66,7 @@ describe("Everyone success read jobs", () => {
   });
 });
 
+
 describe("Employer success crud job", () => {
   let token = "";
 
@@ -231,6 +232,18 @@ describe("User success crud job", () => {
 
     return res.body.access_token;
   };
+
+  it("GET /home, should return all jobs based on user skill list", async () => {
+    token = await getAccessToken();
+
+    const res = await request(app)
+      .get("/jobs/home?loc=Tangerang&tit=Alfa")
+      .set("access_token", token)
+      .expect(200);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body[0]).toHaveProperty("title");
+  });
 
   it("GET /home, should return all jobs based on user skill list", async () => {
     token = await getAccessToken();
