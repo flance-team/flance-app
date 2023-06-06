@@ -283,7 +283,6 @@ describe("User success crud job", () => {
       .set("access_token", token)
       .expect(201);
 
-    console.log(res.body);
     expect(typeof res.body).toBe("object");
     expect(res.body).toHaveProperty("agreementBlockchainId");
   });

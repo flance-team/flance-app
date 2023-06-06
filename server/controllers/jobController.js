@@ -98,8 +98,6 @@ class jobController {
                 where: options,
             });
 
-            // console.log(jobs)
-
             const sortedJobs = jobs.sort((jobA, jobB) => {
                 const jobASkills = jobA.Category.SkillCategories.map((skill) => skill.Skill.name);
                 const jobBSkills = jobB.Category.SkillCategories.map((skill) => skill.Skill.name);
