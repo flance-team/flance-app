@@ -13,6 +13,7 @@ class EmployerController {
         location,
         phoneNumber,
         PIC,
+        imgUrl,
         typeId,
         status
       } = req.body;
@@ -41,6 +42,7 @@ class EmployerController {
         location,
         phoneNumber,
         PIC,
+        imgUrl,
         typeId,
         signer: newSigner.id,
         status: status || "pending",
