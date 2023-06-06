@@ -62,10 +62,10 @@ const UserHome = () => {
       <div className="bg-white min-h-screen flex flex-col mx-7 my-2">
         <header className="bg-white shadow">{/* Header content */}</header>
         <div className="flex flex-grow">
-          <aside className="bg-white w-64">
+          <aside className="bg-white w-64 my-2 mx-2">
             {/* Sidebar content */}
             <div className="card w-56 bg-base-100 shadow-xl items-center">
-              <div className="w-32 h-32 flex  justify-center rounded-full overflow-hidden">
+              <div className="w-32 h-32 flex  justify-center rounded-full overflow-hidden my-1">
                 <img
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   alt="Profile Image"

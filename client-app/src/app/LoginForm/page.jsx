@@ -26,6 +26,14 @@ const LoginForm = () => {
     setLoading(true);
     try {
       const response = await axios.post(`${base_url_server}/login`, formValue);
+
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `Welcome to Flance`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("nameUser", response.data.name);
       localStorage.setItem("role", response.data.role);
