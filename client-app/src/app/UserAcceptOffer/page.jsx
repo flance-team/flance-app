@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NavBarUser from "../components/navbarUser";
 import Swal from "sweetalert2";
+import authMiddleware from "../middleware";
 const UserAcceptOffer = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -27,6 +28,44 @@ const UserAcceptOffer = () => {
           headers,
         }
       );
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `You just accept this job`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } catch (err) {
+      const error = err.response.data.message;
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+        timer: 1500,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  const statusDecline = async (id) => {
+    setLoading(true);
+
+    try {
+      const headers = {
+        access_token: localStorage.getItem("access_token"),
+      };
+      const response = await axios.patch(
+        `${base_url_server}/jobs/reject-user/${id}`,
+        null,
+        { headers }
+      );
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `You just decline this job`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
     } catch (err) {
       const error = err.response.data.message;
       Swal.fire({
@@ -37,18 +76,6 @@ const UserAcceptOffer = () => {
     } finally {
       setLoading(false);
     }
-  };
-  const statusDecline = async (id) => {
-    setLoading(true);
-    const headers = {
-      access_token: localStorage.getItem("access_token"),
-    };
-    const response = await axios.patch(
-      `${base_url_server}/jobs/reject-user/${id}`,
-      null,
-      { headers }
-    );
-    setLoading(false);
   };
   const appliedJob = async () => {
     setLoading(true);
@@ -61,7 +88,6 @@ const UserAcceptOffer = () => {
     setLoading(false);
     setData(response.data);
   };
-
   const jobDetail = async (id) => {
     setDetailJob("");
     setLoading(true);
@@ -80,7 +106,6 @@ const UserAcceptOffer = () => {
       setLoading(false);
     }
   };
-  console.log(detailJob);
   const buttonAction = (status, id) => {
     if (status === "pending") {
       return (
@@ -128,17 +153,9 @@ const UserAcceptOffer = () => {
       );
     }
   };
-
-  const ShowContract = async () => {
-    try {
-      const response = await axios.get(`${base_url_server}`);
-    } catch (err) {}
-  };
-
   useEffect(() => {
     buttonAction();
   }, [statusAccept]);
-
   useEffect(() => {
     appliedJob();
   }, []);
@@ -158,7 +175,7 @@ const UserAcceptOffer = () => {
             </div>
             <div className="flex justify-start my-2">
               <h1 className="text-1xl">
-                You have {data?.length} of jobs you applied.
+                You have {data?.length} of jobs you applied
               </h1>
             </div>
 
@@ -192,7 +209,7 @@ const UserAcceptOffer = () => {
                     </div>
                     <div className="hidden sm:flex sm:flex-col sm:items-end">
                       <p className="text-sm leading-6 text-gray-900">
-                        {person.status}, until: {person.Job.expireDate}
+                        Status: {person.status}
                       </p>
                       <p className="mt-1 text-xs leading-5 text-gray-500 py-2 px-2">
                         {buttonAction(person.status, person.Job.id)}
@@ -288,4 +305,4 @@ const UserAcceptOffer = () => {
   );
 };
 
-export default UserAcceptOffer;
+export default authMiddleware(UserAcceptOffer);

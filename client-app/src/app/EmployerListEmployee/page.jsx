@@ -4,6 +4,7 @@ import axios from "axios";
 import NavbarEmployer from "../components/NavbarEmployer";
 import Swal from "sweetalert2";
 import Loading from "../components/Loading";
+import authMiddleware from "../middleware";
 
 const base_url_server = "http://localhost:3000";
 
@@ -63,7 +64,7 @@ const EmployerListEmployee = () => {
               </div>
               <div className="card-body text-center items-center">
                 <h2 className="card-title text-xl font-semibold place-items-center">
-                  NAMA PERUSAHAAN
+                  {localStorage.getItem("nameUser")}
                 </h2>
               </div>
             </div>
@@ -118,4 +119,4 @@ const EmployerListEmployee = () => {
   );
 };
 
-export default EmployerListEmployee;
+export default authMiddleware(EmployerListEmployee);

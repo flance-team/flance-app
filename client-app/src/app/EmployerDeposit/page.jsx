@@ -4,6 +4,7 @@ import { useEffect, useState, Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CurrencyInput from "react-currency-input-field";
 import NavbarEmployer from "../components/NavbarEmployer";
+import authMiddleware from "../middleware";
 
 const baseUrl = `http://localhost:3000`;
 
@@ -306,4 +307,4 @@ const EmployerDeposit = () => {
   );
 };
 
-export default EmployerDeposit;
+export default authMiddleware(EmployerDeposit);

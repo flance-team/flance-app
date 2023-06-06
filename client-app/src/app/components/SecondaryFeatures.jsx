@@ -7,10 +7,11 @@ import { Container } from "./Container";
 import screenshotContacts from "../images/screenshots/contacts.png";
 import screenshotInventory from "../images/screenshots/inventory.png";
 import screenshotProfitLoss from "../images/screenshots/profit-loss.png";
+import screenshotBlockchain from "../images/screenshots/Blockchain SC.png";
 
 const features = [
   {
-    name: "Reporting",
+    name: "Payroll Management",
     summary: "Stay on top of things with always up-to-date reporting features.",
     description:
       "We talked about reporting in the section above but we needed three items here, so mentioning it one more time for posterity.",
@@ -44,12 +45,12 @@ const features = [
     },
   },
   {
-    name: "Inventory",
+    name: "Secure with blockchain for contract",
     summary:
       "Never lose track of what’s in stock with accurate inventory tracking.",
     description:
-      "We don’t offer this as part of our software but that statement is inarguably true. Accurate inventory tracking would help you for sure.",
-    image: screenshotInventory,
+      "Immutability: Once a contract or a transaction is recorded on a blockchain, it becomes nearly impossible to alter or delete. The data is stored across multiple nodes in the network, and each new transaction is linked to previous ones through cryptographic hashes.",
+    image: screenshotBlockchain,
     icon: function InventoryIcon() {
       return (
         <>
@@ -73,8 +74,7 @@ const features = [
   },
   {
     name: "Contacts",
-    summary:
-      "Organize all of your contacts, service providers, and invoices in one place.",
+    summary: "Organize all of your Employer.",
     description:
       "This also isn’t actually a feature, it’s just some friendly advice. We definitely recommend that you do this, you’ll feel really organized and professional.",
     image: screenshotContacts,

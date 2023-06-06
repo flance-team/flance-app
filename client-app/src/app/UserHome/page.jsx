@@ -5,6 +5,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import NavBarUser from "../components/navbarUser";
+import Swal from "sweetalert2";
+import authMiddleware from "../middleware";
 
 const UserHome = () => {
   const base_url_server = "http://localhost:3000";
@@ -16,10 +18,40 @@ const UserHome = () => {
   const handleLocationQueryChange = (event) => {
     setLocationQuery(event.target.value);
   };
-  const handleSearchSubmit = () => {
-    // Perform search functionality here
+  const handleSearchSubmit = async () => {
     console.log("Search query:", searchQuery);
     console.log("Location query:", locationQuery);
+
+    let option = "";
+    if (searchQuery !== "") {
+      option += "?tit=" + searchQuery;
+    }
+    if (locationQuery !== "") {
+      searchQuery === ""
+        ? (option += "?loc=" + locationQuery)
+        : (option += "&loc=" + locationQuery);
+    }
+
+    try {
+      const { data } = await axios.get(
+        `${base_url_server}/jobs/home${option}`,
+        {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        }
+      );
+      setDataJob(data);
+    } catch (err) {
+      console.log(err);
+      const error = err.response.data.message;
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    }
   };
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -27,9 +59,14 @@ const UserHome = () => {
   const [detailJob, setDetailJob] = useState();
 
   const jobs = async () => {
-    const data = await axios.get(`${base_url_server}/jobs`);
+    const data = await axios.get(`${base_url_server}/jobs/home`, {
+      headers: {
+        access_token: localStorage.getItem("access_token"),
+      },
+    });
     setDataJob(data.data);
   };
+
   const jobDetail = async (id) => {
     const headers = {
       access_token: localStorage.getItem("access_token"),
@@ -39,6 +76,7 @@ const UserHome = () => {
     });
     setDetailJob(data.data);
   };
+
   const clickAccept = async () => {
     setOpen(false);
     const headers = {
@@ -62,10 +100,10 @@ const UserHome = () => {
       <div className="bg-white min-h-screen flex flex-col mx-7 my-2">
         <header className="bg-white shadow">{/* Header content */}</header>
         <div className="flex flex-grow">
-          <aside className="bg-white w-64">
+          <aside className="bg-white w-64 my-2 mx-2">
             {/* Sidebar content */}
             <div className="card w-56 bg-base-100 shadow-xl items-center">
-              <div className="w-32 h-32 flex  justify-center rounded-full overflow-hidden">
+              <div className="w-32 h-32 flex  justify-center rounded-full overflow-hidden my-1">
                 <img
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                   alt="Profile Image"
@@ -87,19 +125,18 @@ const UserHome = () => {
             <div className="flex bg-white rounded-lg flex-col items-center space-y-2">
               <div className="card w-fit bg-base-100 shadow-xl">
                 <div className="card-body">
-                  <h2 className="card-title">
-                    Search anything, anywhere here...
-                  </h2>
-
+                  <div className="flex justify-items-center">
+                    <h2 className="card-title">Search anything here</h2>
+                  </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="flex flex-col">
                       <h2 className="text-lg">What...</h2>
-                      <label
+                      {/* <label
                         htmlFor="input1"
                         className="input-label text-xs my-1"
                       >
                         job title, keyword, company name
-                      </label>
+                      </label> */}
                       <input
                         id="input1"
                         type="text"
@@ -111,16 +148,17 @@ const UserHome = () => {
                     </div>
                     <div className="flex flex-col">
                       <h2 className="text-lg">Where...</h2>
-                      <label
+                      {/* <label
                         htmlFor="input2"
                         className="input-label text-xs my-1"
                       >
                         city or state
-                      </label>
+                      </label> */}
                       <input
                         id="input2"
                         type="text"
                         className="input input-bordered"
+                        placeholder="city or state"
                         value={locationQuery}
                         onChange={handleLocationQueryChange}
                       />
@@ -298,4 +336,4 @@ const UserHome = () => {
   );
 };
 
-export default UserHome;
+export default authMiddleware(UserHome);

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import Loading from "../components/Loading";
+import authMiddleware from "../middleware";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -23,9 +24,24 @@ const LoginForm = () => {
 
   const formOnSubmit = async (el) => {
     el.preventDefault();
+    if (formValue.email.trim() === "" || formValue.password.trim() === "") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Please input your credentials`,
+      });
+      return;
+    }
     setLoading(true);
     try {
       const response = await axios.post(`${base_url_server}/login`, formValue);
+      Swal.fire({
+        width: 200,
+        icon: "success",
+        text: `Welcome to Flance`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("nameUser", response.data.name);
       localStorage.setItem("role", response.data.role);
@@ -103,4 +119,4 @@ const LoginForm = () => {
     </React.Fragment>
   );
 };
-export default LoginForm;
+export default authMiddleware(LoginForm);

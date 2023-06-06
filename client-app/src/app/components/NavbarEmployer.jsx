@@ -78,13 +78,13 @@ const NavbarEmployer = () => {
                   </div>
                   <div className="flex flex-shrink-0 items-center">
                     <img
-                      className="block h-8 w-auto lg:hidden"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                      className="block h-20 w-auto lg:hidden"
+                      src="./Logo - Team 1.png"
                       alt="Your Company"
                     />
                     <img
-                      className="hidden h-8 w-auto lg:block"
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                      className="hidden h-20 w-auto lg:block"
+                      src="./Logo - Team 1.png"
                       alt="Your Company"
                     />
                   </div>
@@ -209,32 +209,6 @@ const NavbarEmployer = () => {
                         leaveTo="transform opacity-0 scale-95"
                       >
                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Your Profile
-                              </a>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <a
-                                href="#"
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700"
-                                )}
-                              >
-                                Settings
-                              </a>
-                            )}
-                          </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
                               <a

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useRef, useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import NavBarUser from "../components/navbarUser";
+import authMiddleware from "../middleware";
 
 import CurrencyInput from "react-currency-input-field";
 
@@ -312,4 +313,4 @@ const UserDeposit = () => {
   );
 };
 
-export default UserDeposit;
+export default authMiddleware(UserDeposit);
