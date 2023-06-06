@@ -181,35 +181,37 @@ const SkillPage = () => {
                </button>
             </form>
          ) : (
-            <table className="w-full border border-gray-200">
-               <thead className="bg-gray-900 text-gray-200">
-                  <tr>
-                     <th className="py-2 px-4 border-b">Name</th>
-                     <th className="py-2 px-4 border-b">Action</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  {skills.map((skill, index) => (
-                     <tr
-                        key={skill.id}
-                        className={index % 2 === 0 ? "bg-gray-200" : "bg-gray-300"}>
-                        <td className="py-2 px-4 border-b">{skill.name}</td>
-                        <td className="py-2 px-4 border-b text-center">
-                           <button
-                              className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded mr-2"
-                              onClick={() => handleEdit(skill)}>
-                              Edit
-                           </button>
-                           <button
-                              className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
-                              onClick={() => handleDelete(skill)}>
-                              Delete
-                           </button>
-                        </td>
+            <div class="rounded-3xl overflow-hidden">
+               <table className="w-full border border-gray-200">
+                  <thead className="bg-gray-900 text-gray-200">
+                     <tr>
+                        <th className="py-2 px-4 border-b">Name</th>
+                        <th className="py-2 px-4 border-b">Action</th>
                      </tr>
-                  ))}
-               </tbody>
-            </table>
+                  </thead>
+                  <tbody>
+                     {skills.map((skill, index) => (
+                        <tr
+                           key={skill.id}
+                           className={index % 2 === 0 ? "bg-gray-200" : "bg-gray-300"}>
+                           <td className="py-2 px-4 border-b">{skill.name}</td>
+                           <td className="py-2 px-4 border-b text-center">
+                              <button
+                                 className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded mr-2"
+                                 onClick={() => handleEdit(skill)}>
+                                 Edit
+                              </button>
+                              <button
+                                 className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded"
+                                 onClick={() => handleDelete(skill)}>
+                                 Delete
+                              </button>
+                           </td>
+                        </tr>
+                     ))}
+                  </tbody>
+               </table>
+            </div>
          )}
       </div>
    );

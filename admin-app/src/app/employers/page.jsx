@@ -92,51 +92,52 @@ const EmployerPage = () => {
    return (
       <div className="p-8">
          <h1 className="text-2xl font-bold mb-4">Employer Page</h1>
-         <table className="w-full border border-gray-200">
-            <thead className="bg-gray-900 text-gray-200">
-               <tr>
-                  <th className="py-2 px-4 border-b">Company Name</th>
-                  <th className="py-2 px-4 border-b">Status</th>
-                  <th className="py-2 px-4 border-b">Location</th>
-                  <th className="py-2 px-4 border-b">Action</th>
-               </tr>
-            </thead>
-            <tbody>
-               {employers.map((employer, index) => (
-                  <tr
-                     key={employer.id}
-                     className={index % 2 === 0 ? "bg-gray-200" : "bg-gray-300"}>
-                     <td className="py-2 px-4 border-b">{employer.companyName}</td>
-                     <td className="py-2 px-4 border-b">{employer.status}</td>
-                     <td className="py-2 px-4 border-b">{employer.location}</td>
-                     <td className="py-2 px-4 border-b text-center">
-                        <button
-                           className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded mr-2"
-                           onClick={() => handleDetail(employer.id)}>
-                           Detail
-                        </button>
-                        {employer.status === "pending" ? (
-                           <>
-                              <button
-                                 className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded mr-2"
-                                 onClick={() => handleVerify(employer.id, "verified")}>
-                                 Verify
-                              </button>
-                              <button
-                                 className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded mr-2"
-                                 onClick={() => handleVerify(employer.id, "rejected")}>
-                                 Reject
-                              </button>
-                           </>
-                        ) : (
-                           <></>
-                        )}
-                     </td>
+         <div class="rounded-3xl overflow-hidden">
+            <table className="w-full border border-gray-200">
+               <thead className="bg-gray-900 text-gray-200">
+                  <tr>
+                     <th className="py-2 px-4 border-b">Company Name</th>
+                     <th className="py-2 px-4 border-b">Status</th>
+                     <th className="py-2 px-4 border-b">Location</th>
+                     <th className="py-2 px-4 border-b">Action</th>
                   </tr>
-               ))}
-            </tbody>
-         </table>
-
+               </thead>
+               <tbody>
+                  {employers.map((employer, index) => (
+                     <tr
+                        key={employer.id}
+                        className={index % 2 === 0 ? "bg-gray-200" : "bg-gray-300"}>
+                        <td className="py-2 px-4 border-b">{employer.companyName}</td>
+                        <td className="py-2 px-4 border-b">{employer.status}</td>
+                        <td className="py-2 px-4 border-b">{employer.location}</td>
+                        <td className="py-2 px-4 border-b text-center">
+                           <button
+                              className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded mr-2"
+                              onClick={() => handleDetail(employer.id)}>
+                              Detail
+                           </button>
+                           {employer.status === "pending" ? (
+                              <>
+                                 <button
+                                    className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded mr-2"
+                                    onClick={() => handleVerify(employer.id, "verified")}>
+                                    Verify
+                                 </button>
+                                 <button
+                                    className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded mr-2"
+                                    onClick={() => handleVerify(employer.id, "rejected")}>
+                                    Reject
+                                 </button>
+                              </>
+                           ) : (
+                              <></>
+                           )}
+                        </td>
+                     </tr>
+                  ))}
+               </tbody>
+            </table>
+         </div>
          {showModal && selectedEmployer && (
             <DetailModal
                employer={selectedEmployer}

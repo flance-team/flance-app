@@ -50,7 +50,7 @@ const HomePage = () => {
          <main className="flex-1 p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                {/* Dashboard Card 1 */}
-               <div className="bg-white rounded-lg shadow-xl p-6">
+               <div className="bg-white rounded-lg shadow-xl p-6 border border-gray-200">
                   <div className="flex items-center">
                      <svg
                         className="h-11 w-11 text-gray-900"
@@ -90,7 +90,7 @@ const HomePage = () => {
                </div>
 
                {/* Dashboard Card 2 */}
-               <div className="bg-white rounded-lg shadow-xl p-6">
+               <div className="bg-white rounded-lg shadow-xl p-6 border border-gray-200">
                   <div className="flex items-center">
                      <svg
                         className="h-11 w-11 text-gray-900"
@@ -112,7 +112,7 @@ const HomePage = () => {
                   </p>
                </div>
 
-               <div className="bg-white rounded-lg shadow-xl p-6">
+               <div className="bg-white rounded-lg shadow-xl p-6 border border-gray-200">
                   <div className="flex items-center">
                      <svg
                         className="h-11 w-11 text-gray-900"
@@ -139,7 +139,7 @@ const HomePage = () => {
                   </p>
                </div>
 
-               <div className="bg-white rounded-lg shadow-xl p-6">
+               <div className="bg-white rounded-lg shadow-xl p-6 border border-gray-200">
                   <div className="flex items-center">
                      <svg
                         className="h-11 w-11 text-gray-900"
@@ -160,7 +160,31 @@ const HomePage = () => {
                   </p>
                </div>
 
-               <div className="bg-white rounded-lg shadow-xl p-6">
+               <div className="bg-white rounded-lg shadow-xl p-6 border border-gray-200">
+                  <div className="flex items-center">
+                     <svg
+                        className="h-11 w-11 text-gray-900"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path
+                           stroke-linecap="round"
+                           stroke-linejoin="round"
+                           stroke-width="2"
+                           d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+                        />
+                     </svg>
+                     <h2 className="text-4xl font-semibold mb-2 ml-4">Types</h2>
+                  </div>
+                  <p>
+                     <span className="text-2xl">Total : </span>
+                     <span className="font-semibold text-green-500 text-4xl">{dataDashboard?.totalTypes}</span>
+                  </p>
+               </div>
+
+               {/* Dashboard Card 3 */}
+
+               <div className="bg-white rounded-lg shadow-xl p-6 border border-gray-200">
                   <div className="flex items-center">
                      <svg
                         className="h-11 w-11 text-gray-900"
@@ -198,29 +222,6 @@ const HomePage = () => {
                   <p>
                      <span className="text-2xl">Total : </span>
                      <span className="font-semibold text-green-500 text-4xl">{dataDashboard?.totalSkills}</span>
-                  </p>
-               </div>
-
-               {/* Dashboard Card 3 */}
-               <div className="bg-white rounded-lg shadow-xl p-6">
-                  <div className="flex items-center">
-                     <svg
-                        className="h-11 w-11 text-gray-900"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path
-                           stroke-linecap="round"
-                           stroke-linejoin="round"
-                           stroke-width="2"
-                           d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                        />
-                     </svg>
-                     <h2 className="text-4xl font-semibold mb-2 ml-4">Types</h2>
-                  </div>
-                  <p>
-                     <span className="text-2xl">Total : </span>
-                     <span className="font-semibold text-green-500 text-4xl">{dataDashboard?.totalTypes}</span>
                   </p>
                </div>
             </div>
