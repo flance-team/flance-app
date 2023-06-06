@@ -1,4 +1,6 @@
 const { Employer, User, DepositEmployer, Signer } = require("../models/index");
+const confirmationEmail = require("../helpers/confirmationEmailEmployerRegister");
+const sendEmail = require("../helpers/sendEmail");
 const axios = require("axios");
 class EmployerController {
   static async registerEmployer(req, res, next) {
@@ -47,6 +49,16 @@ class EmployerController {
 
       await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic })
 
+      const sendEmailPayload = {
+        sendTo: email,
+        subjectEmail: "Verify Your Account",
+        bodyEmail: confirmationEmail(
+          process.env.ZOOM_LINK,
+          process.env.FRONTEND_URL,
+        ),
+      };
+
+      sendEmail(sendEmailPayload)
 
       res.status(201).json(newEmployer);
     } catch (err) {
