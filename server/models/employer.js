@@ -106,6 +106,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      imgUrl: DataTypes.STRING,
       typeId: DataTypes.INTEGER,
       signer: DataTypes.INTEGER,
       status: {

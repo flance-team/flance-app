@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 
-const NavbarEmployer = () => {
+const NavBarUser = () => {
   const router = useRouter();
 
   const base_url_server = "http://localhost:3000";
@@ -78,43 +78,33 @@ const NavbarEmployer = () => {
                   </div>
                   <div className="flex flex-shrink-0 items-center">
                     <img
-                      className="block h-20 w-auto lg:hidden"
+                      className="block h-9 w-auto lg:hidden "
                       src="./Logo - Team 1.png"
                       alt="Your Company"
                     />
                     <img
-                      className="hidden h-20 w-auto lg:block"
+                      className="hidden h-9 w-auto lg:block"
                       src="./Logo - Team 1.png"
                       alt="Your Company"
                     />
                   </div>
                   <div className="hidden md:ml-6 md:flex md:space-x-8">
-                    {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                    <Link legacyBehavior href="/EmployerHome">
+                    <Link legacyBehavior href="/UserHome">
                       <a
-                        onClick={() => router.push("/EmployerHome")}
+                        onClick={() => router.push("/UserHome")}
                         className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                       >
                         Home
                       </a>
                     </Link>
-                    <Link legacyBehavior href="/EmployerListEmployee">
+                    <Link legacyBehavior href="/UserAcceptOffer">
                       <a
-                        onClick={() => router.push("/EmployerListEmployee")}
+                        onClick={() => router.push("/UserAcceptOffer")}
                         className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
                       >
-                        List Employee
+                        Applied Jobs
                       </a>
                     </Link>
-                    {/* <a className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-                      Projects
-                    </a>
-                    <a
-                      href="#"
-                      className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                    >
-                      Calendar
-                    </a> */}
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -321,4 +311,4 @@ const NavbarEmployer = () => {
   );
 };
 
-export default NavbarEmployer;
+export default NavBarUser;

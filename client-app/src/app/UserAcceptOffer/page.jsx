@@ -2,12 +2,12 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import NavBarUser from "../components/navbarUser";
+import NavBarUser from "../../components/navbarUser";
 import Swal from "sweetalert2";
-import authMiddleware from "../middleware";
+import { useRouter } from "next/navigation";
 const UserAcceptOffer = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
@@ -15,6 +15,16 @@ const UserAcceptOffer = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [detailJob, setDetailJob] = useState();
+  const router = useRouter();
+
+  if (!localStorage.getItem("access_token")) {
+    router.push("/");
+  }
+
+  if (localStorage.getItem("role") === "employer") {
+    router.push("/EmployerHome");
+  }
+
   const statusAccept = async (id) => {
     setLoading(true);
     try {
@@ -305,4 +315,4 @@ const UserAcceptOffer = () => {
   );
 };
 
-export default authMiddleware(UserAcceptOffer);
+export default UserAcceptOffer;

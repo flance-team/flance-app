@@ -89,7 +89,7 @@ class jobController {
                     },
                     {
                         model: Employer,
-                        attributes: ['companyName', 'email'],
+                        attributes: ['companyName', 'email', 'imgUrl'],
                     },
                     {
                         model: Schedule,
@@ -97,8 +97,6 @@ class jobController {
                 ],
                 where: options,
             });
-
-            // console.log(jobs)
 
             const sortedJobs = jobs.sort((jobA, jobB) => {
                 const jobASkills = jobA.Category.SkillCategories.map((skill) => skill.Skill.name);
@@ -116,6 +114,13 @@ class jobController {
                 }
             });
 
+
+            for (let i = 0; i < sortedJobs.length; i++) {
+                const countJob = await JobList.count({ where: { jobId: sortedJobs[i].id } });
+                sortedJobs[i].dataValues.countApplicant = countJob;
+            }
+
+            console.log(sortedJobs);
             res.status(200).json(sortedJobs);
         } catch (err) {
             next(err);
@@ -192,7 +197,7 @@ class jobController {
                 where: { id: employerId }
             });
 
-            const dataBlockchain = await axios.post("https://flance-agreement-api.tianweb.dev/jobs",
+            const dataBlockchain = await axios.post(`${process.env.BLOCKCHAIN_URL}/jobs`,
                 {
                     jobTitle: title,
                     companyName: employer.companyName,
@@ -371,7 +376,7 @@ class jobController {
 
 
             const user = await User.findOne({ include: { model: Signer }, where: { id: userId } });
-            const dataBlockchain = await axios.post("https://flance-agreement-api.tianweb.dev/agreements",
+            const dataBlockchain = await axios.post(`${process.env.BLOCKCHAIN_URL}/agreements`,
                 {
                     jobBlockchainId: jobList.Job.jobBlockchainId,
                     userName: user.name,

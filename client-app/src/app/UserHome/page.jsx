@@ -1,12 +1,14 @@
 "use client";
 import axios from "axios";
 import { Fragment, useRef } from "react";
-import { Dialog, Transition } from "@headlessui/react";
+import { Dialog, Transition, Menu } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
+import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
-import NavBarUser from "../components/navbarUser";
+import NavBarUser from "../../components/navbarUser";
 import Swal from "sweetalert2";
-import authMiddleware from "../middleware";
+import { useRouter } from "next/navigation";
+import CardJob from "../../components/CardJob";
 
 const UserHome = () => {
   const base_url_server = "http://localhost:3000";
@@ -18,10 +20,17 @@ const UserHome = () => {
   const handleLocationQueryChange = (event) => {
     setLocationQuery(event.target.value);
   };
-  const handleSearchSubmit = async () => {
-    console.log("Search query:", searchQuery);
-    console.log("Location query:", locationQuery);
+  const router = useRouter();
 
+  // if (!localStorage.getItem("access_token")) {
+  //   router.push("/");
+  // }
+
+  // if (localStorage.getItem("role") === "employer") {
+  //   router.push("/EmployerHome");
+  // }
+
+  const handleSearchSubmit = async () => {
     let option = "";
     if (searchQuery !== "") {
       option += "?tit=" + searchQuery;
@@ -97,12 +106,12 @@ const UserHome = () => {
   return (
     <>
       <NavBarUser />
-      <div className="bg-white min-h-screen flex flex-col mx-7 my-2">
+      <div className="bg-white min-h-20 flex flex-col mx-7 my-2">
         <header className="bg-white shadow">{/* Header content */}</header>
         <div className="flex flex-grow">
           <aside className="bg-white w-64 my-2 mx-2">
             {/* Sidebar content */}
-            <div className="card w-56 bg-base-100 shadow-xl items-center">
+            {/* <div className="card w-56 bg-base-100 shadow-xl items-center">
               <div className="w-32 h-32 flex  justify-center rounded-full overflow-hidden my-1">
                 <img
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -117,6 +126,23 @@ const UserHome = () => {
                 <p className="text-sm text-gray-500 text-xs">
                   Full-stack developer
                 </p>
+              </div>
+            </div> */}
+            <div className="w-56 h-full bg-base-100 shadow-xl flex flex-col items-center mx-2 my-2">
+              <div className="w-32 h-32 flex justify-center rounded-full overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt="Profile Image"
+                  className=""
+                />
+              </div>
+              <div className="flex flex-col items-center">
+                <h2 className="text-xl font-semibold mt-2">
+                  {localStorage.getItem("nameUser")} NAME HERE
+                </h2>
+                {/* <p className="text-sm text-gray-500 text-xs">
+                  Full-stack developer
+                </p> */}
               </div>
             </div>
           </aside>
@@ -184,10 +210,22 @@ const UserHome = () => {
                     key={el.id}
                   >
                     <div className="card-body">
-                      <h2 className="card-title text-xl">
-                        {el.Employer.companyName}
-                      </h2>
-                      <p>Job Required: {el.title}</p>
+                      <h2 className="card-title text-xl">{el.title}</h2>
+                      <div className="flex-row flex">
+                        <h4>
+                          {" "}
+                          <div className="w-10 h-10 rounded-full overflow-hidden my-1">
+                            <img
+                              src={el.Employer.imgUrl}
+                              alt="Profile Image"
+                              className=""
+                            />
+                          </div>
+                          {el.Employer.companyName}
+                        </h4>
+                      </div>
+                      <p>Rate Per Hour: {el.salary}</p>
+                      <p>Total Work Hours: {el.totalHours} / Week</p>
                       <p>Location: {el.location}</p>
                       {/* <div>formatedDate({el.expireDate})</div> */}
                       <div className="card-actions justify-end">
@@ -200,6 +238,7 @@ const UserHome = () => {
                           Details
                         </button>
                       </div>
+                      <p>Total Applicants: {el.countApplicant}</p>
                     </div>
                   </div>
                 );
@@ -209,14 +248,14 @@ const UserHome = () => {
 
           <aside className="bg-white w-64 my-2">
             {/* Sidebar content */}
-            <div className="card w-56 bg-base-100 shadow-xl">
+            <div className="w-56 bg-base-100 shadow-xl">
               <div className="w-24 mask mask-squircle">
                 <img src="" />
               </div>
               <h2 className="card-title text-sm my-2 mx-2">Sponsors:</h2>
               <div className="card-body items-center text-center">
                 <h3 className="container bg-gray-200">YOUR LOGO HERE</h3>
-                <p>Support flance by becoming a sponsor</p>
+                <p className="text-xs">Support flance by becoming a sponsor</p>
                 {/* <div className="card-actions">
                   <button className="btn btn-primary">Buy Now</button>
                 </div> */}
@@ -235,6 +274,60 @@ const UserHome = () => {
           </aside>
         </div>
         <footer className="bg-white shadow">{/* Footer content */}</footer>
+      </div>
+      <div className="bg-white min-h-20 flex flex-col mx-10 my-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {/* 1 */}
+          <div className="card w-full bg-primary text-primary-content">
+            <div className="card-body">
+              <h2 className="card-title">Card title!</h2>
+              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <div className="card-actions justify-end">
+                <button className="btn">Buy Now</button>
+              </div>
+            </div>
+          </div>
+          {/*  2  */}
+          <div className="card w-full bg-primary text-primary-content">
+            <div className="card-body">
+              <h2 className="card-title">Card title!</h2>
+              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <div className="card-actions justify-end">
+                <button className="btn">Buy Now</button>
+              </div>
+            </div>
+          </div>
+          {/* 3 */}
+          <div className="card w-full bg-primary text-primary-content">
+            <div className="card-body">
+              <h2 className="card-title">Card title!</h2>
+              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <div className="card-actions justify-end">
+                <button className="btn">Buy Now</button>
+              </div>
+            </div>
+          </div>
+          {/* 4 */}
+          <div className="card w-full bg-primary text-primary-content">
+            <div className="card-body">
+              <h2 className="card-title">Card title!</h2>
+              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <div className="card-actions justify-end">
+                <button className="btn">Buy Now</button>
+              </div>
+            </div>
+          </div>
+          {/* 5 */}
+          <div className="card w-full bg-primary text-primary-content">
+            <div className="card-body">
+              <h2 className="card-title">Card title!</h2>
+              <p>If a dog chews shoes whose shoes does he choose?</p>
+              <div className="card-actions justify-end">
+                <button className="btn">Buy Now</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <Transition.Root show={open} as={Fragment}>
         <Dialog
@@ -336,4 +429,4 @@ const UserHome = () => {
   );
 };
 
-export default authMiddleware(UserHome);
+export default UserHome;

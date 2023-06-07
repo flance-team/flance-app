@@ -83,7 +83,7 @@ describe("Employer transactions", () => {
       .expect(201);
 
     expect(typeof res.body).toBe("object");
-    expect(res.body).toHaveProperty("amount");
+    expect(res.body).toHaveProperty("transUser");
   });
 });
 

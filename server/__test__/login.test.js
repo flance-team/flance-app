@@ -70,6 +70,16 @@ describe("User or Employer failed login", () => {
   it("POST /login, should return error email or password is incorrect", async () => {
     const res = await request(app)
       .post("/login")
+      .send({ email: "test3@employer.com", password: "123456" })
+      .expect(403);
+
+    expect(typeof res.body).toBe("object");
+    expect(res.body).toHaveProperty("message");
+  });
+
+  it("POST /login, should return error email or password is incorrect", async () => {
+    const res = await request(app)
+      .post("/login")
       .send({ email: "test@employer.com", password: "1234567" })
       .expect(403);
 

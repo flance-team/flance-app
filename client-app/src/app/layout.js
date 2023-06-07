@@ -16,6 +16,7 @@ export default function RootLayout({ children }) {
           type="text/javascript"
           src="https://app.sandbox.midtrans.com/snap/snap.js"
           data-client-key="SB-Mid-client-1HFOVdX6JKijzt6W"
+          async={true}
         ></script>
       </head>
       <body className={inter.className}>{children}</body>

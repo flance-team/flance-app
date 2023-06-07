@@ -66,21 +66,27 @@ class DepositController {
         amount: amount * -1,
         ref: `pay - user ${userId}`,
         transactionDate: new Date(),
-        updatedBalance: depositEmp.balance - amount,
+        updatedBalance: Number(depositEmp.balance) - Number(amount),
       });
-      await depositEmp.update({ balance: depositEmp.balance - amount });
+      await depositEmp.update({
+        balance: Number(depositEmp.balance) - Number(amount),
+      });
 
       const transUser = await TransactionUser.create({
         depositId: depositUser.id,
-        amount: amount,
+        amount: Number(amount),
         ref: `payment from - employer ${employerId}`,
         transactionDate: new Date(),
-        updatedBalance: depositUser.balance + amount,
+        updatedBalance: Number(depositUser.balance) + Number(amount),
       });
-      await depositUser.update({ balance: depositUser.balance + amount });
 
-      res.status(201).json(transEmp);
+      await depositUser.update({
+        balance: Number(depositUser.balance) + Number(amount),
+      });
+
+      res.status(201).json({ transEmp, transUser });
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }

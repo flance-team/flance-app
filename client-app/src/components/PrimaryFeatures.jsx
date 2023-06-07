@@ -13,7 +13,7 @@ import screenshotVatReturns from "../images/screenshots/vat-returns.png";
 
 const features = [
   {
-    title: "Creating Job",
+    title: "Easily Post New Position",
     description:
       "Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.",
     image: screenshotPayroll,
@@ -21,19 +21,18 @@ const features = [
   {
     title: "Accepting Employee",
     description:
-      "All of your receipts organized into one place, as long as you don't mind typing in the data by hand.",
+      "Empowers employers to efficiently identify the most suitable candidates for their job openings",
     image: screenshotExpenses,
   },
   {
-    title: "User Finding Job",
-    description:
-      "We only sell our software to companies who don't deal with VAT at all, so technically we do all the VAT stuff they need.",
+    title: "Discover Jobs",
+    description: "Facilitates an enhanced job search experience for users.",
     image: screenshotVatReturns,
   },
   {
-    title: "Deposit Money",
+    title: "Deposit Money & Withdraw the wages",
     description:
-      "Easily export your data into an Excel spreadsheet where you can do whatever the hell you want with it.",
+      "Easily pay the wages and maintain good credibility of the business. Keep track of everyone's salaries and whether or not they've been paid.",
     image: screenshotReporting,
   },
 ];

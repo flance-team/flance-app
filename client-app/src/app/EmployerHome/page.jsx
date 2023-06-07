@@ -1,13 +1,12 @@
 "use client";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import NavbarEmployer from "../components/NavbarEmployer";
+import NavbarEmployer from "../../components/NavbarEmployer";
 import Swal from "sweetalert2";
-import ApplicantModal from "../components/ModalApplicant";
-import CreateJobForm from "../components/CreateJobForm";
-import Loading from "../components/Loading";
-import authMiddleware from "../middleware";
-
+import ApplicantModal from "../../components/ModalApplicant";
+import CreateJobForm from "../../components/CreateJobForm";
+import Loading from "../../components/Loading";
+import { useRouter } from "next/navigation";
 const base_url_server = "http://localhost:3000";
 
 const EmployerHome = () => {
@@ -17,6 +16,15 @@ const EmployerHome = () => {
   const [showApplicantsModal, setShowApplicantsModal] = useState(false);
   const [showCreateJobForm, setShowCreateJobForm] = useState(false);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  if (!localStorage.getItem("access_token")) {
+    router.push("/");
+  }
+
+  if (localStorage.getItem("role") === "user") {
+    router.push("/UserHome");
+  }
 
   useEffect(() => {
     getJobs();
@@ -166,9 +174,7 @@ const EmployerHome = () => {
                 />
               </div>
               <div className="card-body text-center items-center">
-                <h2 className="card-title text-xl font-semibold place-items-center">
-                  Hello, {localStorage.getItem("nameUser")}
-                </h2>
+                <h2 className="card-title text-xl font-semibold place-items-center"></h2>
               </div>
             </div>
           </aside>
@@ -244,4 +250,4 @@ const EmployerHome = () => {
   );
 };
 
-export default authMiddleware(EmployerHome);
+export default EmployerHome;

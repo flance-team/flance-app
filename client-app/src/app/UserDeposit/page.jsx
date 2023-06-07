@@ -2,14 +2,23 @@
 import axios from "axios";
 import { useEffect, useRef, useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import NavBarUser from "../components/navbarUser";
-import authMiddleware from "../middleware";
-
+import NavBarUser from "../../components/navbarUser";
 import CurrencyInput from "react-currency-input-field";
-
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 const baseUrl = `http://localhost:3000`;
 
 const UserDeposit = () => {
+  const router = useRouter();
+
+  if (!localStorage.getItem("access_token")) {
+    router.push("/");
+  }
+
+  if (localStorage.getItem("role") === "employer") {
+    router.push("/EmployerHome");
+  }
+
   const [balance, setBalance] = useState(0);
   const amountToWithdraw = useRef(0);
   const [historyB, setHistoryB] = useState([]);
@@ -42,9 +51,20 @@ const UserDeposit = () => {
     const res = currentValue.replace(/\D/g, "");
 
     if (res > balance) {
-      return console.log("under budget");
+      Swal.fire({
+        icon: "error",
+        title: "Balance is not enough",
+      });
     } else if (res < 0) {
-      return console.log("Value cant be negative");
+      Swal.fire({
+        icon: "error",
+        title: "Input Can't be negative",
+      });
+    } else if (res == null || res == undefined || res == "" || res == 0) {
+      Swal.fire({
+        icon: "error",
+        title: "Please Input First",
+      });
     } else {
       try {
         const response = await axios.post(
@@ -60,7 +80,12 @@ const UserDeposit = () => {
         );
         setBalance(response.data.updatedBalance);
         amountToWithdraw.current.value = "";
-        openModal();
+        Swal.fire({
+          icon: "success",
+
+          title: "Withdrawal success",
+        });
+        // openModal();
       } catch (err) {
         console.log(err);
       }
@@ -68,10 +93,6 @@ const UserDeposit = () => {
   };
 
   useEffect(() => {
-    // localStorage.setItem(
-    //   "access_token",
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU4NjQzMzV9.Yh_4J9q1XMHMdH5i0vyRA5FBkWXhS5AnL7-EWvPpnm8"
-    // );
     getBalance();
   }, [balance]);
 
@@ -136,6 +157,7 @@ const UserDeposit = () => {
                     ref={amountToWithdraw}
                     decimalsLimit={2}
                     min={0}
+                    allowNegativeValue={false}
                   />
                 </div>
 
@@ -263,7 +285,7 @@ const UserDeposit = () => {
                           {historyB?.map((e, i) => {
                             return (
                               <tr key={i}>
-                                <td>{i}</td>
+                                <td>{i + 1}</td>
                                 <td>{e.ref}</td>
                                 <td>{e.transactionDate}</td>
                                 <td
@@ -313,4 +335,4 @@ const UserDeposit = () => {
   );
 };
 
-export default authMiddleware(UserDeposit);
+export default UserDeposit;
