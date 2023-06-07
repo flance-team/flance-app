@@ -15,6 +15,14 @@ const UserHome = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
   const [nameUser, setNameUser] = useState("");
+  const [open, setOpen] = useState(false);
+  const cancelButtonRef = useRef(null);
+  const [dataJob, setDataJob] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [detailJob, setDetailJob] = useState();
+  const [flag, setFlag] = useState(0);
+
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -35,7 +43,53 @@ const UserHome = () => {
     setNameUser(localStorage.getItem("nameUser"));
   }, []);
 
-  const handleSearchSubmit = async () => {
+  const jobDetail = async (id) => {
+    const headers = {
+      access_token: localStorage.getItem("access_token"),
+    };
+    const data = await axios.get(`${base_url_server}/jobs/schedules/${id}`, {
+      headers,
+    });
+    setDetailJob(data.data);
+  };
+
+  const clickAccept = async () => {
+    try {
+      setOpen(false);
+      const headers = {
+        access_token: localStorage.getItem("access_token"),
+      };
+      const id = detailJob.id;
+      const response = await axios.post(
+        `${base_url_server}/jobs/apply/${id}`,
+        null,
+        { headers }
+      );
+      Swal.fire({
+        width: 400,
+        icon: "success",
+        text: `You just apply this job`,
+        showConfirmButton: true,
+      });
+    } catch (err) {
+      console.log(err);
+      const error = err.response.data.message;
+
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `${error}`,
+      });
+    } finally {
+      setFlag(flag + 1);
+    }
+  };
+
+  useEffect(() => {
+    fetchJobs();
+  }, [currentPage, flag]);
+
+  const fetchJobs = async () => {
     let option = "";
     if (searchQuery !== "") {
       option += "?tit=" + searchQuery;
@@ -56,6 +110,8 @@ const UserHome = () => {
         }
       );
       setDataJob(data);
+
+      setTotalPages(Math.ceil(data.length / 8));
     } catch (err) {
       console.log(err);
       const error = err.response.data.message;
@@ -67,53 +123,19 @@ const UserHome = () => {
       });
     }
   };
-  const [open, setOpen] = useState(false);
-  const cancelButtonRef = useRef(null);
-  const [dataJob, setDataJob] = useState([]);
-  console.log(dataJob);
-  const [detailJob, setDetailJob] = useState();
 
-  const jobs = async () => {
-    const data = await axios.get(`${base_url_server}/jobs/home`, {
-      headers: {
-        access_token: localStorage.getItem("access_token"),
-      },
-    });
-    setDataJob(data.data);
+  const handleSearchSubmit = async () => {
+    setCurrentPage(1);
+    fetchJobs();
   };
 
-  const jobDetail = async (id) => {
-    const headers = {
-      access_token: localStorage.getItem("access_token"),
-    };
-    const data = await axios.get(`${base_url_server}/jobs/schedules/${id}`, {
-      headers,
-    });
-    setDetailJob(data.data);
+  const handlePrevPage = () => {
+    setCurrentPage((prevPage) => prevPage - 1);
   };
 
-  const clickAccept = async () => {
-    setOpen(false);
-    const headers = {
-      access_token: localStorage.getItem("access_token"),
-    };
-    const id = detailJob.id;
-    const response = await axios.post(
-      `${base_url_server}/jobs/apply/${id}`,
-      null,
-      { headers }
-    );
-    Swal.fire({
-      width: 400,
-      icon: "success",
-      text: `You just apply this job`,
-      showConfirmButton: true,
-    });
+  const handleNextPage = () => {
+    setCurrentPage((prevPage) => prevPage + 1);
   };
-
-  useEffect(() => {
-    jobs();
-  }, []);
 
   return (
     <>
@@ -228,10 +250,10 @@ const UserHome = () => {
         </div>
         <footer className="bg-white shadow">{/* Footer content */}</footer>
       </div>
+
       <div className="bg-white min-h-16 flex flex-col mx-10 my-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {/* disini */}
-          {dataJob?.map((el) => {
+          {dataJob.slice((currentPage - 1) * 8, currentPage * 8).map((el) => {
             return (
               <div key={el.id} className="card w-full bg-base-100 shadow-xl">
                 <div className="card-body">
@@ -270,24 +292,36 @@ const UserHome = () => {
         >
           <div className="hidden sm:block">
             <p className="text-sm text-gray-700">
-              Showing <span className="font-medium">1</span> to{" "}
-              <span className="font-medium">10</span> of{" "}
-              <span className="font-medium">20</span> results
+              Showing{" "}
+              <span className="font-medium">{(currentPage - 1) * 8 + 1}</span>{" "}
+              to{" "}
+              <span className="font-medium">
+                {Math.min(currentPage * 8, dataJob.length)}
+              </span>{" "}
+              of <span className="font-medium">{dataJob.length}</span> results
             </p>
           </div>
           <div className="flex flex-1 justify-between sm:justify-end">
-            <a
-              href="#"
-              className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
+            <button
+              className={`relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0 ${
+                currentPage === 1 ? "cursor-not-allowed" : "cursor-pointer"
+              }`}
+              onClick={handlePrevPage}
+              disabled={currentPage === 1}
             >
               Previous
-            </a>
-            <a
-              href="#"
-              className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
+            </button>
+            <button
+              className={`relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0 ${
+                currentPage === totalPages
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+              }`}
+              onClick={handleNextPage}
+              disabled={currentPage === totalPages}
             >
               Next
-            </a>
+            </button>
           </div>
         </nav>
       </div>
