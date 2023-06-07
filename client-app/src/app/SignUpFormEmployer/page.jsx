@@ -23,12 +23,14 @@ const SignUpForm = () => {
     imgUrl: "",
   });
 
-  if (localStorage.getItem("role") === "employer") {
-    router.push("/EmployerHome");
-  }
-  if (localStorage.getItem("role") === "user") {
-    router.push("/UserHome");
-  }
+  useEffect(() => {
+    if (localStorage.getItem("role") === "employer") {
+      router.push("/EmployerHome");
+    }
+    if (localStorage.getItem("role") === "user") {
+      router.push("/UserHome");
+    }
+  }, []);
 
   const inputForm = (el) => {
     setFormValue({
