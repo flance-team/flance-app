@@ -29,9 +29,6 @@ const DetailModal = ({ employer, closeModal }) => (
           <strong>Type ID:</strong> {employer.typeId}
         </p>
         <p>
-          <strong>Signer:</strong> {employer.signer}
-        </p>
-        <p>
           <strong>Status:</strong> {employer.status}
         </p>
       </div>

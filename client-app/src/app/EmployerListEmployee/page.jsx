@@ -287,7 +287,7 @@ const EmployerListEmployee = () => {
                         <CurrencyInput
                           className="input input-bordered"
                           prefix="Rp."
-                          value={
+                          defaultValue={
                             chosenUser?.totalHours * chosenUser?.totalSalary
                           }
                           disabled={true}

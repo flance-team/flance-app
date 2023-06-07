@@ -150,7 +150,7 @@ const NavbarEmployer = () => {
                                     <button
                                       className="btn btn-primary mr-2"
                                       onClick={() => {
-                                        router.push("/UserDeposit");
+                                        router.push("/EmployerDeposit");
                                       }}
                                     >
                                       Withdraw
