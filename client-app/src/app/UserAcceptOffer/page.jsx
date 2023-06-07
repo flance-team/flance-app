@@ -5,6 +5,7 @@ import {
   CheckIcon,
   DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
+import moment from "moment";
 import Loading from "../../components/Loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -277,7 +278,7 @@ const UserAcceptOffer = () => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl sm:p-6">
                   <div>
                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                       <DocumentMagnifyingGlassIcon
@@ -285,38 +286,118 @@ const UserAcceptOffer = () => {
                         aria-hidden="true"
                       />
                     </div>
-                    <div className="mt-3 text-center sm:mt-5">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
-                      >
-                        DETAIL OF JOB
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-lg font-semibold">
-                          {detailJob?.title}
-                        </p>
-                        <div className="mt-1 text-sm">
-                          <h3 className="mb-1">
-                            HOURS REQUIRED: {detailJob?.totalHours} hours
-                          </h3>
-                          <h3 className="mb-2 break-all">
-                            Hash: {detailJob?.hash}
-                          </h3>
-                          <h3 className="mb-2">
-                            Salary: Rp. {detailJob?.salary}
-                          </h3>
-                          <h3 className="mb-2">
-                            Company: {detailJob?.Employer?.companyName}
-                          </h3>
-                          {/* {detailJob?.Schedules.map((el) => (
-                            <div key={el.id} className="space-y-1">
-                              <h3 className="mb-1">
-                                Day: {el.day}, Start: {el.startHour}, Total
-                                Hour: {el.totalHour}
-                              </h3>
+                    <div className="mt-3 sm:mt-5">
+                      <div className="text-center">
+                        <Dialog.Title className="text-base font-semibold leading-6 text-gray-900">
+                          Job Contract
+                        </Dialog.Title>
+                      </div>
+                      <div className="overflow-hidden bg-white shadow sm:rounded-lg">
+                        <div className="border-t border-gray-100">
+                          <dl className="divide-y divide-gray-100">
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-900">
+                                Job Title
+                              </dt>
+                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {detailJob?.title}
+                              </dd>
                             </div>
-                          ))} */}
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-900">
+                                End of contract
+                              </dt>
+                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {moment(detailJob?.expireDate).format("LL")}
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-900">
+                                Rate per hour
+                              </dt>
+                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {detailJob?.salary.toLocaleString("id-ID", {
+                                  style: "currency",
+                                  currency: "IDR",
+                                })}{" "}
+                                / hour
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-900">
+                                Total Hours / week
+                              </dt>
+                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {detailJob?.totalHours} hours / week
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-900">
+                                Company Name
+                              </dt>
+                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {detailJob?.Employer.companyName}
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-900">
+                                Hash
+                              </dt>
+                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 truncate">
+                                {detailJob?.hash}
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium leading-6 text-gray-900">
+                                Schedules
+                              </dt>
+                              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                                <ul
+                                  role="list"
+                                  className="divide-y divide-gray-100 rounded-md border border-gray-200"
+                                >
+                                  {detailJob?.Schedules.map((el) => {
+                                    return (
+                                      <li
+                                        key={el.id}
+                                        className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6"
+                                      >
+                                        <div className="flex w-0 flex-1 items-center">
+                                          <div className="ml-4 flex min-w-0 flex-1 gap-4">
+                                            <span className="truncate font-medium">
+                                              {el.day === 1
+                                                ? "Monday"
+                                                : el.day === 2
+                                                ? "Tuesday"
+                                                : el.day === 3
+                                                ? "Wednesday"
+                                                : el.day === 4
+                                                ? "Thursday"
+                                                : el.day === 5
+                                                ? "Friday"
+                                                : el.day === 6
+                                                ? "Saturday"
+                                                : "Sunday"}
+                                            </span>
+
+                                            <span className="flex-shrink-0 text-gray-400">
+                                              <span className="truncate font-medium">
+                                                Start Hour:
+                                              </span>{" "}
+                                              {el.startHour}
+                                            </span>
+                                            <span className="truncate font-medium">
+                                              {el.totalHour} hours
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </dd>
+                            </div>
+                          </dl>
                         </div>
                       </div>
                     </div>
