@@ -1,10 +1,27 @@
-const { User, Employer, Signer, DepositUser, SkillList, Skill } = require("../models/index");
+const {
+  User,
+  Employer,
+  Signer,
+  DepositUser,
+  SkillList,
+  Skill,
+} = require("../models/index");
 const axios = require("axios");
 class UserController {
   static async registerUser(req, res, next) {
     try {
-      const { email, password, username, name, address, phoneNumber, gender, skills } =
-        req.body;
+      const {
+        email,
+        password,
+        username,
+        name,
+        address,
+        phoneNumber,
+        gender,
+        skills,
+        imgUrl,
+        city,
+      } = req.body;
 
       // checking if email is already registered on Employer
 
@@ -19,7 +36,11 @@ class UserController {
         };
       }
 
-      const newSigner = await Signer.create({ mnemonic: "", addressPublic: "", addressPrivate: "" })
+      const newSigner = await Signer.create({
+        mnemonic: "",
+        addressPublic: "",
+        addressPrivate: "",
+      });
 
       const newUser = await User.create({
         email,
@@ -30,12 +51,24 @@ class UserController {
         phoneNumber,
         gender,
         signer: newSigner.id,
+        imgUrl,
+        city,
       });
 
-      const newDepositUser = await DepositUser.create({ userId: newUser.id, signer: newSigner.id, balance: 0 })
-      const dataSigner = await axios.get(`${process.env.BLOCKCHAIN_URL}/wallets`)
+      const newDepositUser = await DepositUser.create({
+        userId: newUser.id,
+        signer: newSigner.id,
+        balance: 0,
+      });
+      const dataSigner = await axios.get(
+        `${process.env.BLOCKCHAIN_URL}/wallets`
+      );
 
-      await newSigner.update({ addressPublic: dataSigner.data.walletAddress.cAddresses[0], addressPrivate: dataSigner.data.walletAddress.privateKeys[0], mnemonic: dataSigner.data.mnemonic })
+      await newSigner.update({
+        addressPublic: dataSigner.data.walletAddress.cAddresses[0],
+        addressPrivate: dataSigner.data.walletAddress.privateKeys[0],
+        mnemonic: dataSigner.data.mnemonic,
+      });
 
       let arrSkill = [];
 
@@ -54,7 +87,6 @@ class UserController {
 
       const newSkills = await SkillList.bulkCreate(arrSkill);
 
-
       res.status(201).json(newUser);
     } catch (err) {
       next(err);
@@ -67,9 +99,7 @@ class UserController {
         attributes: { exclude: ["password", "signer"] },
       });
       res.status(200).json(users);
-    } catch (err) {
-
-    }
+    } catch (err) {}
   }
 
   static async getUserById(req, res, next) {
@@ -125,8 +155,6 @@ class UserController {
       const newSkills = await SkillList.bulkCreate(arrSkill);
 
       res.status(201).json(newSkills);
-
-
     } catch (err) {
       next(err);
     }

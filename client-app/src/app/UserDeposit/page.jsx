@@ -30,7 +30,7 @@ const EmployerDepositV2 = () => {
       headers: { access_token: localStorage.getItem("access_token") },
     });
     setBalance(response.data.balance);
-    setHistoryB(response.data.TransactionEmployers);
+    setHistoryB(response.data.TransactionUsers);
     setUser(response.data.User);
     console.log(response.data);
   };
