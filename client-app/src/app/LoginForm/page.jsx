@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import Loading from "../components/Loading";
+import Link from "next/link";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -88,6 +89,24 @@ const LoginForm = () => {
                 <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
                   Sign in to your account
                 </h2>
+                <p className="mt-2 text-sm leading-6 text-gray-500">
+                  Not a member yet?{" "}
+                </p>
+                <p>
+                  <Link
+                    href="/SignUpForm"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Register as Applicant
+                  </Link>{" "}
+                  or{" "}
+                  <Link
+                    href="/SignUpFormEmployer"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Register as Employer
+                  </Link>
+                </p>
               </div>
 
               <div className="mt-5">

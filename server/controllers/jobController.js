@@ -89,7 +89,7 @@ class jobController {
                     },
                     {
                         model: Employer,
-                        attributes: ['companyName', 'email'],
+                        attributes: ['companyName', 'email', 'imgUrl'],
                     },
                     {
                         model: Schedule,

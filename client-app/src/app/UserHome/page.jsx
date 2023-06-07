@@ -193,10 +193,23 @@ const UserHome = () => {
                     key={el.id}
                   >
                     <div className="card-body">
-                      <h2 className="card-title text-xl">
-                        {el.Employer.companyName}
-                      </h2>
-                      <p>Job Required: {el.title}</p>
+                      <h2 className="card-title text-xl">{el.title}</h2>
+                      <div className="flex-row flex">
+                        <h4>
+                          {" "}
+                          <div className="w-10 h-10 rounded-full overflow-hidden my-1">
+                            <img
+                              src={el.Employer.imgUrl}
+                              alt="Profile Image"
+                              className=""
+                            />
+                          </div>
+                          {el.Employer.companyName}
+                        </h4>
+                      </div>
+
+                      <p>Rate Per Hour: {el.salary}</p>
+                      <p>Total Work Hours: {el.totalHours} / Week</p>
                       <p>Location: {el.location}</p>
                       {/* <div>formatedDate({el.expireDate})</div> */}
                       <div className="card-actions justify-end">
@@ -209,6 +222,7 @@ const UserHome = () => {
                           Details
                         </button>
                       </div>
+                      <p>Total Applicants: {el.countApplicant}</p>
                     </div>
                   </div>
                 );
