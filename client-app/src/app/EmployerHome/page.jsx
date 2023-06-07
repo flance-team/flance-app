@@ -282,52 +282,7 @@ const EmployerHome = () => {
               </div>
             </div>
             <div className="shadow-sm">&nbsp;</div>
-            {/* batas flex grow */}
-            <div className="flex-grow">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-semibold mt-2">Job List</h2>
-              </div>
-              <div className="flex bg-white rounded-lg flex-col items-center space-y-2">
-                <table className="w-full border">
-                  <thead>
-                    <tr>
-                      <th className="border">Title</th>
-                      <th className="border">Location</th>
-                      <th className="border">Rate/Hour</th>
-                      <th className="border">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {jobs?.map((el) => {
-                      return (
-                        <tr key={el.id}>
-                          <td className="border text-center">{el.title}</td>
-                          <td className="border text-center">{el.location}</td>
-                          <td className="border text-center">{el.salary}</td>
-                          <td className="border text-center">
-                            <button
-                              className="btn btn-primary m-2"
-                              onClick={() => handleDetailsClick(el.id)}
-                            >
-                              List Applicant
-                            </button>
-                            <button
-                              className="btn btn-warning m-2"
-                              onClick={() => {
-                                setOpen(true), jobDetail(el.id);
-                              }}
-                            >
-                              Details
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            {/* batas flexgrow */}
+
             <div className="px-4 sm:px-6 lg:px-8 mt-2">
               <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
@@ -349,13 +304,13 @@ const EmployerHome = () => {
                             scope="col"
                             className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                           >
-                            Name
+                            Title
                           </th>
                           <th
                             scope="col"
                             className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                           >
-                            Title
+                            Total Hours
                           </th>
                           <th
                             scope="col"
@@ -363,17 +318,12 @@ const EmployerHome = () => {
                           >
                             Status
                           </th>
-                          <th
-                            scope="col"
-                            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                          >
-                            Role
-                          </th>
+
                           <th
                             scope="col"
                             className="relative py-3.5 pl-3 pr-4 sm:pr-0"
                           >
-                            <span className="sr-only">Edit</span>
+                            <span className="sr-only">Action</span>
                           </th>
                         </tr>
                       </thead>
@@ -382,45 +332,55 @@ const EmployerHome = () => {
                           <tr key={el.id}>
                             <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
                               <div className="flex items-center">
-                                <div className="h-11 w-11 flex-shrink-0">
-                                  <img
-                                    className="h-11 w-11 rounded-full"
-                                    src=""
-                                    alt=""
-                                  />
-                                </div>
                                 <div className="ml-4">
                                   <div className="font-medium text-gray-900">
-                                    {el.id}
+                                    <b> {el.title}</b>
                                   </div>
                                   <div className="mt-1 text-gray-500">
-                                    {el.id}
+                                    {el.location}
                                   </div>
                                 </div>
                               </div>
                             </td>
                             <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                              <div className="text-gray-900">{el.title}</div>
+                              <div className="text-gray-900">
+                                <b> {el.totalHours} hours</b> / week
+                              </div>
                               <div className="mt-1 text-gray-500">
-                                {el.title}
+                                {el.salary.toLocaleString("id-ID", {
+                                  style: "currency",
+                                  currency: "IDR",
+                                })}{" "}
+                                / hour
                               </div>
                             </td>
                             <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                              <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                                Active
-                              </span>
+                              {el.status === "active" ? (
+                                <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                  {el.status}
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
+                                  {el.status}
+                                </span>
+                              )}
                             </td>
-                            <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                              {el.titlex}
-                            </td>
+
                             <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                              <a
-                                href="#"
-                                className="text-indigo-600 hover:text-indigo-900"
+                              <button
+                                className="block rounded-md bg-blue-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 m-2"
+                                onClick={() => handleDetailsClick(el.id)}
                               >
-                                Edit
-                                <span className="sr-only">, {el.title}</span>
-                              </a>
+                                List Applicant
+                              </button>
+                              <button
+                                className="block rounded-md bg-orange-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-700 m-2"
+                                onClick={() => {
+                                  setOpen(true), jobDetail(el.id);
+                                }}
+                              >
+                                Details
+                              </button>
                             </td>
                           </tr>
                         ))}

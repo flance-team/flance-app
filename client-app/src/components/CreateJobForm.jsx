@@ -12,7 +12,7 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
     expireDate: "",
     categoryId: 1,
     duration: 7,
-    schedules: [{ day: "", startHour: "", totalHour: 0 }],
+    schedules: [{ day: "", startHour: "", totalHour: "" }],
   };
   const [createJobForm, setCreateJobForm] = useState(initialFormState);
   const [dataCategory, setDataCategory] = useState([]);
@@ -87,9 +87,11 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
       ></div>
       <div className="absolute bg-white w-6/12 p-6 rounded-lg shadow-lg z-20">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">Create New Job</h2>
+          <h2 className="text-base font-semibold leading-6 text-gray-900">
+            Create New Job
+          </h2>
           <button
-            className="text-gray-500 hover:text-gray-700 transition duration-300"
+            className="block rounded-md bg-gray-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 m-2"
             onClick={onClose}
           >
             Close
@@ -97,7 +99,9 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
         </div>
         <form onSubmit={handleFormSubmit}>
           <div className="mb-4">
-            <label className="block mb-2 font-medium">Title</label>
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Title
+            </label>
             <input
               type="text"
               name="title"
@@ -106,11 +110,14 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                 setCreateJobForm({ ...createJobForm, title: e.target.value })
               }
               required
-              className="w-full border rounded-md px-3 py-2"
+              placeholder="Job Title"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 font-medium">Location</label>
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Location
+            </label>
             <input
               type="text"
               name="location"
@@ -119,11 +126,14 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                 setCreateJobForm({ ...createJobForm, location: e.target.value })
               }
               required
-              className="w-full border rounded-md px-3 py-2"
+              placeholder="Job Location"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 font-medium">Salary per hour</label>
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Rate per hour
+            </label>
             <input
               type="number"
               name="salary"
@@ -132,11 +142,14 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                 setCreateJobForm({ ...createJobForm, salary: e.target.value })
               }
               required
-              className="w-full border rounded-md px-3 py-2"
+              placeholder="Rate per hour"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 font-medium">Job Expire Date</label>
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Job Expire Date
+            </label>
             <input
               type="date"
               name="expireDate"
@@ -147,12 +160,15 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                   expireDate: e.target.value,
                 })
               }
+              placeholder="Job Expire Date"
               required
-              className="w-full border rounded-md px-3 py-2"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 font-medium">Category ID</label>
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Category ID
+            </label>
             <select
               name="categoryId"
               value={createJobForm.categoryId}
@@ -163,7 +179,7 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                 })
               }
               required
-              className="w-full border rounded-md px-3 py-2"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             >
               {dataCategory?.map((category) => (
                 <option key={category.id} value={category.id}>
@@ -173,7 +189,9 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block mb-2 font-medium">Duration</label>
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Duration
+            </label>
             <select
               name="duration"
               value={createJobForm.duration}
@@ -181,7 +199,7 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                 setCreateJobForm({ ...createJobForm, duration: e.target.value })
               }
               required
-              className="w-full border rounded-md px-3 py-2"
+              className="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             >
               <option value="7">1 Week</option>
               <option value="30">1 Month</option>
@@ -189,7 +207,9 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
             </select>
           </div>
           <div className="mb-4">
-            <label className="block mb-2 font-medium">Schedules</label>
+            <label className="block text-sm font-medium leading-6 text-gray-900">
+              Schedules
+            </label>
             {createJobForm.schedules.map((schedule, index) => (
               <div key={index} className="flex space-x-2">
                 <select
@@ -197,7 +217,7 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                   value={schedule.day}
                   onChange={(e) => handleInputChange(e, index)}
                   required
-                  className="w-1/3 border rounded-md px-3 py-2 mb-2"
+                  className="w-1/3 border rounded-md px-3 py-2 mb-2 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                   <option value="">Select Day</option>
                   <option value="1">Monday</option>
@@ -215,7 +235,7 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                   placeholder="Start Hour"
                   onChange={(e) => handleInputChange(e, index)}
                   required
-                  className="w-1/3 border rounded-md px-3 py-2 mb-2"
+                  className="w-1/3 border rounded-md px-3 py-2 mb-2 border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 <input
                   type="number"
@@ -224,12 +244,12 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
                   onChange={(e) => handleInputChange(e, index)}
                   placeholder="Total Hours"
                   required
-                  className="w-1/3 border rounded-md px-3 py-2 mb-2"
+                  className="w-1/3 border rounded-md px-3 py-2 mb-2 rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
                 {index > 0 && (
                   <button
                     type="button"
-                    className="btn btn-error mb-2 ml-2"
+                    className="block rounded-md bg-red-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500 m-2 mb-2 ml-2"
                     onClick={() => handleRemoveSchedule(index)}
                   >
                     Remove
@@ -239,19 +259,22 @@ const CreateJobForm = ({ onCreateJob, onClose }) => {
             ))}
             <button
               type="button"
-              className="btn btn-primary mt-2"
+              className="block rounded-md bg-blue-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 m-2"
               onClick={handleAddSchedule}
             >
               Add Schedule
             </button>
           </div>
           <div className="text-center">
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="rounded-md bg-indigo-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 m-2"
+            >
               Create
             </button>
             <button
               type="button"
-              className="btn btn-error ml-2"
+              className="rounded-md bg-red-700 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 m-2 ml-2"
               onClick={() => onClose()}
             >
               Cancel
