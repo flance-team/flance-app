@@ -31,7 +31,7 @@ const NavbarEmployer = () => {
         access_token: localStorage.getItem("access_token"),
       };
       const response = await axios.get(
-        `${base_url_server}/transactions/user/balance`,
+        `${base_url_server}/transactions/employer/balance`,
         { headers }
       );
       const formattedAmount = response.data.balance.toLocaleString("id-ID", {

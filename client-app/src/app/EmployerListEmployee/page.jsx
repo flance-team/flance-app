@@ -16,6 +16,7 @@ const EmployerListEmployee = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [chosenUser, setChosenUser] = useState({});
   const [nameUser, setNameUser] = useState("");
+
   const wage = useRef(0);
   const router = useRouter();
 
@@ -73,6 +74,19 @@ const EmployerListEmployee = () => {
     try {
       const amount = currentValue.replace(/\D/g, "");
       console.log(amount);
+      const { data } = await axios.get(
+        `${base_url_server}/transactions/employer/balance`,
+        {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        }
+      );
+
+      if (data.balance < +amount) {
+        throw { name: "Insufficient Balance" };
+      }
+
       const response = await axios.post(
         `${base_url_server}/transactions/employer/salary`,
         {
@@ -92,7 +106,10 @@ const EmployerListEmployee = () => {
         title: "Employee has been Paid",
       });
     } catch (err) {
-      console.log(err);
+      Swal.fire({
+        icon: "error",
+        title: err.name,
+      });
     }
   };
 
@@ -103,10 +120,8 @@ const EmployerListEmployee = () => {
   return (
     <>
       <div className="min-h-full">
-        {/* INI BUNGKUS BIRU FLEX KOLOM */}
         <div className="flex flex-1 flex-col">
           <NavbarEmployer />
-          {/* INI BUNGKUS YANG KUNING BIKIN JADI DI TENGAH, HEIGHTNYA TERGANTUNG ISI DARI ELEMENTNYA BERAPA MENYESUAIKAN h-fit */}
           <main className="flex-1 pb-8 w-3/4 m-auto h-fit">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <table className="w-full divide-y divide-gray-300">
