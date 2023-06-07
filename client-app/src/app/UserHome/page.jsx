@@ -277,6 +277,13 @@ const UserHome = () => {
                               Details
                             </button>
                           </div>
+                          <div className="absolute top-4 right-5">
+                            <img
+                              className="rounded-full h-12 w-12"
+                              src={el.Employer.imgUrl}
+                              alt="Circle Image"
+                            />
+                          </div>
                         </div>
                       </div>
                     );
