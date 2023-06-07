@@ -361,6 +361,7 @@ class jobController {
         include: [
           { model: User, attributes: { exclude: ["password"] } },
           { model: Job },
+          { model: Employer, attributes: { exclude: ["password"] } },
         ],
         where: { employerId, endDate: { [Op.gte]: new Date() } },
       });
