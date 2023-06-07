@@ -22,7 +22,7 @@ const LandingPage = () => {
   return (
     <>
       <Head>
-        <title>Flance - where freelancer meets good employer</title>
+        <title>Flance - where freelancer meets employer</title>
         <meta
           name="description"
           content="Most bookkeeping software is accurate, but hard to use. We make the opposite trade-off, and hope you don’t get audited."

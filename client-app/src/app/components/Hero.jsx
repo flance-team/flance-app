@@ -9,6 +9,10 @@ import solidity from "../images/logos/solidity.svg";
 import jest from "../images/logos/jest.svg";
 import aws from "../images/logos/aws.svg";
 import nestjs from "../images/logos/nestjs.svg";
+import typescript from "../images/logos/typescript.svg";
+import avalanche from "../images/logos/avalanchefuji.svg";
+import hardhat from "../images/logos/hardhat.svg";
+import docker from "../images/logos/docker.svg";
 import { Container } from "./Container";
 
 export function Hero() {
@@ -58,13 +62,17 @@ export function Hero() {
               { name: "next.js", logo: nextjs },
               { name: "firebase", logo: firebase },
               { name: "tailwind", logo: tailwind },
-              { name: "aws", logo: aws },
+              { name: "typescript", logo: typescript },
             ],
             [
-              { name: "supabase", logo: supabase },
               { name: "solidity", logo: solidity },
-              { name: "jest", logo: jest },
+              { name: "avalanche", logo: avalanche },
+              { name: "hardhat", logo: hardhat },
               { name: "nestjs", logo: nestjs },
+              { name: "aws", logo: aws },
+              { name: "supabase", logo: supabase },
+              { name: "jest", logo: jest },
+              { name: "docker", logo: docker },
             ],
           ].map((group, groupIndex) => (
             <li key={groupIndex}>
