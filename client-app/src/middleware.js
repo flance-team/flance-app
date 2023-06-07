@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 // This function can be marked `async` if using `await` inside
 export default function middleware(request) {
-    console.log("Halo Dunia", request.nextUrl.pathname);
+    // console.log("Halo Dunia", request.nextUrl.pathname);
     // if (request.url ===)
     // return NextResponse.redirect(new URL('/home', request.baseURL));
 }
