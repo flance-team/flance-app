@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Loading from "../../components/Loading";
+import Link from "next/link";
 const base_url_server = "http://localhost:3000";
 const SignUpForm = () => {
   const router = useRouter();
@@ -95,18 +96,20 @@ const SignUpForm = () => {
 
           <div className="mx-auto max-w-2xl sm:text-center">
             <div className="flex justify-center items-center my-3">
-              <Image
-                src="/Logo - Team 1.png"
-                width={100}
-                height={100}
-                alt="Flance Logo"
-              />
+              <Link href="/">
+                <img
+                  src="https://firebasestorage.googleapis.com/v0/b/flance-phs3.appspot.com/o/Logo%20-%20Team%201.png?alt=media&token=595f07be-d906-4964-89af-22ff358730fb&_gl=1*cn26g*_ga*MjA1NTA0MjE1Ny4xNjgzOTY5NDQ5*_ga_CW55HF8NVT*MTY4NjEyNTc2OS4xMC4xLjE2ODYxMjU5NTcuMC4wLjA."
+                  width={100}
+                  height={100}
+                  alt="Flance Logo"
+                />
+              </Link>
             </div>
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-              Sign Up
+              Employer Sign Up
             </h2>
             <p className="mt-2 text-lg leading-8 text-gray-600">
-              Join Flance for more part time job opportunities.
+              Join Flance for giving more part time job opportunities.
             </p>
           </div>
 
@@ -342,12 +345,22 @@ const SignUpForm = () => {
             <div className=" items-center mt-5">
               <span className="mr-2">Already have an account?</span>
               <button
-                className="btn btn-primary"
+                className="btn btn-outline"
                 onClick={() => router.push("/LoginForm")}
               >
                 Sign In
               </button>
             </div>
+          </div>
+        </div>
+        <div className="flex items-center justify-end w-full">
+          <div className=" items-center">
+            <span className="mr-2">
+              Sign up as an{" "}
+              <Link href="/SignUpForm">
+                <b className="text-blue-800">Applicant?</b>
+              </Link>
+            </span>
           </div>
         </div>
       </div>

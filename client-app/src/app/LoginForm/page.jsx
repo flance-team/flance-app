@@ -87,11 +87,13 @@ const LoginForm = () => {
           <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div className="mx-auto w-full max-w-sm lg:w-96">
               <div>
-                <img
-                  className="h-10 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt="Flance"
-                />
+                <Link href="/">
+                  <img
+                    className="h-10 w-auto"
+                    src="https://firebasestorage.googleapis.com/v0/b/flance-phs3.appspot.com/o/Logo%20-%20Team%201.png?alt=media&token=595f07be-d906-4964-89af-22ff358730fb&_gl=1*cn26g*_ga*MjA1NTA0MjE1Ny4xNjgzOTY5NDQ5*_ga_CW55HF8NVT*MTY4NjEyNTc2OS4xMC4xLjE2ODYxMjU5NTcuMC4wLjA."
+                    alt="Flance"
+                  />
+                </Link>
                 <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
                   Sign in to your account
                 </h2>
