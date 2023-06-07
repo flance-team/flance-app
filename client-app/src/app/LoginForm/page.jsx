@@ -14,12 +14,15 @@ const LoginForm = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  if (localStorage.getItem("role") === "employer") {
-    router.push("/EmployerHome");
-  }
-  if (localStorage.getItem("role") === "user") {
-    router.push("/UserHome");
-  }
+
+  useEffect(() => {
+    if (localStorage.getItem("role") === "employer") {
+      router.push("/EmployerHome");
+    }
+    if (localStorage.getItem("role") === "user") {
+      router.push("/UserHome");
+    }
+  }, []);
 
   const inputForm = (el) => {
     setFormValue({
@@ -49,8 +52,11 @@ const LoginForm = () => {
         timer: 1500,
       });
       localStorage.setItem("access_token", response.data.access_token);
-      localStorage.setItem("nameUser", response.data.name);
       localStorage.setItem("role", response.data.role);
+      localStorage.getItem("role") === "employer"
+        ? localStorage.setItem("nameUser", response.data.companyName)
+        : localStorage.setItem("nameUser", response.data.name);
+
       if (response.data.role === "user") {
         router.push("/UserHome");
       } else {

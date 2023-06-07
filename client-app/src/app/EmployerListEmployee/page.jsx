@@ -22,8 +22,8 @@ const EmployerListEmployee = () => {
     router.push("/");
   }
 
-  if (localStorage.getItem("role") === "employer") {
-    router.push("/EmployerHome");
+  if (localStorage.getItem("role") === "user") {
+    router.push("/UserHome");
   }
 
   function closeModal() {
