@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 import Link from "next/link";
 
 const LoginForm = () => {

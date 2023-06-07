@@ -5,10 +5,10 @@ import { Dialog, Transition, Menu } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
-import NavBarUser from "../components/navbarUser";
+import NavBarUser from "../../components/navbarUser";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import CardJob from "../components/CardJob";
+import CardJob from "../../components/CardJob";
 
 const UserHome = () => {
   const base_url_server = "http://localhost:3000";

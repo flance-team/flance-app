@@ -4,7 +4,7 @@ import { useEffect, useState, Fragment, useRef } from "react";
 
 import { Dialog, Transition } from "@headlessui/react";
 import CurrencyInput from "react-currency-input-field";
-import NavbarEmployer from "../components/NavbarEmployer";
+import NavbarEmployer from "../../components/NavbarEmployer";
 import { useRouter } from "next/navigation";
 
 import Swal from "sweetalert2";

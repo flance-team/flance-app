@@ -4,8 +4,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import BadgeInput from "../components/BadgeInput";
-import Loading from "../components/Loading";
+import BadgeInput from "../../components/BadgeInput";
+import Loading from "../../components/Loading";
 const base_url_server = "http://localhost:3000";
 
 const SignUpForm = () => {

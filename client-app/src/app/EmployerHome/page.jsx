@@ -1,11 +1,11 @@
 "use client";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import NavbarEmployer from "../components/NavbarEmployer";
+import NavbarEmployer from "../../components/NavbarEmployer";
 import Swal from "sweetalert2";
-import ApplicantModal from "../components/ModalApplicant";
-import CreateJobForm from "../components/CreateJobForm";
-import Loading from "../components/Loading";
+import ApplicantModal from "../../components/ModalApplicant";
+import CreateJobForm from "../../components/CreateJobForm";
+import Loading from "../../components/Loading";
 import { useRouter } from "next/navigation";
 const base_url_server = "http://localhost:3000";
 

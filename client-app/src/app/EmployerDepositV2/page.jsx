@@ -23,7 +23,7 @@ import {
   ChevronRightIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import NavbarEmployer from "../components/NavbarEmployer";
+import NavbarEmployer from "../../components/NavbarEmployer";
 
 const EmployerDepositV2 = () => {
   const navigation = [
