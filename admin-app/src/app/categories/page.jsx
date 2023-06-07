@@ -211,7 +211,7 @@ const CategoryPage = () => {
                </button>
             </form>
          ) : (
-            <div class="rounded-3xl overflow-hidden">
+            <div class="rounded-xl overflow-hidden">
                <table className="w-full border border-gray-200">
                   <thead className="bg-gray-900 text-gray-200">
                      <tr>
