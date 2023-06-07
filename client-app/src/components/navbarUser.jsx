@@ -143,7 +143,7 @@ const NavBarUser = () => {
                                         router.push("/UserDeposit");
                                       }}
                                     >
-                                      Withdraw
+                                      Wallet
                                     </button>
                                   </div>
                                 </div>
