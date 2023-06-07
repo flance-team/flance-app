@@ -115,7 +115,7 @@ const UserAcceptOffer = () => {
       const headers = {
         access_token: localStorage.getItem("access_token"),
       };
-      const data = await axios.get(`${base_url_server}/jobs/schedules/${id}`, {
+      const data = await axios.get(`${base_url_server}/jobs/contract/${id}`, {
         headers,
       });
       setOpen(true);
@@ -159,7 +159,7 @@ const UserAcceptOffer = () => {
             jobDetail(id);
           }}
         >
-          Detail
+          Contract
         </button>
       );
     }
@@ -291,7 +291,23 @@ const UserAcceptOffer = () => {
                                 Job Title
                               </dt>
                               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                {detailJob?.title}
+                                {detailJob?.Job.title}
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-900">
+                                Company Name
+                              </dt>
+                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {detailJob?.Employer.companyName}
+                              </dd>
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                              <dt className="text-sm font-medium text-gray-900">
+                                Start of contract
+                              </dt>
+                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {moment(detailJob?.timestamp).format("LL")}
                               </dd>
                             </div>
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -299,7 +315,7 @@ const UserAcceptOffer = () => {
                                 End of contract
                               </dt>
                               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                {moment(detailJob?.expireDate).format("LL")}
+                                {moment(detailJob?.endDate).format("LL")}
                               </dd>
                             </div>
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -307,10 +323,13 @@ const UserAcceptOffer = () => {
                                 Rate per hour
                               </dt>
                               <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                {detailJob?.salary.toLocaleString("id-ID", {
-                                  style: "currency",
-                                  currency: "IDR",
-                                })}{" "}
+                                {detailJob?.totalSalary.toLocaleString(
+                                  "id-ID",
+                                  {
+                                    style: "currency",
+                                    currency: "IDR",
+                                  }
+                                )}{" "}
                                 / hour
                               </dd>
                             </div>
@@ -322,14 +341,7 @@ const UserAcceptOffer = () => {
                                 {detailJob?.totalHours} hours / week
                               </dd>
                             </div>
-                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                              <dt className="text-sm font-medium text-gray-900">
-                                Company Name
-                              </dt>
-                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                {detailJob?.Employer.companyName}
-                              </dd>
-                            </div>
+
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                               <dt className="text-sm font-medium text-gray-900">
                                 Hash
@@ -347,7 +359,7 @@ const UserAcceptOffer = () => {
                                   role="list"
                                   className="divide-y divide-gray-100 rounded-md border border-gray-200"
                                 >
-                                  {detailJob?.Schedules.map((el) => {
+                                  {detailJob?.Job.Schedules.map((el) => {
                                     return (
                                       <li
                                         key={el.id}
