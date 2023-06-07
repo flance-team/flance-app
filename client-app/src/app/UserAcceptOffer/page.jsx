@@ -20,6 +20,7 @@ const UserAcceptOffer = () => {
   const [detailJob, setDetailJob] = useState();
   const router = useRouter();
   const [nameUser, setNameUser] = useState("");
+  const [flag, setFlag] = useState(0);
 
   useEffect(() => {
     if (!localStorage.getItem("access_token")) {
@@ -62,6 +63,7 @@ const UserAcceptOffer = () => {
       });
     } finally {
       setLoading(false);
+      setFlag(flag + 1);
     }
   };
   const statusDecline = async (id) => {
@@ -91,6 +93,7 @@ const UserAcceptOffer = () => {
       });
     } finally {
       setLoading(false);
+      setFlag(flag + 1);
     }
   };
   const appliedJob = async () => {
@@ -174,7 +177,12 @@ const UserAcceptOffer = () => {
   }, [statusAccept]);
   useEffect(() => {
     appliedJob();
-  }, []);
+  }, [flag]);
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <NavBarUser />
