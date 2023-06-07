@@ -102,6 +102,12 @@ const UserHome = () => {
       null,
       { headers }
     );
+    Swal.fire({
+      width: 400,
+      icon: "success",
+      text: `You just apply this job`,
+      showConfirmButton: true,
+    });
   };
 
   useEffect(() => {
