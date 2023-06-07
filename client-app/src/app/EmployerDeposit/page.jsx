@@ -19,13 +19,15 @@ const EmployerDeposit = () => {
   const amountToDeposit = useRef(0);
   const router = useRouter();
 
-  if (!localStorage.getItem("access_token")) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (!localStorage.getItem("access_token")) {
+      router.push("/");
+    }
 
-  if (localStorage.getItem("role") === "user") {
-    router.push("/UserHome");
-  }
+    if (localStorage.getItem("role") === "user") {
+      router.push("/UserHome");
+    }
+  }, []);
 
   const withdraw = async () => {
     const currentValue = amountToWithdraw.current.value;

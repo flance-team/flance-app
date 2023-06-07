@@ -14,6 +14,7 @@ const UserHome = () => {
   const base_url_server = "http://localhost:3000";
   const [searchQuery, setSearchQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
+  const [nameUser, setNameUser] = useState("");
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -22,13 +23,17 @@ const UserHome = () => {
   };
   const router = useRouter();
 
-  // if (!localStorage.getItem("access_token")) {
-  //   router.push("/");
-  // }
+  useEffect(() => {
+    if (!localStorage.getItem("access_token")) {
+      router.push("/");
+    }
 
-  // if (localStorage.getItem("role") === "employer") {
-  //   router.push("/EmployerHome");
-  // }
+    if (localStorage.getItem("role") === "employer") {
+      router.push("/EmployerHome");
+    }
+
+    setNameUser(localStorage.getItem("nameUser"));
+  }, []);
 
   const handleSearchSubmit = async () => {
     let option = "";
@@ -137,9 +142,7 @@ const UserHome = () => {
                 />
               </div>
               <div className="flex flex-col items-center">
-                <h2 className="text-xl font-semibold mt-2">
-                  {localStorage.getItem("nameUser")} NAME HERE
-                </h2>
+                <h2 className="text-xl font-semibold mt-2">{nameUser}</h2>
                 {/* <p className="text-sm text-gray-500 text-xs">
                   Full-stack developer
                 </p> */}

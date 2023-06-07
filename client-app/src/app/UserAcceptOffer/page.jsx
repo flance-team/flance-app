@@ -17,13 +17,15 @@ const UserAcceptOffer = () => {
   const [detailJob, setDetailJob] = useState();
   const router = useRouter();
 
-  if (!localStorage.getItem("access_token")) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (!localStorage.getItem("access_token")) {
+      router.push("/");
+    }
 
-  if (localStorage.getItem("role") === "employer") {
-    router.push("/EmployerHome");
-  }
+    if (localStorage.getItem("role") === "employer") {
+      router.push("/EmployerHome");
+    }
+  }, []);
 
   const statusAccept = async (id) => {
     setLoading(true);
