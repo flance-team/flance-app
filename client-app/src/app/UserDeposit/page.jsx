@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import NavBarUser from "../components/navbarUser";
 import CurrencyInput from "react-currency-input-field";
 import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
 const baseUrl = `http://localhost:3000`;
 
 const UserDeposit = () => {
