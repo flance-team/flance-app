@@ -142,7 +142,7 @@ const EmployerListEmployee = () => {
                             alt=""
                           />
                           <h1 className="ml-3 text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:leading-9">
-                            {employees[0].Employer.companyName}
+                            {employees[0]?.Employer.companyName}
                           </h1>
                         </div>
                         <dl className="mt-6 flex flex-col sm:ml-3 sm:mt-1 sm:flex-row sm:flex-wrap">
