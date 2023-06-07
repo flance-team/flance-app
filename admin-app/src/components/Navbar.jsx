@@ -12,7 +12,11 @@ const Navbar = () => {
    return (
       <aside className="w-64 bg-gray-900 text-gray-200">
          <div className="p-4">
-            <h1 className="text-2xl font-bold text-white">Flance</h1>
+            <img
+               className="block h-9 w-auto"
+               src="https://firebasestorage.googleapis.com/v0/b/flance-phs3.appspot.com/o/Logo%20-%20Team%201.png?alt=media&token=595f07be-d906-4964-89af-22ff358730fb&_gl=1*cn26g*_ga*MjA1NTA0MjE1Ny4xNjgzOTY5NDQ5*_ga_CW55HF8NVT*MTY4NjEyNTc2OS4xMC4xLjE2ODYxMjU5NTcuMC4wLjA."
+               alt="Your Company"
+            />
          </div>
          <nav className="px-4 py-2">
             <ul className="space-y-2">
