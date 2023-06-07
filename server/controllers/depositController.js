@@ -4,6 +4,7 @@ const {
   TransactionUser,
   TransactionEmployer,
   Employer,
+  User,
 } = require("../models/index");
 const midtransClient = require("midtrans-client");
 
@@ -135,6 +136,10 @@ class DepositController {
           {
             model: TransactionUser,
           },
+          {
+            model: User,
+            attributes: { exclude: ["password"] },
+          },
         ],
       });
 
@@ -156,6 +161,10 @@ class DepositController {
         include: [
           {
             model: TransactionEmployer,
+          },
+          {
+            model: Employer,
+            attributes: { exclude: ["password"] },
           },
         ],
       });
