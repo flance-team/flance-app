@@ -226,7 +226,7 @@ const UserAcceptOffer = () => {
                         Status: {person.status}
                       </p>
                       <p className="mt-1 text-xs leading-5 text-gray-500 py-2 px-2">
-                        {buttonAction(person.status, person.Job.id)}
+                        {buttonAction(person.status, person.id)}
                       </p>
                     </div>
                   </li>
