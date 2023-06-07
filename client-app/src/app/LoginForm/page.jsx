@@ -51,11 +51,10 @@ const LoginForm = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      console.log(response.data);
       localStorage.setItem("access_token", response.data.access_token);
       localStorage.setItem("role", response.data.role);
-      localStorage.getItem("role") === "employer"
-        ? localStorage.setItem("nameUser", response.data.companyName)
-        : localStorage.setItem("nameUser", response.data.name);
+      localStorage.setItem("nameUser", response.data.name);
 
       if (response.data.role === "user") {
         router.push("/UserHome");
