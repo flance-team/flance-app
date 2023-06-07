@@ -5,15 +5,16 @@ import { Dialog, Transition, Menu } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
 import { EllipsisHorizontalIcon } from "@heroicons/react/20/solid";
 import React, { useEffect, useState } from "react";
-import NavBarUser from "../components/navbarUser";
+import NavBarUser from "../../components/navbarUser";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import CardJob from "../components/CardJob";
+import CardJob from "../../components/CardJob";
 
 const UserHome = () => {
   const base_url_server = "http://localhost:3000";
   const [searchQuery, setSearchQuery] = useState("");
   const [locationQuery, setLocationQuery] = useState("");
+  const [nameUser, setNameUser] = useState("");
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -22,13 +23,17 @@ const UserHome = () => {
   };
   const router = useRouter();
 
-  // if (!localStorage.getItem("access_token")) {
-  //   router.push("/");
-  // }
+  useEffect(() => {
+    if (!localStorage.getItem("access_token")) {
+      router.push("/");
+    }
 
-  // if (localStorage.getItem("role") === "employer") {
-  //   router.push("/EmployerHome");
-  // }
+    if (localStorage.getItem("role") === "employer") {
+      router.push("/EmployerHome");
+    }
+
+    setNameUser(localStorage.getItem("nameUser"));
+  }, []);
 
   const handleSearchSubmit = async () => {
     let option = "";
@@ -128,7 +133,7 @@ const UserHome = () => {
                 </p>
               </div>
             </div> */}
-            <div className="w-56 h-full bg-base-100 shadow-xl flex flex-col items-center mx-2 my-2">
+            <div className="w-56 h-60 bg-base-100 shadow-xl flex flex-col items-center mx-2 my-2">
               <div className="w-32 h-32 flex justify-center rounded-full overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
@@ -137,9 +142,7 @@ const UserHome = () => {
                 />
               </div>
               <div className="flex flex-col items-center">
-                <h2 className="text-xl font-semibold mt-2">
-                  {localStorage.getItem("nameUser")} NAME HERE
-                </h2>
+                <h2 className="text-xl font-semibold mt-2">{nameUser}</h2>
                 {/* <p className="text-sm text-gray-500 text-xs">
                   Full-stack developer
                 </p> */}
@@ -203,49 +206,8 @@ const UserHome = () => {
                   </div>
                 </div>
               </div>
-              {dataJob?.map((el) => {
-                return (
-                  <div
-                    className="card w-11/12 bg-base-100 shadow-xl"
-                    key={el.id}
-                  >
-                    <div className="card-body">
-                      <h2 className="card-title text-xl">{el.title}</h2>
-                      <div className="flex-row flex">
-                        <h4>
-                          {" "}
-                          <div className="w-10 h-10 rounded-full overflow-hidden my-1">
-                            <img
-                              src={el.Employer.imgUrl}
-                              alt="Profile Image"
-                              className=""
-                            />
-                          </div>
-                          {el.Employer.companyName}
-                        </h4>
-                      </div>
-                      <p>Rate Per Hour: {el.salary}</p>
-                      <p>Total Work Hours: {el.totalHours} / Week</p>
-                      <p>Location: {el.location}</p>
-                      {/* <div>formatedDate({el.expireDate})</div> */}
-                      <div className="card-actions justify-end">
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => {
-                            setOpen(true), jobDetail(el.id);
-                          }}
-                        >
-                          Details
-                        </button>
-                      </div>
-                      <p>Total Applicants: {el.countApplicant}</p>
-                    </div>
-                  </div>
-                );
-              })}
             </div>
           </main>
-
           <aside className="bg-white w-64 my-2">
             {/* Sidebar content */}
             <div className="w-56 bg-base-100 shadow-xl">
@@ -275,58 +237,31 @@ const UserHome = () => {
         </div>
         <footer className="bg-white shadow">{/* Footer content */}</footer>
       </div>
-      <div className="bg-white min-h-20 flex flex-col mx-10 my-8">
+      <div className="bg-white min-h-16 flex flex-col mx-10 my-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {/* 1 */}
-          <div className="card w-full bg-primary text-primary-content">
-            <div className="card-body">
-              <h2 className="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn">Buy Now</button>
+          {/* disini */}
+          {dataJob?.map((el) => {
+            return (
+              <div key={el.id} className="card w-full bg-base-100 shadow-xl">
+                <div className="card-body">
+                  <h2 className="card-title">{el.title}</h2>
+                  <p>Rate Per Hour: {el.salary}</p>
+                  <p>Total Work Hours: {el.totalHours} / Week</p>
+                  <p>Location: {el.location}</p>
+                  <div className="card-actions justify-end">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        setOpen(true), jobDetail(el.id);
+                      }}
+                    >
+                      Details
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          {/*  2  */}
-          <div className="card w-full bg-primary text-primary-content">
-            <div className="card-body">
-              <h2 className="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn">Buy Now</button>
-              </div>
-            </div>
-          </div>
-          {/* 3 */}
-          <div className="card w-full bg-primary text-primary-content">
-            <div className="card-body">
-              <h2 className="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn">Buy Now</button>
-              </div>
-            </div>
-          </div>
-          {/* 4 */}
-          <div className="card w-full bg-primary text-primary-content">
-            <div className="card-body">
-              <h2 className="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn">Buy Now</button>
-              </div>
-            </div>
-          </div>
-          {/* 5 */}
-          <div className="card w-full bg-primary text-primary-content">
-            <div className="card-body">
-              <h2 className="card-title">Card title!</h2>
-              <p>If a dog chews shoes whose shoes does he choose?</p>
-              <div className="card-actions justify-end">
-                <button className="btn">Buy Now</button>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
       <Transition.Root show={open} as={Fragment}>

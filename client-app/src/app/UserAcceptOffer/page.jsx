@@ -2,10 +2,10 @@
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { CheckIcon } from "@heroicons/react/24/outline";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import NavBarUser from "../components/navbarUser";
+import NavBarUser from "../../components/navbarUser";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 const UserAcceptOffer = () => {
@@ -16,14 +16,18 @@ const UserAcceptOffer = () => {
   const [loading, setLoading] = useState(false);
   const [detailJob, setDetailJob] = useState();
   const router = useRouter();
+  const [nameUser, setNameUser] = useState("");
 
-  if (!localStorage.getItem("access_token")) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (!localStorage.getItem("access_token")) {
+      router.push("/");
+    }
 
-  if (localStorage.getItem("role") === "employer") {
-    router.push("/EmployerHome");
-  }
+    if (localStorage.getItem("role") === "employer") {
+      router.push("/EmployerHome");
+    }
+    setNameUser(localStorage.getItem("nameUser"));
+  }, []);
 
   const statusAccept = async (id) => {
     setLoading(true);
@@ -179,9 +183,7 @@ const UserAcceptOffer = () => {
           <main className="flex-wrap bg-white py-1 justify-center static">
             {/* Main content */}
             <div className="flex justify-start my-2">
-              <h1 className="text-3xl">
-                Hello, {localStorage.getItem("nameUser")}
-              </h1>
+              <h1 className="text-3xl">Hello, {nameUser}</h1>
             </div>
             <div className="flex justify-start my-2">
               <h1 className="text-1xl">
