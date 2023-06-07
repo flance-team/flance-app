@@ -89,17 +89,18 @@ const SignUpForm = () => {
     <>
       <div className="isolate bg-gray-100 px-4 py-10 sm:py-10 lg:px-8">
         <div className="grid grid-cols-3 w-full">
-          <div className="text-center">
-            <Image
-              src="/Logo - Team 1.png"
-              width={200}
-              height={200}
-              alt="Flance Logo"
-            />
-          </div>
+          <div className="flex justify-start items-start">&nbsp;</div>
 
           <div className="mx-auto max-w-2xl sm:text-center">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            <div className="flex justify-center items-center my-3">
+              <Image
+                src="/Logo - Team 1.png"
+                width={100}
+                height={100}
+                alt="Flance Logo"
+              />
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">
               Sign Up
             </h2>
             <p className="mt-2 text-lg leading-8 text-gray-600">
@@ -107,7 +108,7 @@ const SignUpForm = () => {
             </p>
           </div>
 
-          <div className=""></div>
+          <div className="">&nbsp;</div>
         </div>
 
         <div className="space-y-10 divide-y divide-gray-900/10 p-20">

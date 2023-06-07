@@ -2,7 +2,6 @@
 import React, { useEffect, useState, Fragment, useRef } from "react";
 import axios from "axios";
 import NavbarEmployer from "../../components/NavbarEmployer";
-import Swal from "sweetalert2";
 import Loading from "../../components/Loading";
 import { Dialog, Transition } from "@headlessui/react";
 import CurrencyInput from "react-currency-input-field";
@@ -15,16 +14,21 @@ const EmployerListEmployee = () => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [chosenUser, setChosenUser] = useState({});
+  const [nameUser, setNameUser] = useState("");
   const wage = useRef(0);
   const router = useRouter();
 
-  if (!localStorage.getItem("access_token")) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (!localStorage.getItem("access_token")) {
+      router.push("/");
+    }
 
-  if (localStorage.getItem("role") === "user") {
-    router.push("/UserHome");
-  }
+    if (localStorage.getItem("role") === "user") {
+      router.push("/UserHome");
+    }
+
+    setNameUser(localStorage.getItem("userName"));
+  }, []);
 
   function closeModal() {
     setIsOpen(false);
@@ -108,7 +112,7 @@ const EmployerListEmployee = () => {
               </div>
               <div className="card-body text-center items-center">
                 <h2 className="card-title text-xl font-semibold place-items-center">
-                  {localStorage.getItem("nameUser")}
+                  {nameUser}
                 </h2>
               </div>
             </div>

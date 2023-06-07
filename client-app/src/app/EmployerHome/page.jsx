@@ -18,13 +18,15 @@ const EmployerHome = () => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  if (!localStorage.getItem("access_token")) {
-    router.push("/");
-  }
+  useEffect(() => {
+    if (!localStorage.getItem("access_token")) {
+      router.push("/");
+    }
 
-  if (localStorage.getItem("role") === "user") {
-    router.push("/UserHome");
-  }
+    if (localStorage.getItem("role") === "user") {
+      router.push("/UserHome");
+    }
+  }, []);
 
   useEffect(() => {
     getJobs();
