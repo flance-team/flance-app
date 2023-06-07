@@ -12,7 +12,7 @@ const Navbar = () => {
    return (
       <aside className="w-64 bg-gray-900 text-gray-200">
          <div className="p-4">
-            <h1 className="text-2xl font-bold text-white">Menu</h1>
+            <h1 className="text-2xl font-bold text-white">Flance</h1>
          </div>
          <nav className="px-4 py-2">
             <ul className="space-y-2">
