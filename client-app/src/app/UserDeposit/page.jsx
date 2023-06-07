@@ -92,10 +92,6 @@ const UserDeposit = () => {
   };
 
   useEffect(() => {
-    // localStorage.setItem(
-    //   "access_token",
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlkIjoxLCJpYXQiOjE2ODU4NjQzMzV9.Yh_4J9q1XMHMdH5i0vyRA5FBkWXhS5AnL7-EWvPpnm8"
-    // );
     getBalance();
   }, [balance]);
 
@@ -288,7 +284,7 @@ const UserDeposit = () => {
                           {historyB?.map((e, i) => {
                             return (
                               <tr key={i}>
-                                <td>{i}</td>
+                                <td>{i + 1}</td>
                                 <td>{e.ref}</td>
                                 <td>{e.transactionDate}</td>
                                 <td

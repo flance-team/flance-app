@@ -91,7 +91,7 @@ const EmployerDeposit = () => {
       );
       console.log(response.data);
 
-      window?.snap?.pay(response.data, {
+      window.snap.pay(response.data, {
         onSuccess: async (result) => {
           console.log("success");
           //   console.log(result);
@@ -127,10 +127,6 @@ const EmployerDeposit = () => {
   console.log(historyB);
 
   useEffect(() => {
-    // localStorage.setItem(
-    //   "access_token",
-    //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVtcEBtYWlsLmNvbSIsInJvbGUiOiJlbXBsb3llciIsImlkIjoxLCJpYXQiOjE2ODU4NjQ0NzB9.SJOzBp4WOuQJ9zZyPE8DQe0efUp2KDODEH2RwzFg0T8"
-    // );
     getBalance();
     amountToWithdraw.current.value = 0;
   }, []);
@@ -286,7 +282,7 @@ const EmployerDeposit = () => {
                           {historyB?.map((e, i) => {
                             return (
                               <tr key={i}>
-                                <td>{i}</td>
+                                <td>{i + 1}</td>
                                 <td>{e.ref}</td>
                                 <td>{e.transactionDate}</td>
                                 <td
