@@ -40,7 +40,7 @@ const NavbarEmployer = () => {
         style: "currency",
         currency: "IDR",
       });
-      setimgProfile(response.data.User.imgUrl);
+      setimgProfile(response.data.Employer.imgUrl);
       setBalance(formattedAmount);
     } catch (err) {
       console.log(err);
@@ -154,7 +154,7 @@ const NavbarEmployer = () => {
                                         router.push("/EmployerDeposit");
                                       }}
                                     >
-                                      Withdraw
+                                      Wallet
                                     </button>
                                   </div>
                                 </div>
