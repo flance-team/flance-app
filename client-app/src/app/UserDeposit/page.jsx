@@ -6,16 +6,18 @@ import NavBarUser from "../components/navbarUser";
 import CurrencyInput from "react-currency-input-field";
 import { useRouter } from "next/navigation";
 const baseUrl = `http://localhost:3000`;
-const router = useRouter();
 
-if (!localStorage.getItem("access_token")) {
-  router.push("/");
-}
-
-if (localStorage.getItem("role") === "employer") {
-  router.push("/EmployerHome");
-}
 const UserDeposit = () => {
+  const router = useRouter();
+
+  if (!localStorage.getItem("access_token")) {
+    router.push("/");
+  }
+
+  if (localStorage.getItem("role") === "employer") {
+    router.push("/EmployerHome");
+  }
+
   const [balance, setBalance] = useState(0);
   const amountToWithdraw = useRef(0);
   const [historyB, setHistoryB] = useState([]);
