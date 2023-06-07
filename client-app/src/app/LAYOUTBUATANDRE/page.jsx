@@ -1,4 +1,7 @@
 "use client";
+
+import NavBarUser from "@/components/navbarUser";
+
 const { default: NavbarEmployer } = require("@/components/NavbarEmployer");
 
 const LAYOUTBUATANDRE = () => {
@@ -6,9 +9,9 @@ const LAYOUTBUATANDRE = () => {
     <div className="min-h-full">
       {/* INI BUNGKUS BIRU FLEX KOLOM */}
       <div className="flex flex-1 flex-col bg-blue-200">
-        <NavbarEmployer />
+        <NavBarUser />
         {/* INI BUNGKUS YANG KUNING BIKIN JADI DI TENGAH, HEIGHTNYA TERGANTUNG ISI DARI ELEMENTNYA BERAPA MENYESUAIKAN h-fit */}
-        <main className="flex-1 pb-8 w-3/4 m-auto bg-yellow-200 h-fit">
+        <main className="flex-1 pb-8 w-3/4 m-auto bg-yellow-200 h-fit w-full">
           <div className="mt-8">
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
               <h2 className="text-lg font-medium leading-6 text-gray-900">
