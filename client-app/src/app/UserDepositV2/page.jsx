@@ -4,19 +4,18 @@ import { useEffect, useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import CurrencyInput from "react-currency-input-field";
 import { BanknotesIcon } from "@heroicons/react/20/solid";
-import NavbarEmployer from "@/components/NavbarEmployer";
 import Swal from "sweetalert2";
+import NavBarUser from "@/components/navbarUser";
 
 const baseUrl = `http://localhost:3000`;
 
 const EmployerDepositV2 = () => {
   const [balance, setBalance] = useState(0);
   const [historyB, setHistoryB] = useState([]);
-  const [employer, setEmployer] = useState({});
+  const [user, setUser] = useState({});
   const [amountToWithdraw, setAmountToWithdraw] = useState(0);
-  const [amountToDeposit, setAmountToDeposit] = useState(0);
+
   let [isOpen, setIsOpen] = useState(false);
-  let [isOpen2, setIsOpen2] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
@@ -25,24 +24,14 @@ const EmployerDepositV2 = () => {
   function openModal() {
     setIsOpen(true);
   }
-  function closeModal2() {
-    setIsOpen2(false);
-  }
-
-  function openModal2() {
-    setIsOpen2(true);
-  }
 
   const getBalance = async () => {
-    const response = await axios.get(
-      `${baseUrl}/transactions/employer/balance`,
-      {
-        headers: { access_token: localStorage.getItem("access_token") },
-      }
-    );
+    const response = await axios.get(`${baseUrl}/transactions/user/balance`, {
+      headers: { access_token: localStorage.getItem("access_token") },
+    });
     setBalance(response.data.balance);
     setHistoryB(response.data.TransactionEmployers);
-    setEmployer(response.data.Employer);
+    setUser(response.data.User);
     console.log(response.data);
   };
   console.log(historyB);
@@ -50,15 +39,9 @@ const EmployerDepositV2 = () => {
   const withdraw = () => {
     openModal();
   };
-  const deposit = () => {
-    openModal2();
-  };
 
   const handleChangeWithdraw = (e) => {
     setAmountToWithdraw(e.target.value);
-  };
-  const handleChangeDeposit = (e) => {
-    setAmountToDeposit(e.target.value);
   };
 
   const submitWithdraw = async () => {
@@ -82,7 +65,7 @@ const EmployerDepositV2 = () => {
         });
       } else {
         const response = await axios.post(
-          `${baseUrl}/transactions/employer/withdraw`,
+          `${baseUrl}/transactions/user/withdraw`,
           {
             amount: +res,
           },
@@ -106,48 +89,6 @@ const EmployerDepositV2 = () => {
     }
   };
 
-  const submitDeposit = async () => {
-    try {
-      const currentValue = amountToDeposit;
-      const res = currentValue.replace(/\D/g, "");
-      if (res <= 0) {
-        return console.log("Value cant be negative");
-      } else {
-        const response = await axios.post(
-          `${baseUrl}/transactions/employer/requesttoken`,
-          {
-            amount: +res,
-          },
-          {
-            headers: { access_token: localStorage.getItem("access_token") },
-          }
-        );
-        console.log(response.data);
-
-        window.snap.pay(response.data, {
-          onSuccess: async (result) => {
-            console.log("success");
-            //   console.log(result);
-            const response = await axios.post(
-              `${baseUrl}/transactions/employer/topup`,
-              {
-                amount: +res,
-              },
-              {
-                headers: { access_token: localStorage.getItem("access_token") },
-              }
-            );
-
-            await getBalance();
-            closeModal2();
-          },
-        });
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     getBalance();
   }, []);
@@ -158,7 +99,7 @@ const EmployerDepositV2 = () => {
         {/* Static sidebar for desktop */}
 
         <div className="flex flex-1 flex-col">
-          <NavbarEmployer />
+          <NavBarUser />
           <main className="flex-1 pb-8 w-3/4 m-auto">
             {/* Page header */}
 
@@ -200,13 +141,6 @@ const EmployerDepositV2 = () => {
                         >
                           Withdraw
                         </button>
-                        <button
-                          type="button"
-                          className="inline-flex items-center rounded-md bg-cyan-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
-                          onClick={deposit}
-                        >
-                          Deposit
-                        </button>
                       </div>
                     </div>
                   </div>
@@ -215,8 +149,8 @@ const EmployerDepositV2 = () => {
                       <div className="w-32 rounded m-2">
                         <img
                           src={
-                            employer.imgUrl
-                              ? employer.imgUrl
+                            user.imgUrl
+                              ? user.imgUrl
                               : "https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
                           }
                         />
@@ -226,24 +160,24 @@ const EmployerDepositV2 = () => {
                     <div className="flex flex-col w-full p-2 pl-4">
                       <div className="flex">
                         <h2 className="font-medium text-lg">
-                          Hello, {employer.PIC}
+                          Hello, {user.name}
                         </h2>
                       </div>
                       <div className="flex">
-                        <p className="mr-2">Company: </p>
-                        <p>{employer.companyName}</p>
+                        <p className="mr-2">Gender: </p>
+                        <p>{user.gender}</p>
                       </div>
                       <div className="flex">
                         <p className="mr-2">Contact: </p>
-                        <p>{employer.phoneNumber}</p>
+                        <p>{user.phoneNumber}</p>
                       </div>
                       <div className="flex">
                         <p className="mr-2">City :</p>
-                        <p>{employer.location}</p>
+                        <p>{user.city}</p>
                       </div>
                       <div className="flex">
                         <p className="mr-2">Address: </p>
-                        <p>{employer.address}</p>
+                        <p>{user.address}</p>
                       </div>
                     </div>
                   </div>
@@ -398,65 +332,6 @@ const EmployerDepositV2 = () => {
                       type="button"
                       className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={submitWithdraw}
-                    >
-                      OK
-                    </button>
-                  </div>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
-      <Transition appear show={isOpen2} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal2}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    Deposit Amount
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <CurrencyInput
-                      className="input input-bordered w-full"
-                      // type="number"
-                      prefix="Rp."
-                      decimalsLimit={2}
-                      min={0}
-                      allowNegativeValue={false}
-                      onChange={handleChangeDeposit}
-                    />
-                  </div>
-
-                  <div className="mt-4 flex justify-end">
-                    <button
-                      type="button"
-                      className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                      onClick={submitDeposit}
                     >
                       OK
                     </button>
