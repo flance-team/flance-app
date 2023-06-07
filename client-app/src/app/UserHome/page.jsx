@@ -70,6 +70,7 @@ const UserHome = () => {
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [dataJob, setDataJob] = useState([]);
+  console.log(dataJob);
   const [detailJob, setDetailJob] = useState();
 
   const jobs = async () => {
@@ -122,23 +123,7 @@ const UserHome = () => {
         <div className="flex flex-grow">
           <aside className="bg-white w-64 my-2 mx-2">
             {/* Sidebar content */}
-            {/* <div className="card w-56 bg-base-100 shadow-xl items-center">
-              <div className="w-32 h-32 flex  justify-center rounded-full overflow-hidden my-1">
-                <img
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt="Profile Image"
-                  className=""
-                />
-              </div>
-              <div className="card-body text-center items-center">
-                <h2 className="card-title text-xl font-semibold place-items-center">
-                  {localStorage.getItem("nameUser")}
-                </h2>
-                <p className="text-sm text-gray-500 text-xs">
-                  Full-stack developer
-                </p>
-              </div>
-            </div> */}
+
             <div className="w-56 h-60 bg-base-100 shadow-xl flex flex-col items-center mx-2 my-2">
               <div className="w-32 h-32 flex justify-center rounded-full overflow-hidden">
                 <img
@@ -251,10 +236,20 @@ const UserHome = () => {
               <div key={el.id} className="card w-full bg-base-100 shadow-xl">
                 <div className="card-body">
                   <h2 className="card-title">{el.title}</h2>
-                  <p>Rate Per Hour: {el.salary}</p>
+                  <p>Rate Per Hour: Rp. {el.salary}</p>
                   <p>Total Work Hours: {el.totalHours} / Week</p>
                   <p>Location: {el.location}</p>
-                  <div className="card-actions justify-end">
+
+                  <div className="card-actions space-x-0">
+                    {/* applicant: {el.countApplicant} */}
+                    <div>
+                      Total Applicant:
+                      <progress
+                        className="progress w-20 ml-1"
+                        value={el.countApplicant}
+                        max="5"
+                      ></progress>
+                    </div>
                     <button
                       className="btn btn-primary"
                       onClick={() => {
@@ -269,6 +264,32 @@ const UserHome = () => {
             );
           })}
         </div>
+        <nav
+          className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-2"
+          aria-label="Pagination"
+        >
+          <div className="hidden sm:block">
+            <p className="text-sm text-gray-700">
+              Showing <span className="font-medium">1</span> to{" "}
+              <span className="font-medium">10</span> of{" "}
+              <span className="font-medium">20</span> results
+            </p>
+          </div>
+          <div className="flex flex-1 justify-between sm:justify-end">
+            <a
+              href="#"
+              className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
+            >
+              Previous
+            </a>
+            <a
+              href="#"
+              className="relative ml-3 inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:outline-offset-0"
+            >
+              Next
+            </a>
+          </div>
+        </nav>
       </div>
       <Transition.Root show={open} as={Fragment}>
         <Dialog
