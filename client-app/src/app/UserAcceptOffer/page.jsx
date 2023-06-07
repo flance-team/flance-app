@@ -182,7 +182,6 @@ const UserAcceptOffer = () => {
   if (loading) {
     return <Loading />;
   }
-
   return (
     <>
       <NavBarUser />
@@ -193,7 +192,7 @@ const UserAcceptOffer = () => {
           <main className="flex-wrap bg-white py-1 justify-center static">
             {/* Main content */}
             <div className="flex justify-start my-2">
-              <h1 className="text-3xl">Hello, {nameUser}</h1>
+              <h1 className="text-3xl">{nameUser}</h1>
             </div>
             <div className="flex justify-start my-2">
               <h1 className="text-1xl">
@@ -216,7 +215,7 @@ const UserAcceptOffer = () => {
                     <div className="flex gap-x-4">
                       <img
                         className="h-12 w-12 flex-none rounded-full bg-gray-50"
-                        src={person.imageUrl}
+                        src={person.Job.Employer.imgUrl}
                         alt=""
                       />
                       <div className="min-w-0 flex-auto">
@@ -224,7 +223,7 @@ const UserAcceptOffer = () => {
                           {person.Job.title}
                         </p>
                         <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                          {person.Job.Employer.companyName},{""}
+                          {person.Job.Employer.companyName},{" "}
                           {person.Job.location}
                         </p>
                       </div>

@@ -341,7 +341,7 @@ class jobController {
           model: Job,
           include: [
             { model: Category },
-            { model: Employer, attributes: ["companyName"] },
+            { model: Employer, attributes: ["companyName", "imgUrl"] },
           ],
         },
         where: { userId: userId },

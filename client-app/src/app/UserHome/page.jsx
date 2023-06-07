@@ -23,6 +23,7 @@ const UserHome = () => {
   const [detailJob, setDetailJob] = useState();
   const [flag, setFlag] = useState(0);
   const [imgProfile, setimgProfile] = useState();
+  const [emailUser, setemailUser] = useState();
 
   const handleSearchQueryChange = (event) => {
     setSearchQuery(event.target.value);
@@ -150,6 +151,8 @@ const UserHome = () => {
         style: "currency",
         currency: "IDR",
       });
+      console.log(response.data);
+      setemailUser(response.data.User.email);
       setimgProfile(response.data.User.imgUrl);
     } catch (err) {
       console.log(err);
@@ -172,9 +175,9 @@ const UserHome = () => {
                 <div className="mt-2 flex">
                   <div className="overflow-hidden rounded-lg bg-white shadow w-1/3 mr-2">
                     <div className="p-5">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0">
-                          <div className="w-32 h-32 flex justify-center rounded-full overflow-hidden">
+                      <div className="flex items-center justify-center">
+                        <div className="flex items-center justify-center">
+                          <div className="w-32 h-32 flex rounded-full overflow-hidden">
                             <img
                               src={imgProfile}
                               alt="Profile Image"
@@ -182,25 +185,17 @@ const UserHome = () => {
                             />
                           </div>
                         </div>
-                        <div className="ml-5 w-0 flex-1">
-                          <dl>
-                            <dt className="truncate text-sm font-medium text-gray-500"></dt>
-                            <dd>
-                              <div className="text-lg font-medium text-gray-900">
-                                {nameUser}
-                              </div>
-                            </dd>
-                          </dl>
-                        </div>
                       </div>
                     </div>
                     <div className="px-5 py-3">
-                      <div className="text-sm flex justify-between"></div>
+                      <div className="text-lg font-medium text-gray-900">
+                        Hello, {nameUser}!
+                      </div>
                     </div>
                   </div>
-                  <div className="overflow-hidden rounded-lg bg-white shadow">
-                    <div className="w-fit bg-base-100 shadow-xl">
-                      <div className="card-body">
+                  <div className="overflow-hidden rounded-lg bg-white shadow w-full">
+                    <div className="w-full bg-base-100 shadow-xl">
+                      <div className="card-body w-full">
                         <div className="flex justify-items-center">
                           <h2 className="card-title">Search anything here</h2>
                         </div>
@@ -249,7 +244,7 @@ const UserHome = () => {
             </div>
             <div className="bg-white-200"></div>
             <div className="bg-white-200 mt-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-2">
                 {dataJob
                   .slice((currentPage - 1) * 8, currentPage * 8)
                   .map((el) => {
@@ -258,14 +253,12 @@ const UserHome = () => {
                         key={el.id}
                         className="card w-full bg-base-100 shadow-xl"
                       >
-                        <div className="card-body shadow-xl">
+                        <div className="card-body drop-shadow-md">
                           <h2 className="card-title">{el.title}</h2>
                           <p>Rate Per Hour: Rp. {el.salary}</p>
                           <p>Total Work Hours: {el.totalHours} / Week</p>
                           <p>Location: {el.location}</p>
-
-                          <div className="card-actions space-x-0">
-                            {/* applicant: {el.countApplicant} */}
+                          <div className="card-actions flex items-center justify-between">
                             <div>
                               Total Applicant:
                               <progress
@@ -275,9 +268,10 @@ const UserHome = () => {
                               ></progress>
                             </div>
                             <button
-                              className="btn btn-primary"
+                              className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                               onClick={() => {
-                                setOpen(true), jobDetail(el.id);
+                                setOpen(true);
+                                jobDetail(el.id);
                               }}
                             >
                               Details
