@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Loading from "../components/Loading";
+import Loading from "../../components/Loading";
 const base_url_server = "http://localhost:3000";
 const SignUpForm = () => {
   const router = useRouter();
