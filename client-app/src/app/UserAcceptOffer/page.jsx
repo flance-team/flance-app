@@ -1,7 +1,10 @@
 "use client";
 import { Fragment, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/24/outline";
+import {
+  CheckIcon,
+  DocumentMagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 import Loading from "../../components/Loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -63,7 +66,6 @@ const UserAcceptOffer = () => {
   };
   const statusDecline = async (id) => {
     setLoading(true);
-
     try {
       const headers = {
         access_token: localStorage.getItem("access_token"),
@@ -149,7 +151,7 @@ const UserAcceptOffer = () => {
               jobDetail(id);
             }}
           >
-            Contract
+            Detail
           </button>
         </>
       );
@@ -159,10 +161,10 @@ const UserAcceptOffer = () => {
           type="button"
           className="rounded-full bg-white px-2.5 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           onClick={() => {
-            setOpen(true);
+            jobDetail(id);
           }}
         >
-          Contract
+          Detail
         </button>
       );
     }
@@ -271,7 +273,7 @@ const UserAcceptOffer = () => {
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
                   <div>
                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                      <CheckIcon
+                      <DocumentMagnifyingGlassIcon
                         className="h-6 w-6 text-green-600"
                         aria-hidden="true"
                       />
@@ -281,11 +283,33 @@ const UserAcceptOffer = () => {
                         as="h3"
                         className="text-base font-semibold leading-6 text-gray-900"
                       >
-                        This is your contract integrated with blockchain
+                        DETAIL OF JOB
                       </Dialog.Title>
                       <div className="mt-2">
-                        <div className="flex flex-wrap break-all">
-                          {detailJob?.hash}
+                        <p className="text-lg font-semibold">
+                          {detailJob?.title}
+                        </p>
+                        <div className="mt-1 text-sm">
+                          <h3 className="mb-1">
+                            HOURS REQUIRED: {detailJob?.totalHours} hours
+                          </h3>
+                          <h3 className="mb-2 break-all">
+                            Hash: {detailJob?.hash}
+                          </h3>
+                          <h3 className="mb-2">
+                            Salary: Rp. {detailJob?.salary}
+                          </h3>
+                          <h3 className="mb-2">
+                            Company: {detailJob?.Employer?.companyName}
+                          </h3>
+                          {/* {detailJob?.Schedules.map((el) => (
+                            <div key={el.id} className="space-y-1">
+                              <h3 className="mb-1">
+                                Day: {el.day}, Start: {el.startHour}, Total
+                                Hour: {el.totalHour}
+                              </h3>
+                            </div>
+                          ))} */}
                         </div>
                       </div>
                     </div>

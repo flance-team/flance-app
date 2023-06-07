@@ -1,24 +1,4 @@
 {
-<<<<<<< HEAD
-   "development": {
-      "username": "postgres",
-      "password": "postgres",
-      "database": "flancedb",
-      "host": "127.0.0.1",
-      "dialect": "postgres",
-      "logging": false
-   },
-   "test": {
-      "username": "septianmaulana",
-      "password": "admin",
-      "database": "flancedb_test",
-      "host": "127.0.0.1",
-      "dialect": "postgres"
-   },
-   "production": {
-      "use_env_variable": "DATABASE_URL"
-   }
-=======
   "development": {
     "username": "postgres",
     "password": "postgres",
@@ -37,5 +17,4 @@
   "production": {
     "use_env_variable": "DATABASE_URL"
   }
->>>>>>> 42a1bdb754e1a0066a1e5e88041e564840001eff
 }

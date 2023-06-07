@@ -79,12 +79,12 @@ const NavbarEmployer = () => {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="block h-9 w-auto lg:hidden "
-                      src="./Logo - Team 1.png"
+                      src="https://firebasestorage.googleapis.com/v0/b/flance-phs3.appspot.com/o/Logo%20-%20Team%201.png?alt=media&token=595f07be-d906-4964-89af-22ff358730fb&_gl=1*cn26g*_ga*MjA1NTA0MjE1Ny4xNjgzOTY5NDQ5*_ga_CW55HF8NVT*MTY4NjEyNTc2OS4xMC4xLjE2ODYxMjU5NTcuMC4wLjA."
                       alt="Your Company"
                     />
                     <img
                       className="hidden h-9 w-auto lg:block"
-                      src="./Logo - Team 1.png"
+                      src="https://firebasestorage.googleapis.com/v0/b/flance-phs3.appspot.com/o/Logo%20-%20Team%201.png?alt=media&token=595f07be-d906-4964-89af-22ff358730fb&_gl=1*cn26g*_ga*MjA1NTA0MjE1Ny4xNjgzOTY5NDQ5*_ga_CW55HF8NVT*MTY4NjEyNTc2OS4xMC4xLjE2ODYxMjU5NTcuMC4wLjA."
                       alt="Your Company"
                     />
                   </div>
@@ -140,48 +140,21 @@ const NavbarEmployer = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <div className="relative">
-                                <button
-                                  className={`flex items-center px-4 py-2 rounded-md w-full${
-                                    active
-                                      ? "bg-gray-100 text-gray-800"
-                                      : "text-gray-600 hover:bg-gray-100"
-                                  }`}
-                                >
-                                  <span className="font-semibold">Wallet!</span>
-                                  <svg
-                                    className={`ml-2 w-4 h-4 transition-transform ${
-                                      active ? "transform rotate-180" : ""
-                                    }`}
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  >
-                                    <path d="M19 9l-7 7-7-7" />
-                                  </svg>
-                                </button>
-                                {active && (
-                                  <div className="absolute mt-2 py-2 w-56 bg-white rounded-md shadow-lg">
-                                    <div className="p-4">
-                                      <p className="text-gray-600">
-                                        You have {balance}
-                                      </p>
-                                      <div className="mt-4 flex justify-end">
-                                        <button
-                                          className="btn btn-primary mr-2"
-                                          onClick={() => {
-                                            router.push("/EmployerDeposit");
-                                          }}
-                                        >
-                                          Withdraw
-                                        </button>
-                                      </div>
-                                    </div>
+                                <div className="p-4">
+                                  <p className="text-gray-600">
+                                    You have {balance}
+                                  </p>
+                                  <div className="mt-4 flex justify-end">
+                                    <button
+                                      className="btn btn-primary mr-2"
+                                      onClick={() => {
+                                        router.push("/UserDeposit");
+                                      }}
+                                    >
+                                      Withdraw
+                                    </button>
                                   </div>
-                                )}
+                                </div>
                               </div>
                             )}
                           </Menu.Item>
