@@ -16,24 +16,24 @@ const features = [
     title: "Easily Post New Position",
     description:
       "Keep track of everyone's salaries and whether or not they've been paid. Direct deposit not supported.",
-    image: screenshotPayroll,
+    image: "https://firebasestorage.googleapis.com/v0/b/hacktiv8-tb.appspot.com/o/Screenshot%202023-06-08%20at%2009.10.39.png?alt=media&token=824a14a9-0c7d-42b6-ae88-e6547c454d35",
   },
   {
     title: "Accepting Employee",
     description:
       "Empowers employers to efficiently identify the most suitable candidates for their job openings",
-    image: screenshotExpenses,
+    image: "https://firebasestorage.googleapis.com/v0/b/hacktiv8-tb.appspot.com/o/Screenshot%202023-06-08%20at%2009.09.13.png?alt=media&token=ad27ac3b-43a7-4b94-a885-7d0edd943074",
   },
   {
     title: "Discover Jobs",
     description: "Facilitates an enhanced job search experience for users.",
-    image: screenshotVatReturns,
+    image: "https://firebasestorage.googleapis.com/v0/b/hacktiv8-tb.appspot.com/o/Screenshot%202023-06-08%20at%2009.05.37.png?alt=media&token=ec096bab-5353-4dec-82c5-9359f7e12dc4",
   },
   {
     title: "Deposit Money & Withdraw the wages",
     description:
       "Easily pay the wages and maintain good credibility of the business. Keep track of everyone's salaries and whether or not they've been paid.",
-    image: screenshotReporting,
+    image: "https://firebasestorage.googleapis.com/v0/b/hacktiv8-tb.appspot.com/o/Screenshot%202023-06-08%20at%2008.59.35.png?alt=media&token=18ee9828-7645-4f8c-8673-065f146be228",
   },
 ];
 
