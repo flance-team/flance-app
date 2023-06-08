@@ -242,7 +242,7 @@ const UserHome = () => {
 
               {/* END */}
             </div>
-            <div className="bg-white-200"></div>
+            <div className="bg-white-200 mt-10"></div>
             <div className="bg-white-200 mt-2">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-2">
                 {dataJob
@@ -290,7 +290,7 @@ const UserHome = () => {
                   })}
               </div>
             </div>
-            <div className="bg-red-400">
+            <div className="bg-red-400 mt-10">
               {" "}
               <nav
                 className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 mt-2"

@@ -22,5 +22,6 @@ router.post("/apply/:id", authUser, jobController.applyJob); //apply lowongan
 router.patch("/accept/:id", authUser, jobController.acceptJob); //accept offer dari employer ktika apply jobnya disetujui oleh employer
 router.patch("/reject-user/:id", authUser, jobController.rejectJob); // reject offer dari user ktika apply jobnya disetujui oleh employer
 router.get("/schedules/:id", authUser, jobController.getSchedules); // menampilkan schedule dari job
+router.get("/contract/:id", authUser, jobController.getContract); //menampilkan contact dari user berdasarkan joblist id
 
 module.exports = router;

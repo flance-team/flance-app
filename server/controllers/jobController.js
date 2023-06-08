@@ -36,7 +36,7 @@ class jobController {
         },
       });
       res.status(200).json(jobs);
-    } catch (err) {}
+    } catch (err) { }
   }
 
   static async getAllJobsUser(req, res, next) {
@@ -303,6 +303,22 @@ class jobController {
       });
 
       res.status(200).json(jobs);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getContract(req, res, next) {
+    try {
+      const id = +req.params.id;
+
+
+
+      const smartContract = await JobContract.findOne({
+        where: { jobListId: id },
+        include: [{ model: Job, include: Schedule }, { model: Employer, attributes: ["companyName", "imgUrl"] }],
+      });
+      res.status(200).json(smartContract);
     } catch (err) {
       next(err);
     }
