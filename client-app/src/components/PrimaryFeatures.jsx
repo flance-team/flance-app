@@ -6,10 +6,10 @@ import clsx from "clsx";
 
 import { Container } from "./Container";
 import backgroundImage from "../images/background-features.jpg";
-import screenshotExpenses from "../images/screenshots/expenses.png";
-import screenshotPayroll from "../images/screenshots/payroll.png";
-import screenshotReporting from "../images/screenshots/reporting.png";
-import screenshotVatReturns from "../images/screenshots/vat-returns.png";
+import screenshotExpenses from "../images/screenshots/User Accept job.png";
+import screenshotPayroll from "../images/screenshots/Employer Wage.png";
+import screenshotReporting from "../images/screenshots/employer deposit.png";
+import screenshotVatReturns from "../images/screenshots/User Home.png";
 
 const features = [
   {
